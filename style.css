@@ -16,7 +16,7 @@
   --gold:       #ffd700;
   --silver:     #c0c0c0;
   --bronze:     #cd7f32;
-  --font:       'Segoe UI', Arial, sans-serif;
+  --font:       'Segoe UI', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
   --radius:     10px;
   --shadow:     0 4px 24px rgba(0,0,0,0.4);
 }

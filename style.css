@@ -72,27 +72,27 @@ a { color: var(--accent); text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
+  padding: 32px 64px;
   background: linear-gradient(135deg, #0f172a 0%, #1e2d4a 100%);
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 4px solid var(--accent);
   flex-shrink: 0;
 }
 
 .lb-header__logo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 28px;
 }
 
 .lb-header__trophy {
-  font-size: 48px;
+  font-size: 96px;
   filter: drop-shadow(0 0 12px rgba(232,184,75,0.6));
   cursor: pointer;
   user-select: none;
 }
 
 .lb-header__title {
-  font-size: 28px;
+  font-size: 56px;
   font-weight: 800;
   color: var(--accent);
   letter-spacing: -0.5px;
@@ -100,7 +100,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .lb-header__subtitle {
-  font-size: 14px;
+  font-size: 28px;
   color: var(--text-muted);
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -113,7 +113,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .lb-header__updated {
-  font-size: 12px;
+  font-size: 24px;
   color: var(--text-muted);
 }
 
@@ -128,62 +128,62 @@ a { color: var(--accent); text-decoration: none; }
 .lb-main {
   flex: 1;
   overflow-y: auto;
-  padding: 24px 32px;
+  padding: 48px 64px;
 }
 
 /* ── Yesterday's results sidebar ── */
 .lb-sidebar {
-  width: 300px;
+  width: 520px;
   flex-shrink: 0;
   overflow-y: auto;
-  padding: 20px 16px;
+  padding: 40px 28px;
   background: var(--bg-card);
   border-left: 1px solid var(--border);
 }
 
 .sidebar-title {
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 14px;
+  margin-bottom: 28px;
 }
 
 .sidebar-empty {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 24px;
   text-align: center;
-  padding: 24px 0;
+  padding: 48px 0;
 }
 
 .sidebar-match {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 22px;
 }
 
 .sidebar-round {
-  font-size: 10px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 
 .sidebar-scoreline {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .sidebar-team-name {
-  font-size: 13px;
+  font-size: 24px;
   font-weight: 700;
   flex: 1;
   line-height: 1.2;
@@ -194,7 +194,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .sidebar-score {
-  font-size: 20px;
+  font-size: 38px;
   font-weight: 900;
   color: var(--accent);
   white-space: nowrap;
@@ -203,28 +203,28 @@ a { color: var(--accent); text-decoration: none; }
 
 .sidebar-pts {
   border-top: 1px solid var(--border);
-  padding-top: 10px;
+  padding-top: 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .sidebar-team-pts {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 6px;
+  gap: 10px;
 }
 
 .sidebar-team-pts__name {
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--text);
   flex-shrink: 0;
 }
 
 .sidebar-team-pts__events {
-  font-size: 10px;
+  font-size: 18px;
   color: var(--text-muted);
   text-align: right;
   flex: 1;
@@ -232,7 +232,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .sidebar-team-pts__total {
-  font-size: 14px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--accent2);
   white-space: nowrap;
@@ -245,9 +245,9 @@ a { color: var(--accent); text-decoration: none; }
 
 .lb-loading {
   text-align: center;
-  padding: 60px;
+  padding: 120px;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 36px;
 }
 
 .lb-empty {
@@ -264,9 +264,9 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .lb-table thead th {
-  padding: 12px 16px;
+  padding: 24px 32px;
   text-align: left;
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -284,38 +284,38 @@ a { color: var(--accent); text-decoration: none; }
 .lb-table tbody tr:hover { background: var(--bg-card2); }
 
 .lb-table tbody td {
-  padding: 14px 16px;
+  padding: 28px 32px;
   vertical-align: middle;
 }
 
 /* Rank cell */
 .rank-cell {
-  font-size: 22px;
+  font-size: 40px;
   font-weight: 800;
-  width: 60px;
+  width: 100px;
   text-align: center;
 }
 .rank--1 { color: var(--gold); }
 .rank--2 { color: var(--silver); }
 .rank--3 { color: var(--bronze); }
-.rank--other { color: var(--text-muted); font-size: 18px; }
+.rank--other { color: var(--text-muted); font-size: 34px; }
 
 /* Rank medal icons */
-.rank-medal { font-size: 28px; }
+.rank-medal { font-size: 52px; }
 
 /* Name cell */
-.name-cell { font-size: 20px; font-weight: 700; }
+.name-cell { font-size: 38px; font-weight: 700; }
 
 /* Teams cell */
-.teams-cell { display: flex; gap: 8px; flex-wrap: wrap; }
+.teams-cell { display: flex; gap: 16px; flex-wrap: wrap; }
 
 .team-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 36px;
+  font-size: 22px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -324,22 +324,22 @@ a { color: var(--accent); text-decoration: none; }
 .team-chip--not-a-chancer { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 
 .team-chip__mult {
-  font-size: 10px;
+  font-size: 18px;
   opacity: .7;
 }
 
 /* Score cell */
 .score-cell {
   text-align: right;
-  font-size: 28px;
+  font-size: 52px;
   font-weight: 900;
   color: var(--accent);
   white-space: nowrap;
 }
-.score-pts { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+.score-pts { font-size: 26px; font-weight: 400; color: var(--text-muted); }
 
 /* Score breakdown cell */
-.breakdown-cell { text-align: right; font-size: 12px; color: var(--text-muted); }
+.breakdown-cell { text-align: right; font-size: 22px; color: var(--text-muted); }
 .breakdown-cell span { display: block; }
 
 /* Top 3 rows get a highlight */
@@ -350,7 +350,7 @@ a { color: var(--accent); text-decoration: none; }
 /* Footer scoring key */
 .lb-footer {
   flex-shrink: 0;
-  padding: 10px 32px;
+  padding: 18px 64px;
   background: var(--bg-card);
   border-top: 1px solid var(--border);
 }
@@ -360,11 +360,11 @@ a { color: var(--accent); text-decoration: none; }
   flex-wrap: wrap;
   gap: 6px 0;
   align-items: center;
-  font-size: 11px;
+  font-size: 20px;
   color: var(--text-muted);
 }
 
-.key-item { padding: 0 8px; }
+.key-item { padding: 0 14px; }
 .key-sep  { opacity: .3; }
 
 /* ===================================================

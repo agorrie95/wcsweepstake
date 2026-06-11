@@ -75,7 +75,7 @@ function computeTeamTotals(matches) {
   let winner = null;
 
   const ensure = name => {
-    if (!totals[name]) totals[name] = { goals:0, hatTrickBonus:0, cleanSheet:0, penSaves:0, redCards:0, result:0, progression:0 };
+    if (!totals[name]) totals[name] = { goals:0, hatTrickBonus:0, cleanSheet:0, penSaves:0, redCards:0, result:0, progression:0, matchBreakdowns:[] };
     if (!teamRounds[name]) teamRounds[name] = new Set();
   };
 
@@ -96,6 +96,8 @@ function computeTeamTotals(matches) {
       ensure(name);
       const pts = scoreTeamInMatch(side, isNilNil);
       Object.keys(pts).forEach(k => { totals[name][k] += pts[k]; });
+      const inGame = pts.goals + pts.hatTrickBonus + pts.cleanSheet + pts.penSaves + pts.redCards;
+      totals[name].matchBreakdowns.push({ inGame, result: pts.result });
       teamRounds[name].add(roundKey);
       if (roundKey === 'final' && side.result === 'win') winner = name;
     }
@@ -130,19 +132,28 @@ function computeScores(matches, participants) {
     for (const team of (p.teams || [])) {
       const mult = parseFloat(team.multiplier) || 1;
       const raw = teamTotals[team.name] || {};
-      const inGameRaw = (raw.goals||0) + (raw.hatTrickBonus||0) + (raw.cleanSheet||0) + (raw.penSaves||0) + (raw.redCards||0);
-      const resultRaw  = raw.result || 0;
-      const progRaw    = raw.progression || 0;
 
-      totalGoalsPts       += inGameRaw * mult;
-      totalResultsPts     += resultRaw * mult;
-      totalProgressionPts += progRaw   * mult;
+      // Apply multiplier per match; if a match's raw total is negative, cap at ×1
+      // so the multiplier never amplifies a bad game further
+      let teamInGamePts = 0, teamResultPts = 0;
+      for (const { inGame, result } of (raw.matchBreakdowns || [])) {
+        const effectiveMult = (inGame + result) < 0 ? 1 : mult;
+        teamInGamePts += inGame * effectiveMult;
+        teamResultPts += result * effectiveMult;
+      }
+
+      const progRaw = raw.progression || 0;
+      const teamProgPts = progRaw * mult;
+
+      totalGoalsPts       += teamInGamePts;
+      totalResultsPts     += teamResultPts;
+      totalProgressionPts += teamProgPts;
 
       teamDetails.push({
         name:       team.name,
         bracket:    team.bracket,
         multiplier: mult,
-        total:      Math.round((inGameRaw + resultRaw + progRaw) * mult * 100) / 100,
+        total:      Math.round((teamInGamePts + teamResultPts + teamProgPts) * 100) / 100,
         raw,
       });
     }

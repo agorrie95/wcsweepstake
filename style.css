@@ -127,7 +127,7 @@ a { color: var(--accent); text-decoration: none; }
 /* Main table area */
 .lb-main {
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 48px 64px;
 }
 

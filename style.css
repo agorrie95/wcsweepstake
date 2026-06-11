@@ -117,11 +117,130 @@ a { color: var(--accent); text-decoration: none; }
   color: var(--text-muted);
 }
 
+/* Body row (main + sidebar) */
+.lb-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
 /* Main table area */
 .lb-main {
   flex: 1;
   overflow-y: auto;
   padding: 24px 32px;
+}
+
+/* ── Yesterday's results sidebar ── */
+.lb-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 20px 16px;
+  background: var(--bg-card);
+  border-left: 1px solid var(--border);
+}
+
+.sidebar-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.sidebar-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 0;
+}
+
+.sidebar-match {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.sidebar-round {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.sidebar-scoreline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sidebar-team-name {
+  font-size: 13px;
+  font-weight: 700;
+  flex: 1;
+  line-height: 1.2;
+}
+
+.sidebar-team-name--away {
+  text-align: right;
+}
+
+.sidebar-score {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sidebar-pts {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-team-pts {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.sidebar-team-pts__name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.sidebar-team-pts__events {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: right;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.sidebar-team-pts__total {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sidebar-team-pts__total--neg {
+  color: var(--red);
 }
 
 .lb-loading {

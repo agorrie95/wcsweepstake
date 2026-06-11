@@ -90,6 +90,83 @@ function renderLeaderboard(scores, participants) {
     </table>`;
 }
 
+function renderSidebar(matches) {
+  const el = document.getElementById('sidebar-results');
+  if (!el) return;
+
+  // Yesterday as YYYY-MM-DD in local time
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  const yesterday = d.toLocaleDateString('en-CA'); // gives YYYY-MM-DD
+
+  const yMatches = matches.filter(m => m.finished && m.date === yesterday);
+
+  if (!yMatches.length) {
+    el.innerHTML = `
+      <div class="sidebar-title">Yesterday's Results</div>
+      <div class="sidebar-empty">No matches played yesterday</div>`;
+    return;
+  }
+
+  const matchCards = yMatches.map(m => {
+    const { home, away, round } = m;
+    const isNilNil = home.goals === 0 && away.goals === 0;
+    const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
+    const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+
+    const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
+    const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
+    const homePts = scoreTeamInMatch(homeSide, isNilNil);
+    const awayPts = scoreTeamInMatch(awaySide, isNilNil);
+
+    const rawTotal = pts => Object.values(pts).reduce((s, v) => s + v, 0);
+
+    const buildEvents = (pts, side, result) => {
+      const parts = [];
+      if (side.goals > 0) parts.push(`⚽ ${side.goals} goal${side.goals > 1 ? 's' : ''}`);
+      if (pts.hatTrickBonus > 0) parts.push('🎩 hat-trick');
+      if (pts.cleanSheet > 0) parts.push('🧤 clean sheet');
+      if (pts.penSaves > 0) parts.push(`🛑 ×${side.penaltySaves}`);
+      if (pts.redCards < 0) parts.push(`🟥 ×${side.redCards}`);
+      if (result === 'win') parts.push('✅ win');
+      else if (result === 'draw') parts.push(isNilNil ? '😴 0-0' : '🤝 draw');
+      return parts.join(' · ') || '—';
+    };
+
+    const homeRaw = rawTotal(homePts);
+    const awayRaw = rawTotal(awayPts);
+
+    const ptClass = v => v < 0 ? 'sidebar-team-pts__total--neg' : '';
+
+    return `
+      <div class="sidebar-match">
+        <div class="sidebar-round">${round || 'Match'}</div>
+        <div class="sidebar-scoreline">
+          <div class="sidebar-team-name">${home.name}</div>
+          <div class="sidebar-score">${home.goals} - ${away.goals}</div>
+          <div class="sidebar-team-name sidebar-team-name--away">${away.name}</div>
+        </div>
+        <div class="sidebar-pts">
+          <div class="sidebar-team-pts">
+            <div class="sidebar-team-pts__name">${home.name}</div>
+            <div class="sidebar-team-pts__events">${buildEvents(homePts, home, homeResult)}</div>
+            <div class="sidebar-team-pts__total ${ptClass(homeRaw)}">${homeRaw > 0 ? '+' : ''}${homeRaw} raw</div>
+          </div>
+          <div class="sidebar-team-pts">
+            <div class="sidebar-team-pts__name">${away.name}</div>
+            <div class="sidebar-team-pts__events">${buildEvents(awayPts, away, awayResult)}</div>
+            <div class="sidebar-team-pts__total ${ptClass(awayRaw)}">${awayRaw > 0 ? '+' : ''}${awayRaw} raw</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="sidebar-title">Yesterday's Results</div>
+    ${matchCards}
+    <div class="sidebar-empty" style="font-size:10px;padding-top:4px">Raw pts shown · multiply by your team's ×</div>`;
+}
+
 async function loadAndRender() {
   try {
     const participants = await fetchJSON('data/participants.json');
@@ -103,6 +180,7 @@ async function loadAndRender() {
 
     const scores = computeScores(matches, participants);
     renderLeaderboard(scores, participants);
+    renderSidebar(matches);
 
     const source = localStorage.getItem(STORAGE_KEY) ? 'live' : 'deployed';
     const el = document.getElementById('last-updated');

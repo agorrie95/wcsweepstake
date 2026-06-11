@@ -24,8 +24,8 @@
     ]
   },
   {
-    "name": "Benjamin Prickett",
-    "office": "Dubai",
+    "name": "Adam Turner",
+    "office": "London",
     "teams": [
       {
         "name": "Brazil",
@@ -48,8 +48,8 @@
     ]
   },
   {
-    "name": "Edward Nethersole",
-    "office": "Hong Kong",
+    "name": "Adrian Hadley",
+    "office": "New York",
     "teams": [
       {
         "name": "Spain",
@@ -72,8 +72,8 @@
     ]
   },
   {
-    "name": "Sze Tung Lam",
-    "office": "Hong Kong",
+    "name": "Alfie Donkin",
+    "office": "London",
     "teams": [
       {
         "name": "Brazil",
@@ -96,8 +96,8 @@
     ]
   },
   {
-    "name": "William Bown",
-    "office": "Hong Kong",
+    "name": "Angus Gorrie",
+    "office": "London",
     "teams": [
       {
         "name": "England",
@@ -120,8 +120,8 @@
     ]
   },
   {
-    "name": "Yebin Nam",
-    "office": "Hong Kong",
+    "name": "Aren Besim",
+    "office": "London",
     "teams": [
       {
         "name": "Spain",
@@ -144,8 +144,8 @@
     ]
   },
   {
-    "name": "Yuejuan (Natalie) Zeng",
-    "office": "Hong Kong",
+    "name": "Benjamin Bach",
+    "office": "New York",
     "teams": [
       {
         "name": "Netherlands",
@@ -168,8 +168,8 @@
     ]
   },
   {
-    "name": "Adam Turner",
-    "office": "London",
+    "name": "Benjamin Prickett",
+    "office": "Dubai",
     "teams": [
       {
         "name": "Netherlands",
@@ -192,8 +192,8 @@
     ]
   },
   {
-    "name": "Alfie Donkin",
-    "office": "London",
+    "name": "Caitlyn Stevens",
+    "office": "New York",
     "teams": [
       {
         "name": "Argentina",
@@ -216,8 +216,8 @@
     ]
   },
   {
-    "name": "Angus Gorrie",
-    "office": "London",
+    "name": "Carolina Sotomayor",
+    "office": "West Palm Beach",
     "teams": [
       {
         "name": "France",
@@ -240,8 +240,8 @@
     ]
   },
   {
-    "name": "Aren Besim",
-    "office": "London",
+    "name": "Cassidy Tsakoniatis",
+    "office": "New York",
     "teams": [
       {
         "name": "Germany",
@@ -264,7 +264,7 @@
     ]
   },
   {
-    "name": "Charles Steel",
+    "name": "Charles Betts",
     "office": "London",
     "teams": [
       {
@@ -288,8 +288,8 @@
     ]
   },
   {
-    "name": "Charles Betts",
-    "office": "London",
+    "name": "Charles Buchan",
+    "office": "New York",
     "teams": [
       {
         "name": "Netherlands",
@@ -312,7 +312,7 @@
     ]
   },
   {
-    "name": "Cher Vyn Goh",
+    "name": "Charles Steel",
     "office": "London",
     "teams": [
       {
@@ -336,32 +336,8 @@
     ]
   },
   {
-    "name": "Chloë Hunt",
-    "office": "London",
-    "teams": [
-      {
-        "name": "England",
-        "group": "L",
-        "multiplier": 1.75,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Paraguay",
-        "group": "D",
-        "multiplier": 8.62,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Cape Verde",
-        "group": "H",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Devraj Harilela",
-    "office": "London",
+    "name": "Chimuanya Okafor",
+    "office": "New York",
     "teams": [
       {
         "name": "France",
@@ -384,7 +360,7 @@
     ]
   },
   {
-    "name": "Elliott Campbell",
+    "name": "Chloë Hunt",
     "office": "London",
     "teams": [
       {
@@ -408,8 +384,8 @@
     ]
   },
   {
-    "name": "Eloise Tilbury",
-    "office": "London",
+    "name": "Daniel Kalish",
+    "office": "New York",
     "teams": [
       {
         "name": "Argentina",
@@ -432,8 +408,8 @@
     ]
   },
   {
-    "name": "Gaurav Sethi",
-    "office": "London",
+    "name": "Del-Ann Henry",
+    "office": "New York",
     "teams": [
       {
         "name": "Netherlands",
@@ -456,8 +432,8 @@
     ]
   },
   {
-    "name": "Griffin Godsick",
-    "office": "London",
+    "name": "Devin Orgettas",
+    "office": "New York",
     "teams": [
       {
         "name": "Netherlands",
@@ -480,7 +456,7 @@
     ]
   },
   {
-    "name": "Hannah Louise Carleton-Jepson",
+    "name": "Devraj Harilela",
     "office": "London",
     "teams": [
       {
@@ -504,8 +480,8 @@
     ]
   },
   {
-    "name": "Hiral Patel",
-    "office": "London",
+    "name": "Edward Nethersole",
+    "office": "Hong Kong",
     "teams": [
       {
         "name": "Netherlands",
@@ -528,8 +504,8 @@
     ]
   },
   {
-    "name": "Jack Mulloy",
-    "office": "London",
+    "name": "Ellie Bartley",
+    "office": "New York",
     "teams": [
       {
         "name": "England",
@@ -552,7 +528,7 @@
     ]
   },
   {
-    "name": "James Rudofsky",
+    "name": "Elliott Campbell",
     "office": "London",
     "teams": [
       {
@@ -576,7 +552,7 @@
     ]
   },
   {
-    "name": "Jane Nash",
+    "name": "Eloise Tilbury",
     "office": "London",
     "teams": [
       {
@@ -600,8 +576,8 @@
     ]
   },
   {
-    "name": "Jessica Wakefield",
-    "office": "London",
+    "name": "Evan Dwinell",
+    "office": "New York",
     "teams": [
       {
         "name": "Brazil",
@@ -624,8 +600,8 @@
     ]
   },
   {
-    "name": "Johnny Barker",
-    "office": "London",
+    "name": "Flora Tissier",
+    "office": "New York",
     "teams": [
       {
         "name": "Portugal",
@@ -648,7 +624,7 @@
     ]
   },
   {
-    "name": "Justin Pearson",
+    "name": "Gaurav Sethi",
     "office": "London",
     "teams": [
       {
@@ -672,8 +648,8 @@
     ]
   },
   {
-    "name": "Lewis Ward",
-    "office": "London",
+    "name": "George Roberts",
+    "office": "New York",
     "teams": [
       {
         "name": "Netherlands",
@@ -696,7 +672,7 @@
     ]
   },
   {
-    "name": "Lucy Whyte",
+    "name": "Griffin Godsick",
     "office": "London",
     "teams": [
       {
@@ -720,7 +696,7 @@
     ]
   },
   {
-    "name": "Luisa Blanco-Bush",
+    "name": "Hannah Louise Carleton-Jepson",
     "office": "London",
     "teams": [
       {
@@ -744,7 +720,7 @@
     ]
   },
   {
-    "name": "Max Denton",
+    "name": "Hiral Patel",
     "office": "London",
     "teams": [
       {
@@ -768,7 +744,7 @@
     ]
   },
   {
-    "name": "Nataliia Zinets",
+    "name": "Jack Mulloy",
     "office": "London",
     "teams": [
       {
@@ -792,7 +768,7 @@
     ]
   },
   {
-    "name": "Neha Vivek",
+    "name": "James Rudofsky",
     "office": "London",
     "teams": [
       {
@@ -816,7 +792,7 @@
     ]
   },
   {
-    "name": "Oliver Thompson",
+    "name": "Jane Nash",
     "office": "London",
     "teams": [
       {
@@ -840,7 +816,7 @@
     ]
   },
   {
-    "name": "Rohan Lakhani",
+    "name": "Jessica Wakefield",
     "office": "London",
     "teams": [
       {
@@ -852,6 +828,486 @@
       {
         "name": "Ivory Coast",
         "group": "E",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Iraq",
+        "group": "I",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Johnny Barker",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Argentina",
+        "group": "J",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Colombia",
+        "group": "K",
+        "multiplier": 5.01,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Australia",
+        "group": "D",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Justin Pearson",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Spain",
+        "group": "H",
+        "multiplier": 1.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Switzerland",
+        "group": "B",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Qatar",
+        "group": "B",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Kriti Nandi",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Argentina",
+        "group": "J",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Croatia",
+        "group": "L",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Haiti",
+        "group": "C",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Lewis Ward",
+    "office": "London",
+    "teams": [
+      {
+        "name": "France",
+        "group": "I",
+        "multiplier": 1.17,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Austria",
+        "group": "J",
+        "multiplier": 6.81,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Iran",
+        "group": "G",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Lindsey Cruikshank",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Spain",
+        "group": "H",
+        "multiplier": 1.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Senegal",
+        "group": "I",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "South Korea",
+        "group": "A",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Lisa Kennedy",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "England",
+        "group": "L",
+        "multiplier": 1.75,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Sweden",
+        "group": "F",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Haiti",
+        "group": "C",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Lucy Whyte",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Germany",
+        "group": "E",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Switzerland",
+        "group": "B",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Bosnia & Herzegovina",
+        "group": "B",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Luisa Blanco-Bush",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Argentina",
+        "group": "J",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Norway",
+        "group": "I",
+        "multiplier": 4.63,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "DR Congo",
+        "group": "K",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Madeline Schmitt",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Brazil",
+        "group": "C",
+        "multiplier": 1.98,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Mexico",
+        "group": "A",
+        "multiplier": 5.99,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Haiti",
+        "group": "C",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Maria Llenas",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Spain",
+        "group": "H",
+        "multiplier": 1.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Croatia",
+        "group": "L",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Iran",
+        "group": "G",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Matthew Healy",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "France",
+        "group": "I",
+        "multiplier": 1.17,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Colombia",
+        "group": "K",
+        "multiplier": 5.01,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "New Zealand",
+        "group": "G",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Max Denton",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Germany",
+        "group": "E",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Senegal",
+        "group": "I",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "New Zealand",
+        "group": "G",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Mitchell Myers II",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "France",
+        "group": "I",
+        "multiplier": 1.17,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Switzerland",
+        "group": "B",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Saudi Arabia",
+        "group": "H",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Yuejuan (Natalie) Zeng",
+    "office": "Hong Kong",
+    "teams": [
+      {
+        "name": "Netherlands",
+        "group": "F",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Belgium",
+        "group": "G",
+        "multiplier": 3.67,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Australia",
+        "group": "D",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Nataliia Zinets",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Germany",
+        "group": "E",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Canada",
+        "group": "B",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Czechia",
+        "group": "A",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Neha Vivek",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Brazil",
+        "group": "C",
+        "multiplier": 1.98,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Austria",
+        "group": "J",
+        "multiplier": 6.81,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Saudi Arabia",
+        "group": "H",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Nicholas Guerriero",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Germany",
+        "group": "E",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Austria",
+        "group": "J",
+        "multiplier": 6.81,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Uzbekistan",
+        "group": "K",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Oliver Thompson",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Argentina",
+        "group": "J",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Scotland",
+        "group": "C",
+        "multiplier": 7.61,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Saudi Arabia",
+        "group": "H",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Rizwaan Ahmed",
+    "office": "New York",
+    "teams": [
+      {
+        "name": "Netherlands",
+        "group": "F",
+        "multiplier": 3.0,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Egypt",
+        "group": "G",
+        "multiplier": 8.62,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Curaçao",
+        "group": "E",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Rohan Lakhani",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Brazil",
+        "group": "C",
+        "multiplier": 1.98,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Scotland",
+        "group": "C",
         "multiplier": 7.61,
         "bracket": "long-shot"
       },
@@ -874,462 +1330,6 @@
         "bracket": "front-runner"
       },
       {
-        "name": "Colombia",
-        "group": "K",
-        "multiplier": 5.01,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Australia",
-        "group": "D",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Sabrina Walsh",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Spain",
-        "group": "H",
-        "multiplier": 1.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Switzerland",
-        "group": "B",
-        "multiplier": 6.37,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Qatar",
-        "group": "B",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Sebastian Coughlin",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Argentina",
-        "group": "J",
-        "multiplier": 2.19,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Croatia",
-        "group": "L",
-        "multiplier": 6.37,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Haiti",
-        "group": "C",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Tara Shaw",
-    "office": "London",
-    "teams": [
-      {
-        "name": "France",
-        "group": "I",
-        "multiplier": 1.17,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Austria",
-        "group": "J",
-        "multiplier": 6.81,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Iran",
-        "group": "G",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Thomas Chambers",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Spain",
-        "group": "H",
-        "multiplier": 1.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Senegal",
-        "group": "I",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "South Korea",
-        "group": "A",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Thomas Walsh",
-    "office": "London",
-    "teams": [
-      {
-        "name": "England",
-        "group": "L",
-        "multiplier": 1.75,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Sweden",
-        "group": "F",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Haiti",
-        "group": "C",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Thomas Wilkie",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Germany",
-        "group": "E",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Switzerland",
-        "group": "B",
-        "multiplier": 6.37,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Bosnia & Herzegovina",
-        "group": "B",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Wendy Martin",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Argentina",
-        "group": "J",
-        "multiplier": 2.19,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Norway",
-        "group": "I",
-        "multiplier": 4.63,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "DR Congo",
-        "group": "K",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "William Hannaford",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Brazil",
-        "group": "C",
-        "multiplier": 1.98,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Mexico",
-        "group": "A",
-        "multiplier": 5.99,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Haiti",
-        "group": "C",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Yasra Khurram",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Spain",
-        "group": "H",
-        "multiplier": 1.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Croatia",
-        "group": "L",
-        "multiplier": 6.37,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Iran",
-        "group": "G",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Benjamin Bach",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "France",
-        "group": "I",
-        "multiplier": 1.17,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Colombia",
-        "group": "K",
-        "multiplier": 5.01,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "New Zealand",
-        "group": "G",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Adrian Hadley",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Germany",
-        "group": "E",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Senegal",
-        "group": "I",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "New Zealand",
-        "group": "G",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Caitlyn Stevens",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "France",
-        "group": "I",
-        "multiplier": 1.17,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Switzerland",
-        "group": "B",
-        "multiplier": 6.37,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Saudi Arabia",
-        "group": "H",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Cassidy Tsakoniatis",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Germany",
-        "group": "E",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Canada",
-        "group": "B",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Czechia",
-        "group": "A",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Charles Buchan",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Brazil",
-        "group": "C",
-        "multiplier": 1.98,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Austria",
-        "group": "J",
-        "multiplier": 6.81,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Saudi Arabia",
-        "group": "H",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Chimuanya Okafor",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Germany",
-        "group": "E",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Austria",
-        "group": "J",
-        "multiplier": 6.81,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Uzbekistan",
-        "group": "K",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Daniel Kalish",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Argentina",
-        "group": "J",
-        "multiplier": 2.19,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Scotland",
-        "group": "C",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Saudi Arabia",
-        "group": "H",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Del-Ann Henry",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Netherlands",
-        "group": "F",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Egypt",
-        "group": "G",
-        "multiplier": 8.62,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Curaçao",
-        "group": "E",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Devin Orgettas",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Brazil",
-        "group": "C",
-        "multiplier": 1.98,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Scotland",
-        "group": "C",
-        "multiplier": 7.61,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Iraq",
-        "group": "I",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Ellie Bartley",
-    "office": "New York",
-    "teams": [
-      {
-        "name": "Argentina",
-        "group": "J",
-        "multiplier": 2.19,
-        "bracket": "front-runner"
-      },
-      {
         "name": "Algeria",
         "group": "J",
         "multiplier": 8.62,
@@ -1344,7 +1344,7 @@
     ]
   },
   {
-    "name": "Evan Dwinell",
+    "name": "Sabah Reina",
     "office": "New York",
     "teams": [
       {
@@ -1368,8 +1368,8 @@
     ]
   },
   {
-    "name": "Flora Tissier",
-    "office": "New York",
+    "name": "Sabrina Walsh",
+    "office": "London",
     "teams": [
       {
         "name": "Netherlands",
@@ -1392,7 +1392,7 @@
     ]
   },
   {
-    "name": "George Roberts",
+    "name": "Samuel Jacobwitz",
     "office": "New York",
     "teams": [
       {
@@ -1416,7 +1416,7 @@
     ]
   },
   {
-    "name": "Kriti Nandi",
+    "name": "Sean Helverson",
     "office": "New York",
     "teams": [
       {
@@ -1440,8 +1440,8 @@
     ]
   },
   {
-    "name": "Lindsey Cruikshank",
-    "office": "New York",
+    "name": "Sebastian Coughlin",
+    "office": "London",
     "teams": [
       {
         "name": "England",
@@ -1464,7 +1464,7 @@
     ]
   },
   {
-    "name": "Lisa Kennedy",
+    "name": "Seema Brin",
     "office": "New York",
     "teams": [
       {
@@ -1488,7 +1488,7 @@
     ]
   },
   {
-    "name": "Madeline Schmitt",
+    "name": "Shawn Glacbach",
     "office": "New York",
     "teams": [
       {
@@ -1512,7 +1512,7 @@
     ]
   },
   {
-    "name": "Maria Llenas",
+    "name": "Shaylin Castro",
     "office": "New York",
     "teams": [
       {
@@ -1536,7 +1536,7 @@
     ]
   },
   {
-    "name": "Matthew Healy",
+    "name": "Sheldon VanKooten",
     "office": "New York",
     "teams": [
       {
@@ -1560,7 +1560,7 @@
     ]
   },
   {
-    "name": "Mitchell Myers II",
+    "name": "Szabolcs Wiksell",
     "office": "New York",
     "teams": [
       {
@@ -1584,8 +1584,8 @@
     ]
   },
   {
-    "name": "Nicholas Guerriero",
-    "office": "New York",
+    "name": "Sze Tung Lam",
+    "office": "Hong Kong",
     "teams": [
       {
         "name": "Spain",
@@ -1608,8 +1608,8 @@
     ]
   },
   {
-    "name": "Rizwaan Ahmed",
-    "office": "New York",
+    "name": "Tara Shaw",
+    "office": "London",
     "teams": [
       {
         "name": "Germany",
@@ -1632,8 +1632,8 @@
     ]
   },
   {
-    "name": "Sabah Reina",
-    "office": "New York",
+    "name": "Thomas Bradbeer",
+    "office": "West Palm Beach",
     "teams": [
       {
         "name": "Brazil",
@@ -1656,8 +1656,8 @@
     ]
   },
   {
-    "name": "Samuel Jacobwitz",
-    "office": "New York",
+    "name": "Thomas Chambers",
+    "office": "London",
     "teams": [
       {
         "name": "England",
@@ -1680,8 +1680,8 @@
     ]
   },
   {
-    "name": "Sean Helverson",
-    "office": "New York",
+    "name": "Thomas Walsh",
+    "office": "London",
     "teams": [
       {
         "name": "Portugal",
@@ -1704,8 +1704,8 @@
     ]
   },
   {
-    "name": "Seema Brin",
-    "office": "New York",
+    "name": "Thomas Wilkie",
+    "office": "London",
     "teams": [
       {
         "name": "France",
@@ -1728,8 +1728,32 @@
     ]
   },
   {
-    "name": "Shawn Glacbach",
-    "office": "New York",
+    "name": "Cher Vyn Goh",
+    "office": "London",
+    "teams": [
+      {
+        "name": "England",
+        "group": "L",
+        "multiplier": 1.75,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Paraguay",
+        "group": "D",
+        "multiplier": 8.62,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Cape Verde",
+        "group": "H",
+        "multiplier": 10.0,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Wendy Martin",
+    "office": "London",
     "teams": [
       {
         "name": "Spain",
@@ -1752,8 +1776,8 @@
     ]
   },
   {
-    "name": "Shaylin Castro",
-    "office": "New York",
+    "name": "William Bown",
+    "office": "Hong Kong",
     "teams": [
       {
         "name": "England",
@@ -1776,8 +1800,8 @@
     ]
   },
   {
-    "name": "Sheldon VanKooten",
-    "office": "New York",
+    "name": "William Hannaford",
+    "office": "London",
     "teams": [
       {
         "name": "Netherlands",
@@ -1800,8 +1824,8 @@
     ]
   },
   {
-    "name": "Szabolcs Wiksell",
-    "office": "New York",
+    "name": "Yasra Khurram",
+    "office": "London",
     "teams": [
       {
         "name": "Spain",
@@ -1824,8 +1848,8 @@
     ]
   },
   {
-    "name": "Thomas Bradbeer",
-    "office": "West Palm Beach",
+    "name": "Yebin Nam",
+    "office": "Hong Kong",
     "teams": [
       {
         "name": "Brazil",
@@ -1842,30 +1866,6 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Carolina Sotomayor",
-    "office": "West Palm Beach",
-    "teams": [
-      {
-        "name": "Netherlands",
-        "group": "F",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Belgium",
-        "group": "G",
-        "multiplier": 3.67,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Australia",
-        "group": "D",
         "multiplier": 10.0,
         "bracket": "not-a-chancer"
       }

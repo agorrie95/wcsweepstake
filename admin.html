@@ -37,6 +37,7 @@
       <div class="tab-bar">
         <button class="tab-btn tab-btn--active" onclick="showTab('tab-add')">➕ Add Result</button>
         <button class="tab-btn" onclick="showTab('tab-history')">📋 Match History</button>
+        <button class="tab-btn" onclick="showTab('tab-progression')">🏁 Progression</button>
         <button class="tab-btn" onclick="showTab('tab-export')">💾 Export</button>
       </div>
 
@@ -168,6 +169,30 @@
           <h2 class="card__title">Match History</h2>
           <p class="card__desc" id="history-count">No matches entered yet.</p>
           <div id="match-history-list"></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: Progression ══ -->
+      <div id="tab-progression" class="tab-panel hidden">
+        <div class="card">
+          <h2 class="card__title">Team Progression</h2>
+          <p class="card__desc">
+            Set the furthest stage each team has reached. Progression bonus points are awarded based on
+            this table — not from individual match results. Changes save automatically.
+          </p>
+          <div id="progression-table-wrap">
+            <p class="muted">Loading teams…</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <h2 class="card__title">Export Progression</h2>
+          <p class="card__desc">
+            Download <code>progression.json</code> and replace <code>data/progression.json</code>
+            in your repository to deploy progression data alongside match results.
+          </p>
+          <div class="card__actions">
+            <button class="btn btn--success" onclick="exportProgression()">⬇ Download progression.json</button>
+          </div>
         </div>
       </div>
 

@@ -6,6 +6,7 @@
 
 const REFRESH_MS   = 15 * 1000;   // re-render every 15 s
 const STORAGE_KEY  = 'wc2026_matches';
+const PROG_KEY     = 'wc2026_progression';
 
 async function fetchJSON(path) {
   const res = await fetch(path + '?_=' + Date.now());
@@ -14,12 +15,19 @@ async function fetchJSON(path) {
 }
 
 function getMatches() {
-  // Prefer localStorage (written by admin.html) over the static JSON file
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) {
     try { return JSON.parse(stored); } catch(e) {}
   }
-  return null;   // caller will fall back to fetching matches.json
+  return null;
+}
+
+function getProgression() {
+  const stored = localStorage.getItem(PROG_KEY);
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) {}
+  }
+  return null;
 }
 
 function rankDisplay(rank) {
@@ -178,7 +186,12 @@ async function loadAndRender() {
       matches = await fetchJSON('data/matches.json');
     }
 
-    const scores = computeScores(matches, participants);
+    let progressionMap = getProgression();
+    if (!progressionMap) {
+      try { progressionMap = await fetchJSON('data/progression.json'); } catch(e) { progressionMap = {}; }
+    }
+
+    const scores = computeScores(matches, participants, progressionMap);
     renderLeaderboard(scores, participants);
     renderSidebar(matches);
 

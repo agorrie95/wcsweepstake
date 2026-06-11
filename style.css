@@ -684,6 +684,18 @@ select.form-input { cursor: pointer; }
   color: var(--text-muted);
 }
 
+.prog-bracket-heading {
+  margin: 18px 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.prog-bracket-heading:first-child { margin-top: 0; }
+
+.prog-table { margin-bottom: 4px; }
+
 code {
   background: var(--bg);
   padding: 2px 6px;

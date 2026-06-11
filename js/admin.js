@@ -4,9 +4,28 @@
 
 const PASSWORD    = '123sausages';
 const STORAGE_KEY = 'wc2026_matches';
+const PROG_KEY    = 'wc2026_progression';
 
-let allTeams     = [];
-let matches      = [];    // in-memory, synced to localStorage
+const PROG_STAGES = [
+  { value: 'group stage',    label: 'Group Stage' },
+  { value: 'knocked out',    label: 'Knocked Out' },
+  { value: 'round of 32',    label: 'Round of 32' },
+  { value: 'round of 16',    label: 'Round of 16' },
+  { value: 'quarter-finals', label: 'Quarter-Finals' },
+  { value: 'semi-finals',    label: 'Semi-Finals' },
+  { value: 'final',          label: 'Final' },
+  { value: 'winner',         label: 'Winner 🏆' },
+];
+
+const BRACKET_LABELS = {
+  'front-runner':  'Front-Runners',
+  'long-shot':     'Long-Shots',
+  'not-a-chancer': 'Not-A-Chancers',
+};
+
+let allTeams      = [];
+let matches       = [];    // in-memory, synced to localStorage
+let progressionMap = {};
 let homeScore    = 0;
 let awayScore    = 0;
 let homeRed      = 0;
@@ -59,6 +78,12 @@ async function init() {
     } catch(e) {}
   }
 
+  // Load progression from localStorage
+  const storedProg = localStorage.getItem(PROG_KEY);
+  if (storedProg) {
+    try { progressionMap = JSON.parse(storedProg); } catch(e) { progressionMap = {}; }
+  }
+
   populateTeamDropdowns();
   setDefaultDate();
   resetCounters();
@@ -99,8 +124,88 @@ function showTab(id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
   document.getElementById(id).classList.remove('hidden');
   event.target.classList.add('tab-btn--active');
-  if (id === 'tab-history') renderHistory();
-  if (id === 'tab-export')  renderExportStats();
+  if (id === 'tab-history')     renderHistory();
+  if (id === 'tab-export')      renderExportStats();
+  if (id === 'tab-progression') renderProgressionTab();
+}
+
+// ── Progression ───────────────────────────────────────────────────────────
+
+function renderProgressionTab() {
+  const wrap = document.getElementById('progression-table-wrap');
+  if (!allTeams.length) { wrap.innerHTML = '<p class="muted">Loading teams…</p>'; return; }
+
+  const stageOpts = PROG_STAGES.map(s =>
+    `<option value="${s.value}">${s.label}</option>`
+  ).join('');
+
+  const optionsFor = teamName => PROG_STAGES.map(s => {
+    const sel = (progressionMap[teamName] || 'group stage') === s.value ? ' selected' : '';
+    return `<option value="${s.value}"${sel}>${s.label}</option>`;
+  }).join('');
+
+  let html = '';
+  for (const bracket of ['front-runner', 'long-shot', 'not-a-chancer']) {
+    const teams = allTeams
+      .filter(t => t.bracket === bracket)
+      .sort((a, b) => a.name.localeCompare(b.name));
+    if (!teams.length) continue;
+
+    html += `
+      <h3 class="prog-bracket-heading">${BRACKET_LABELS[bracket]}</h3>
+      <table class="existing-table prog-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th style="width:60px">×Mult</th>
+            <th style="width:210px">Stage Reached</th>
+            <th style="width:90px;text-align:right">Prog Pts</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+    for (const team of teams) {
+      const stage = progressionMap[team.name] || 'group stage';
+      const pts   = computeProgressionPts(stage);
+      html += `
+          <tr id="prog-row-${team.name.replace(/\W/g,'_')}">
+            <td>${team.name}</td>
+            <td style="color:var(--text-muted)">×${team.multiplier}</td>
+            <td>
+              <select class="form-input" style="padding:5px 8px;font-size:13px"
+                  data-team="${team.name}"
+                  onchange="onProgressionChange(this)">
+                ${optionsFor(team.name)}
+              </select>
+            </td>
+            <td style="text-align:right;font-weight:700;color:var(--accent2)" id="prog-pts-${team.name.replace(/\W/g,'_')}">${pts}</td>
+          </tr>`;
+    }
+
+    html += `</tbody></table>`;
+  }
+
+  wrap.innerHTML = html;
+}
+
+function onProgressionChange(sel) {
+  const teamName = sel.dataset.team;
+  const stage    = sel.value;
+  progressionMap[teamName] = stage;
+  localStorage.setItem(PROG_KEY, JSON.stringify(progressionMap));
+
+  // Update the pts display in the same row without a full re-render
+  const safeId = teamName.replace(/\W/g, '_');
+  const ptsEl  = document.getElementById('prog-pts-' + safeId);
+  if (ptsEl) ptsEl.textContent = computeProgressionPts(stage);
+}
+
+function exportProgression() {
+  const blob = new Blob([JSON.stringify(progressionMap, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'progression.json'; a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ── Score steppers ────────────────────────────────────────────────────────

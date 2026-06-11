@@ -24,6 +24,44 @@ const SCORING = {
   WINNER: 80,
 };
 
+// Stages in order from earliest to latest
+const PROG_STAGE_ORDER = [
+  'group stage',
+  'round of 32',
+  'round of 16',
+  'quarter-finals',
+  'semi-finals',
+  'final',
+  'winner',
+];
+
+/**
+ * Compute cumulative progression points for the furthest stage a team reached.
+ * "knocked out" and "group stage" both return 0 — you earn progression pts only
+ * by advancing past the group stage.
+ *
+ * Points represent passing each previous round:
+ *   round of 32   → passed groups              → +5
+ *   round of 16   → also passed R32             → +5+5 = 10
+ *   quarter-finals → also passed R16            → +20
+ *   semi-finals   → also passed QF              → +40
+ *   final         → also passed SF              → +75
+ *   winner        → also played and won final   → +205
+ */
+function computeProgressionPts(stage) {
+  if (!stage || stage === 'knocked out' || stage === 'group stage') return 0;
+  const s = stage === 'winner' ? 'final' : stage;
+  const idx = PROG_STAGE_ORDER.indexOf(s);
+  if (idx < 1) return 0;
+  // Award the progression bonus for each round passed to get here
+  let pts = 0;
+  for (let i = 0; i < idx; i++) {
+    pts += SCORING.PROGRESSION[PROG_STAGE_ORDER[i]] || 0;
+  }
+  if (stage === 'winner') pts += SCORING.PROGRESSION['final'] + SCORING.WINNER;
+  return pts;
+}
+
 /**
  * Score one team's performance in one finished match.
  * @param {object} side  - { goals, goalScorers:[{player}], redCards, penaltySaves, result }
@@ -67,11 +105,12 @@ function scoreTeamInMatch(side, isNilNil) {
 /**
  * Compute total points per team across all finished matches.
  * @param {Array} matches
- * @returns {object} teamName -> { raw totals, progression }
+ * @param {object} progressionMap  - { teamName: stage } — if provided, used for progression pts
+ * @returns {object} teamName -> totals incl. matchBreakdowns array
  */
-function computeTeamTotals(matches) {
-  const totals = {};   // teamName -> { goals, hatTrickBonus, cleanSheet, penSaves, redCards, result, progression }
-  const teamRounds = {};  // teamName -> Set of rounds
+function computeTeamTotals(matches, progressionMap) {
+  const totals = {};
+  const teamRounds = {};
   let winner = null;
 
   const ensure = name => {
@@ -85,7 +124,6 @@ function computeTeamTotals(matches) {
     const roundKey = (round || '').toLowerCase();
     const isNilNil = home.goals === 0 && away.goals === 0;
 
-    // Determine results
     const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
     const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
 
@@ -103,14 +141,23 @@ function computeTeamTotals(matches) {
     }
   }
 
-  // Progression points (cumulative per round reached)
-  const ROUND_ORDER = ['group stage','round of 32','round of 16','quarter-finals','semi-finals','final'];
-  for (const [name, rounds] of Object.entries(teamRounds)) {
-    ensure(name);
-    let prog = 0;
-    ROUND_ORDER.forEach(r => { if (rounds.has(r)) prog += (SCORING.PROGRESSION[r] || 0); });
-    if (name === winner) prog += SCORING.WINNER;
-    totals[name].progression = prog;
+  // Progression points
+  if (progressionMap && Object.keys(progressionMap).length > 0) {
+    // Use explicit admin-set progression stages
+    for (const [name, stage] of Object.entries(progressionMap)) {
+      ensure(name);
+      totals[name].progression = computeProgressionPts(stage);
+    }
+  } else {
+    // Fallback: derive from rounds seen in match data (legacy behaviour)
+    const ROUND_ORDER = ['group stage','round of 32','round of 16','quarter-finals','semi-finals','final'];
+    for (const [name, rounds] of Object.entries(teamRounds)) {
+      ensure(name);
+      let prog = 0;
+      ROUND_ORDER.forEach(r => { if (rounds.has(r)) prog += (SCORING.PROGRESSION[r] || 0); });
+      if (name === winner) prog += SCORING.WINNER;
+      totals[name].progression = prog;
+    }
   }
 
   return totals;
@@ -120,10 +167,11 @@ function computeTeamTotals(matches) {
  * Compute per-participant scores.
  * @param {Array} matches
  * @param {Array} participants  – [{ name, teams:[{name, multiplier, bracket}] }]
+ * @param {object} progressionMap  – { teamName: stage }
  * @returns {Array} sorted scores array
  */
-function computeScores(matches, participants) {
-  const teamTotals = computeTeamTotals(matches);
+function computeScores(matches, participants, progressionMap) {
+  const teamTotals = computeTeamTotals(matches, progressionMap);
 
   return participants.map(p => {
     let totalGoalsPts = 0, totalResultsPts = 0, totalProgressionPts = 0;

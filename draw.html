@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WC2026 Sweepstake – Admin Draw</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="admin-page">
+
+  <header class="admin-header">
+    <h1>⚙ Sweepstake Draw</h1>
+    <a href="index.html" class="btn btn--ghost btn--sm">← Leaderboard</a>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- Step 1: Enter participants -->
+    <section class="card" id="step-participants">
+      <h2 class="card__title">Step 1 – Add Participants</h2>
+      <p class="card__desc">Enter each person's name, one per line, then click <strong>Continue</strong>.</p>
+      <textarea id="names-input" class="names-textarea" placeholder="Alice&#10;Bob&#10;Charlie&#10;..."></textarea>
+      <div class="card__actions">
+        <button class="btn btn--primary" onclick="loadParticipants()">Continue →</button>
+      </div>
+    </section>
+
+    <!-- Step 2: Preview & draw -->
+    <section class="card hidden" id="step-draw">
+      <h2 class="card__title">Step 2 – Run the Draw</h2>
+      <p class="card__desc" id="draw-info"></p>
+      <div id="bracket-status" class="bracket-status"></div>
+      <div class="card__actions">
+        <button class="btn btn--primary" id="btn-draw" onclick="runDraw()">🎲 Run Draw</button>
+        <button class="btn btn--ghost" onclick="resetDraw()">↺ Start Over</button>
+      </div>
+    </section>
+
+    <!-- Step 3: Results -->
+    <section class="card hidden" id="step-results">
+      <h2 class="card__title">Step 3 – Draw Results</h2>
+      <p class="card__desc">Each participant has been assigned one team from each bracket. Review below, then save.</p>
+      <div id="draw-results" class="draw-results"></div>
+      <div class="card__actions">
+        <button class="btn btn--success" onclick="saveDrawResults()">💾 Save & Go to Leaderboard</button>
+        <button class="btn btn--ghost" onclick="rerunDraw()">🎲 Re-draw</button>
+      </div>
+    </section>
+
+    <!-- Existing participants management -->
+    <section class="card" id="section-existing">
+      <h2 class="card__title">Current Participants</h2>
+      <div id="existing-participants">
+        <p class="muted">No draw has been run yet.</p>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--danger btn--sm" onclick="clearAll()">🗑 Clear All Data</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/draw.js"></script>
+</body>
+</html>

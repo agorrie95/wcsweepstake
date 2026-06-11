@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WC2026 Admin – Results</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="admin-page">
+
+  <!-- ── Password gate ── -->
+  <div id="gate" class="gate-overlay">
+    <div class="gate-box">
+      <div class="gate-trophy">🏆</div>
+      <h1 class="gate-title">Admin Access</h1>
+      <p class="gate-subtitle">Maven WC2026 Sweepstake</p>
+      <input id="gate-pw" type="password" class="gate-input" placeholder="Enter password" />
+      <p id="gate-error" class="gate-error hidden">Incorrect password</p>
+      <button class="btn btn--primary" style="width:100%;margin-top:8px" onclick="checkPassword()">Unlock</button>
+    </div>
+  </div>
+
+  <!-- ── Main admin UI (hidden until unlocked) ── -->
+  <div id="admin-ui" class="hidden">
+
+    <header class="admin-header">
+      <h1>⚙ Results Admin</h1>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="index.html" class="btn btn--ghost btn--sm">← Leaderboard</a>
+        <a href="draw.html" class="btn btn--ghost btn--sm">Draw page</a>
+      </div>
+    </header>
+
+    <main class="admin-main">
+
+      <!-- Tab bar -->
+      <div class="tab-bar">
+        <button class="tab-btn tab-btn--active" onclick="showTab('tab-add')">➕ Add Result</button>
+        <button class="tab-btn" onclick="showTab('tab-history')">📋 Match History</button>
+        <button class="tab-btn" onclick="showTab('tab-export')">💾 Export</button>
+      </div>
+
+      <!-- ══ TAB: Add Result ══ -->
+      <div id="tab-add" class="tab-panel">
+        <div class="card">
+          <h2 class="card__title">Add Match Result</h2>
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="f-date" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Round</label>
+              <select id="f-round" class="form-input">
+                <option value="group stage">Group Stage</option>
+                <option value="round of 32">Round of 32</option>
+                <option value="round of 16">Round of 16</option>
+                <option value="quarter-finals">Quarter-Finals</option>
+                <option value="semi-finals">Semi-Finals</option>
+                <option value="final">Final</option>
+              </select>
+            </div>
+
+            <!-- Teams & Score -->
+            <div class="form-group">
+              <label>Home Team</label>
+              <select id="f-home-team" class="form-input" onchange="syncGoalRows()"></select>
+            </div>
+
+            <div class="form-group">
+              <label>Away Team</label>
+              <select id="f-away-team" class="form-input" onchange="syncGoalRows()"></select>
+            </div>
+
+            <div class="form-group form-group--score">
+              <label>Home Goals</label>
+              <div class="score-stepper">
+                <button type="button" onclick="stepScore('home',-1)">−</button>
+                <span id="home-score-display">0</span>
+                <button type="button" onclick="stepScore('home',1)">+</button>
+              </div>
+            </div>
+
+            <div class="form-group form-group--score">
+              <label>Away Goals</label>
+              <div class="score-stepper">
+                <button type="button" onclick="stepScore('away',-1)">−</button>
+                <span id="away-score-display">0</span>
+                <button type="button" onclick="stepScore('away',1)">+</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Goal scorers -->
+          <div class="scorers-section">
+            <div id="home-scorers-wrap" class="scorers-col">
+              <h3 class="scorers-title" id="home-scorers-label">Home – Goal Scorers</h3>
+              <div id="home-scorers-list" class="scorers-list"></div>
+              <p class="scorers-hint">Enter scorer names to detect hat-tricks. Leave blank if preferred.</p>
+            </div>
+            <div id="away-scorers-wrap" class="scorers-col">
+              <h3 class="scorers-title" id="away-scorers-label">Away – Goal Scorers</h3>
+              <div id="away-scorers-list" class="scorers-list"></div>
+              <p class="scorers-hint">Enter scorer names to detect hat-tricks. Leave blank if preferred.</p>
+            </div>
+          </div>
+
+          <!-- Events -->
+          <div class="events-section">
+            <div class="events-col">
+              <h3 class="events-title">🟥 Red Cards</h3>
+              <div class="event-row">
+                <span id="home-red-label">Home</span>
+                <div class="mini-stepper">
+                  <button type="button" onclick="stepEvent('home','red',-1)">−</button>
+                  <span id="home-red-count">0</span>
+                  <button type="button" onclick="stepEvent('home','red',1)">+</button>
+                </div>
+              </div>
+              <div class="event-row">
+                <span id="away-red-label">Away</span>
+                <div class="mini-stepper">
+                  <button type="button" onclick="stepEvent('away','red',-1)">−</button>
+                  <span id="away-red-count">0</span>
+                  <button type="button" onclick="stepEvent('away','red',1)">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="events-col">
+              <h3 class="events-title">🧤 Penalty Saves</h3>
+              <div class="event-row">
+                <span id="home-pensave-label">Home</span>
+                <div class="mini-stepper">
+                  <button type="button" onclick="stepEvent('home','pensave',-1)">−</button>
+                  <span id="home-pensave-count">0</span>
+                  <button type="button" onclick="stepEvent('home','pensave',1)">+</button>
+                </div>
+              </div>
+              <div class="event-row">
+                <span id="away-pensave-label">Away</span>
+                <div class="mini-stepper">
+                  <button type="button" onclick="stepEvent('away','pensave',-1)">−</button>
+                  <span id="away-pensave-count">0</span>
+                  <button type="button" onclick="stepEvent('away','pensave',1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div id="match-preview" class="match-preview hidden"></div>
+
+          <div class="card__actions">
+            <button class="btn btn--primary" onclick="addMatch()">✅ Save Match</button>
+            <button class="btn btn--ghost" onclick="resetForm()">↺ Clear Form</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: Match History ══ -->
+      <div id="tab-history" class="tab-panel hidden">
+        <div class="card">
+          <h2 class="card__title">Match History</h2>
+          <p class="card__desc" id="history-count">No matches entered yet.</p>
+          <div id="match-history-list"></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: Export ══ -->
+      <div id="tab-export" class="tab-panel hidden">
+        <div class="card">
+          <h2 class="card__title">Export Data</h2>
+          <p class="card__desc">
+            Download the updated <code>matches.json</code> file, then replace
+            <code>data/matches.json</code> in your repository and push to deploy.
+            The leaderboard will update automatically once deployed.
+          </p>
+          <div class="export-stats" id="export-stats"></div>
+          <div class="card__actions">
+            <button class="btn btn--success" onclick="exportMatches()">⬇ Download matches.json</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <h2 class="card__title">Import Data</h2>
+          <p class="card__desc">Load an existing <code>matches.json</code> to continue editing.</p>
+          <div class="card__actions">
+            <label class="btn btn--ghost" style="cursor:pointer">
+              📂 Load matches.json
+              <input type="file" accept=".json" style="display:none" onchange="importMatches(event)" />
+            </label>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <h2 class="card__title">Scoring Reference</h2>
+          <table class="scoring-ref-table">
+            <tr><th>Event</th><th>Points</th><th>Note</th></tr>
+            <tr><td>⚽ Goal</td><td>+1</td><td>Per goal scored</td></tr>
+            <tr><td>🎩 Hat-trick bonus</td><td>+2</td><td>On top of the 3 goal points</td></tr>
+            <tr><td>🧤 Clean sheet</td><td>+2</td><td>0 goals conceded</td></tr>
+            <tr><td>🛑 Penalty save</td><td>+2</td><td>Per save</td></tr>
+            <tr><td>🟥 Red card</td><td>-2</td><td>Per card</td></tr>
+            <tr><td>✅ Win</td><td>+3</td><td></td></tr>
+            <tr><td>✅🟥 Win + red card</td><td>+4 extra</td><td>Counterbalance on top of Win</td></tr>
+            <tr><td>🤝 Draw</td><td>+1</td><td></td></tr>
+            <tr><td>😴 0-0 Draw</td><td>-3</td><td>Replaces draw pts</td></tr>
+            <tr><td>🏁 Group stage</td><td>+5</td><td>Progression</td></tr>
+            <tr><td>🔝 Round of 32</td><td>+5</td><td>Progression</td></tr>
+            <tr><td>🔝 Round of 16</td><td>+10</td><td>Progression</td></tr>
+            <tr><td>🔝 Quarter-final</td><td>+20</td><td>Progression</td></tr>
+            <tr><td>🔝 Semi-final</td><td>+35</td><td>Progression</td></tr>
+            <tr><td>🔝 Final</td><td>+50</td><td>Progression</td></tr>
+            <tr><td>🏆 Winner</td><td>+80</td><td>Progression</td></tr>
+            <tr><td colspan="3" style="font-style:italic;color:var(--text-muted);padding-top:8px">All points × team multiplier</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

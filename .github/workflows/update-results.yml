@@ -1,0 +1,45 @@
+name: Update WC2026 Results
+
+on:
+  schedule:
+    # Runs at 08:00 UTC daily (covers previous day's evening games)
+    # Also at 23:00 UTC to catch same-day late-night games
+    - cron: '0 8 * * *'
+    - cron: '0 23 * * *'
+  workflow_dispatch:   # Allow manual trigger from GitHub Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # Needed to commit updated JSON files
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch latest results
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python scripts/fetch_results.py
+
+      - name: Calculate scores
+        run: python scripts/calculate_scores.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/matches.json data/scores.json
+          # Only commit if something changed
+          git diff --cached --quiet || git commit -m "chore: update WC2026 results [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push

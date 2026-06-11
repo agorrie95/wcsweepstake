@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maven WC2026 Sweepstake</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="leaderboard-page">
+
+  <header class="lb-header">
+    <div class="lb-header__logo">
+      <span class="lb-header__trophy" onclick="window.location.href='admin.html'">🏆</span>
+      <div>
+        <h1 class="lb-header__title">Maven World Cup 2026</h1>
+        <p class="lb-header__subtitle">Sweepstake Leaderboard</p>
+      </div>
+    </div>
+    <div class="lb-header__meta">
+      <span id="last-updated" class="lb-header__updated">Loading...</span>
+    </div>
+  </header>
+
+  <main class="lb-main">
+    <div id="leaderboard-container" class="lb-table-wrap">
+      <div class="lb-loading">Loading scores...</div>
+    </div>
+  </main>
+
+  <footer class="lb-footer">
+    <div id="scoring-key" class="scoring-key">
+      <span class="key-item">⚽ Goal = 1pt</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">🎩 Hat-trick bonus = +2pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">🧤 Clean sheet = 2pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">🛑 Pen save = 2pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">🟥 Red card = -2pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">✅ Win = 3pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">🤝 Draw = 1pt</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">😴 0-0 Draw = -3pts</span>
+      <span class="key-sep">|</span>
+      <span class="key-item">All pts × team multiplier</span>
+    </div>
+  </footer>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/leaderboard.js"></script>
+</body>
+</html>

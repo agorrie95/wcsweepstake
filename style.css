@@ -316,6 +316,198 @@ a { color: var(--accent); text-decoration: none; }
 .rank-delta--same { color: var(--text-muted); opacity: 0.35; }
 .rank-delta--new  { color: var(--accent); font-size: 18px; }
 
+/* Clickable name cells */
+.lb-name-link { cursor: pointer; }
+.lb-name-link:hover { color: var(--accent) !important; text-decoration: underline; }
+
+/* Clickable sidebar match cards */
+.lb-match-link { cursor: pointer; transition: background .15s; }
+.lb-match-link:hover { background: var(--bg-card2); }
+.sidebar-match-tap-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ===================================================
+   MODALS
+   =================================================== */
+
+.lb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lb-modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 36px 36px 28px;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.lb-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.lb-modal-close:hover { background: var(--bg-card2); color: var(--text); }
+
+/* Participant modal */
+.lb-modal-title    { font-size: 26px; font-weight: 800; color: var(--accent); margin-bottom: 2px; }
+.lb-modal-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+
+.lb-modal-team-block {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.lb-modal-team-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-card2);
+  flex-wrap: wrap;
+}
+
+.lb-modal-stage-badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+.lb-modal-stage-badge--knocked { color: var(--red); border-color: rgba(239,68,68,0.3); }
+
+.lb-modal-match-list { padding: 0 18px; }
+
+.lb-modal-match-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .12s;
+  border-radius: 4px;
+}
+.lb-modal-match-row:last-child { border-bottom: none; }
+.lb-modal-match-row:hover { background: var(--bg-card2); padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
+
+.lb-modal-mr-date    { font-size: 12px; color: var(--text-muted); white-space: nowrap; min-width: 82px; }
+.lb-modal-mr-fixture { flex: 1; font-size: 14px; font-weight: 600; }
+.lb-modal-mr-events  { font-size: 13px; color: var(--text-muted); text-align: right; }
+.lb-modal-mr-pts     { font-size: 15px; font-weight: 800; white-space: nowrap; min-width: 52px; text-align: right; color: var(--text-muted); }
+.lb-modal-mr-pts.pos { color: var(--accent2); }
+.lb-modal-mr-pts.neg { color: var(--red); }
+
+.lb-modal-no-matches {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.lb-modal-team-subtotal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--bg-card2);
+  border-top: 1px solid var(--border);
+}
+.lb-modal-team-subtotal strong { color: var(--text); }
+.lb-modal-prog-note { font-size: 11px; opacity: 0.6; }
+
+/* Match modal */
+.lb-modal-match-hdr      { text-align: center; margin-bottom: 28px; }
+.lb-modal-match-round-lbl {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.lb-modal-match-scoreline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.lb-modal-match-team  { font-size: 20px; font-weight: 700; }
+.lb-modal-match-score { font-size: 40px; font-weight: 900; color: var(--accent); }
+
+.lb-modal-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.lb-modal-earner-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .12s;
+  border-radius: 4px;
+}
+.lb-modal-earner-row:last-child { border-bottom: none; }
+.lb-modal-earner-row:hover { background: var(--bg-card2); padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
+
+.lb-modal-earner-name   { font-size: 15px; font-weight: 700; min-width: 140px; }
+.lb-modal-earner-chip   { font-size: 12px !important; padding: 3px 10px !important; }
+.lb-modal-earner-events { flex: 1; font-size: 13px; color: var(--text-muted); }
+.lb-modal-earner-pts    { font-size: 18px; font-weight: 800; white-space: nowrap; color: var(--text-muted); }
+.lb-modal-earner-pts.pos { color: var(--accent2); }
+.lb-modal-earner-pts.neg { color: var(--red); }
+
+.lb-modal-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 14px;
+  padding: 24px 0;
+  text-align: center;
+}
+
 /* Name cell */
 .name-cell { font-size: 38px; font-weight: 700; }
 

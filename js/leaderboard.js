@@ -4,9 +4,20 @@
    calculates scores client-side via scoring.js.
    =================================================== */
 
-const REFRESH_MS   = 15 * 1000;   // re-render every 15 s
-const STORAGE_KEY  = 'wc2026_matches';
-const PROG_KEY     = 'wc2026_progression';
+const REFRESH_MS  = 15 * 1000;
+const STORAGE_KEY = 'wc2026_matches';
+const PROG_KEY    = 'wc2026_progression';
+
+// Module-scope data — kept fresh after every loadAndRender, used by modals
+let _matches = [], _participants = [], _progressionMap = {};
+
+const PROG_PTS = {
+  'group stage': 0, 'knocked out': 0, 'round of 32': 5,
+  'round of 16': 10, 'quarter-finals': 20, 'semi-finals': 40,
+  'final': 75, 'winner': 205
+};
+
+// ── Data helpers ──────────────────────────────────────────────────────────
 
 async function fetchJSON(path) {
   const res = await fetch(path + '?_=' + Date.now());
@@ -16,19 +27,52 @@ async function fetchJSON(path) {
 
 function getMatches() {
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try { return JSON.parse(stored); } catch(e) {}
-  }
+  if (stored) { try { return JSON.parse(stored); } catch(e) {} }
   return null;
 }
 
 function getProgression() {
   const stored = localStorage.getItem(PROG_KEY);
-  if (stored) {
-    try { return JSON.parse(stored); } catch(e) {}
-  }
+  if (stored) { try { return JSON.parse(stored); } catch(e) {} }
   return null;
 }
+
+// ── Scoring helpers ───────────────────────────────────────────────────────
+
+function matchSides(m) {
+  const isNilNil = m.home.goals === 0 && m.away.goals === 0;
+  const homeResult = m.home.goals > m.away.goals ? 'win' : m.home.goals < m.away.goals ? 'loss' : 'draw';
+  const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+  return {
+    isNilNil,
+    homeSide: { ...m.home, goalsConceded: m.away.goals, result: homeResult },
+    awaySide: { ...m.away, goalsConceded: m.home.goals, result: awayResult },
+    homeResult, awayResult
+  };
+}
+
+function rawTotal(ptsObj) {
+  return Object.values(ptsObj).reduce((s, v) => s + v, 0);
+}
+
+function multipliedPts(ptsObj, multiplier) {
+  const raw = rawTotal(ptsObj);
+  return raw < 0 ? raw : raw * multiplier;
+}
+
+function buildEventsStr(pts, side, result, isNilNil) {
+  const parts = [];
+  if (side.goals > 0)        parts.push(`⚽ ${side.goals} goal${side.goals > 1 ? 's' : ''}`);
+  if (pts.hatTrickBonus > 0) parts.push('🎩 hat-trick');
+  if (pts.cleanSheet > 0)    parts.push('🧤 clean sheet');
+  if (pts.penSaves > 0)      parts.push(`🛑 ×${side.penaltySaves}`);
+  if (pts.redCards < 0)      parts.push(`🟥 ×${side.redCards}`);
+  if (result === 'win')      parts.push('✅ win');
+  else if (result === 'draw') parts.push(isNilNil ? '😴 0-0' : '🤝 draw');
+  return parts.join(' · ') || '—';
+}
+
+// ── Leaderboard rendering ─────────────────────────────────────────────────
 
 function rankDisplay(rank) {
   if (rank === 1) return '<span class="rank-medal">🥇</span>';
@@ -42,13 +86,13 @@ function rowClass(rank) {
 }
 
 function deltaIndicator(delta) {
-  if (delta === null)    return '<span class="rank-delta rank-delta--new">NEW</span>';
-  if (delta > 0)  return `<span class="rank-delta rank-delta--up">▲${delta}</span>`;
-  if (delta < 0)  return `<span class="rank-delta rank-delta--down">▼${Math.abs(delta)}</span>`;
+  if (delta === null)  return '<span class="rank-delta rank-delta--new">NEW</span>';
+  if (delta > 0) return `<span class="rank-delta rank-delta--up">▲${delta}</span>`;
+  if (delta < 0) return `<span class="rank-delta rank-delta--down">▼${Math.abs(delta)}</span>`;
   return '<span class="rank-delta rank-delta--same">—</span>';
 }
 
-function renderLeaderboard(scores, participants) {
+function renderLeaderboard(scores) {
   const container = document.getElementById('leaderboard-container');
 
   if (!scores.length) {
@@ -61,7 +105,6 @@ function renderLeaderboard(scores, participants) {
     return;
   }
 
-  // Assign ranks (handle ties)
   let rank = 0, prevTotal = null, counter = 0;
   const ranked = scores.map(row => {
     counter++;
@@ -83,7 +126,7 @@ function renderLeaderboard(scores, participants) {
     return `
       <tr class="${rowClass(row.rank)}">
         <td class="rank-cell">${rankDisplay(row.rank)}${row.delta !== undefined ? deltaIndicator(row.delta) : ''}</td>
-        <td class="name-cell">${row.name}</td>
+        <td class="name-cell lb-name-link" data-participant="${row.name}">${row.name}</td>
         <td><div class="teams-cell">${teamChips}</div></td>
         <td class="breakdown-cell">${breakdown}</td>
         <td class="score-cell">${row.total.toFixed(1)}<span class="score-pts"> pts</span></td>
@@ -105,14 +148,14 @@ function renderLeaderboard(scores, participants) {
     </table>`;
 }
 
+// ── Sidebar ───────────────────────────────────────────────────────────────
+
 function renderSidebar(matches) {
   const el = document.getElementById('sidebar-results');
   if (!el) return;
 
-  // On Mondays show Fri/Sat/Sun; otherwise show yesterday
   const today = new Date();
   const isMonday = today.getDay() === 1;
-
   const toDateStr = d => d.toLocaleDateString('en-CA');
   let sidebarDates, sidebarTitle, emptyLabel;
 
@@ -124,8 +167,7 @@ function renderSidebar(matches) {
     sidebarTitle = "Weekend's Results";
     emptyLabel   = 'No matches played this weekend';
   } else {
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
+    const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
     sidebarDates = new Set([toDateStr(yesterday)]);
     sidebarTitle = "Yesterday's Results";
     emptyLabel   = 'No matches played yesterday';
@@ -141,55 +183,34 @@ function renderSidebar(matches) {
   }
 
   const matchCards = yMatches.map(m => {
-    const { home, away, round } = m;
-    const isNilNil = home.goals === 0 && away.goals === 0;
-    const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
-    const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
-
-    const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
-    const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
+    const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
     const homePts = scoreTeamInMatch(homeSide, isNilNil);
     const awayPts = scoreTeamInMatch(awaySide, isNilNil);
-
-    const rawTotal = pts => Object.values(pts).reduce((s, v) => s + v, 0);
-
-    const buildEvents = (pts, side, result) => {
-      const parts = [];
-      if (side.goals > 0) parts.push(`⚽ ${side.goals} goal${side.goals > 1 ? 's' : ''}`);
-      if (pts.hatTrickBonus > 0) parts.push('🎩 hat-trick');
-      if (pts.cleanSheet > 0) parts.push('🧤 clean sheet');
-      if (pts.penSaves > 0) parts.push(`🛑 ×${side.penaltySaves}`);
-      if (pts.redCards < 0) parts.push(`🟥 ×${side.redCards}`);
-      if (result === 'win') parts.push('✅ win');
-      else if (result === 'draw') parts.push(isNilNil ? '😴 0-0' : '🤝 draw');
-      return parts.join(' · ') || '—';
-    };
-
     const homeRaw = rawTotal(homePts);
     const awayRaw = rawTotal(awayPts);
-
     const ptClass = v => v < 0 ? 'sidebar-team-pts__total--neg' : '';
 
     return `
-      <div class="sidebar-match">
-        <div class="sidebar-round">${round || 'Match'}</div>
+      <div class="sidebar-match lb-match-link" data-match-id="${m.id}">
+        <div class="sidebar-round">${m.round || 'Match'}</div>
         <div class="sidebar-scoreline">
-          <div class="sidebar-team-name">${home.name}</div>
-          <div class="sidebar-score">${home.goals} - ${away.goals}</div>
-          <div class="sidebar-team-name sidebar-team-name--away">${away.name}</div>
+          <div class="sidebar-team-name">${m.home.name}</div>
+          <div class="sidebar-score">${m.home.goals} - ${m.away.goals}</div>
+          <div class="sidebar-team-name sidebar-team-name--away">${m.away.name}</div>
         </div>
         <div class="sidebar-pts">
           <div class="sidebar-team-pts">
-            <div class="sidebar-team-pts__name">${home.name}</div>
-            <div class="sidebar-team-pts__events">${buildEvents(homePts, home, homeResult)}</div>
+            <div class="sidebar-team-pts__name">${m.home.name}</div>
+            <div class="sidebar-team-pts__events">${buildEventsStr(homePts, m.home, homeResult, isNilNil)}</div>
             <div class="sidebar-team-pts__total ${ptClass(homeRaw)}">${homeRaw > 0 ? '+' : ''}${homeRaw} raw</div>
           </div>
           <div class="sidebar-team-pts">
-            <div class="sidebar-team-pts__name">${away.name}</div>
-            <div class="sidebar-team-pts__events">${buildEvents(awayPts, away, awayResult)}</div>
+            <div class="sidebar-team-pts__name">${m.away.name}</div>
+            <div class="sidebar-team-pts__events">${buildEventsStr(awayPts, m.away, awayResult, isNilNil)}</div>
             <div class="sidebar-team-pts__total ${ptClass(awayRaw)}">${awayRaw > 0 ? '+' : ''}${awayRaw} raw</div>
           </div>
         </div>
+        <div class="sidebar-match-tap-hint">Tap to see who scored points</div>
       </div>`;
   }).join('');
 
@@ -199,61 +220,234 @@ function renderSidebar(matches) {
     <div class="sidebar-empty" style="font-size:10px;padding-top:4px">Raw pts shown · multiply by your team's ×</div>`;
 }
 
+// ── Modal system ──────────────────────────────────────────────────────────
+
+function ensureModal() {
+  if (document.getElementById('lb-modal-overlay')) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'lb-modal-overlay';
+  overlay.className = 'lb-modal-overlay hidden';
+  overlay.innerHTML = `
+    <div class="lb-modal-box" id="lb-modal-box">
+      <button class="lb-modal-close" id="lb-modal-close">✕</button>
+      <div class="lb-modal-content" id="lb-modal-content"></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.getElementById('lb-modal-close').addEventListener('click', closeModal);
+}
+
+function openModal(html) {
+  ensureModal();
+  document.getElementById('lb-modal-content').innerHTML = html;
+  document.getElementById('lb-modal-overlay').classList.remove('hidden');
+}
+
+function closeModal() {
+  const el = document.getElementById('lb-modal-overlay');
+  if (el) el.classList.add('hidden');
+}
+
+// ── Participant modal ─────────────────────────────────────────────────────
+
+function openParticipantModal(name) {
+  const participant = _participants.find(p => p.name === name);
+  if (!participant) return;
+
+  const scoreRow = _matches.length
+    ? computeScores(_matches, _participants, _progressionMap).find(s => s.name === name)
+    : null;
+
+  let html = `
+    <h2 class="lb-modal-title">${name}</h2>
+    <div class="lb-modal-subtitle">${scoreRow ? scoreRow.total.toFixed(1) + ' pts total' : ''}</div>`;
+
+  for (const team of participant.teams) {
+    const stage      = _progressionMap[team.name] || 'group stage';
+    const progPts    = PROG_PTS[stage] || 0;
+    const knocked    = stage === 'knocked out';
+    const stageLabel = stage.charAt(0).toUpperCase() + stage.slice(1);
+
+    const teamMatches = _matches.filter(m =>
+      m.finished && (m.home.name === team.name || m.away.name === team.name)
+    );
+
+    let matchTotal = 0;
+    let matchRows  = '';
+
+    for (const m of teamMatches) {
+      const isHome = m.home.name === team.name;
+      const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
+      const side   = isHome ? homeSide : awaySide;
+      const opp    = isHome ? m.away   : m.home;
+      const result = isHome ? homeResult : awayResult;
+      const pts    = scoreTeamInMatch(side, isNilNil);
+      const final  = multipliedPts(pts, team.multiplier);
+      matchTotal  += final;
+
+      const score = isHome
+        ? `${m.home.goals}–${m.away.goals}`
+        : `${m.away.goals}–${m.home.goals}`;
+
+      const events = buildEventsStr(pts, side, result, isNilNil);
+      const ptsCls = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
+
+      matchRows += `
+        <div class="lb-modal-match-row lb-match-link" data-match-id="${m.id}">
+          <span class="lb-modal-mr-date">${m.date}</span>
+          <span class="lb-modal-mr-fixture">${team.name} ${score} ${opp.name}</span>
+          <span class="lb-modal-mr-events">${events}</span>
+          <span class="lb-modal-mr-pts ${ptsCls}">${final >= 0 ? '+' : ''}${final.toFixed(1)}</span>
+        </div>`;
+    }
+
+    // Subtotal for this team = match pts + progression pts
+    const teamTotal = matchTotal + progPts;
+    const bracketClass = `team-chip--${team.bracket}`;
+
+    html += `
+      <div class="lb-modal-team-block">
+        <div class="lb-modal-team-hdr">
+          <span class="team-chip ${bracketClass}">${team.name}<span class="team-chip__mult"> ×${team.multiplier}</span></span>
+          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progPts > 0 ? ` · +${progPts} pts` : ''}</span>
+        </div>
+        ${teamMatches.length
+          ? `<div class="lb-modal-match-list">${matchRows}</div>`
+          : '<div class="lb-modal-no-matches">No matches played yet</div>'}
+        <div class="lb-modal-team-subtotal">
+          Team subtotal: <strong>${teamTotal >= 0 ? '+' : ''}${teamTotal.toFixed(1)} pts</strong>
+          ${progPts > 0 ? `<span class="lb-modal-prog-note">(incl. +${progPts} progression)</span>` : ''}
+        </div>
+      </div>`;
+  }
+
+  openModal(html);
+}
+
+// ── Match modal ───────────────────────────────────────────────────────────
+
+function openMatchModal(matchId) {
+  const m = _matches.find(x => x.id === matchId);
+  if (!m) return;
+
+  const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
+
+  let html = `
+    <div class="lb-modal-match-hdr">
+      <div class="lb-modal-match-round-lbl">${m.round || 'Match'} · ${m.date}</div>
+      <div class="lb-modal-match-scoreline">
+        <span class="lb-modal-match-team">${m.home.name}</span>
+        <span class="lb-modal-match-score">${m.home.goals} – ${m.away.goals}</span>
+        <span class="lb-modal-match-team">${m.away.name}</span>
+      </div>
+    </div>
+    <h3 class="lb-modal-section-title">Points earned by participants</h3>`;
+
+  // Find all participants who own either team
+  const earners = [];
+  for (const p of _participants) {
+    for (const team of p.teams) {
+      if (team.name !== m.home.name && team.name !== m.away.name) continue;
+      const isHome = team.name === m.home.name;
+      const side   = isHome ? homeSide : awaySide;
+      const result = isHome ? homeResult : awayResult;
+      const pts    = scoreTeamInMatch(side, isNilNil);
+      const final  = multipliedPts(pts, team.multiplier);
+      earners.push({ name: p.name, team, side, result, pts, final });
+    }
+  }
+
+  if (!earners.length) {
+    html += '<div class="lb-modal-empty">No participants own either team in this match.</div>';
+    openModal(html);
+    return;
+  }
+
+  // Sort highest earners first
+  earners.sort((a, b) => b.final - a.final);
+
+  for (const e of earners) {
+    const events  = buildEventsStr(e.pts, e.side, e.result, isNilNil);
+    const ptsCls  = e.final < 0 ? 'neg' : e.final > 0 ? 'pos' : '';
+    const bracketClass = `team-chip--${e.team.bracket}`;
+
+    html += `
+      <div class="lb-modal-earner-row lb-name-link" data-participant="${e.name}">
+        <span class="lb-modal-earner-name">${e.name}</span>
+        <span class="team-chip ${bracketClass} lb-modal-earner-chip">${e.team.name}<span class="team-chip__mult"> ×${e.team.multiplier}</span></span>
+        <span class="lb-modal-earner-events">${events}</span>
+        <span class="lb-modal-earner-pts ${ptsCls}">${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</span>
+      </div>`;
+  }
+
+  openModal(html);
+}
+
+// ── Global click delegation ───────────────────────────────────────────────
+// Handles name clicks (participant modal) and match clicks (match modal)
+// anywhere on the page, including inside modals.
+
+document.addEventListener('click', e => {
+  const nameEl  = e.target.closest('[data-participant]');
+  const matchEl = e.target.closest('[data-match-id]');
+
+  // Participant click inside match modal → go back to participant modal
+  if (nameEl && document.getElementById('lb-modal-overlay') &&
+      !document.getElementById('lb-modal-overlay').classList.contains('hidden')) {
+    openParticipantModal(nameEl.dataset.participant);
+    return;
+  }
+
+  if (nameEl)  { openParticipantModal(nameEl.dataset.participant); return; }
+  if (matchEl) { openMatchModal(matchEl.dataset.matchId); return; }
+});
+
+// ── Load, score, render ───────────────────────────────────────────────────
+
 async function loadAndRender() {
   try {
     const participants = await fetchJSON('data/participants.json');
 
-    // Use localStorage matches if present (live admin edits),
-    // otherwise fall back to the committed data/matches.json
     let matches = getMatches();
-    if (!matches) {
-      matches = await fetchJSON('data/matches.json');
-    }
+    if (!matches) matches = await fetchJSON('data/matches.json');
 
     let progressionMap = getProgression();
     if (!progressionMap) {
       try { progressionMap = await fetchJSON('data/progression.json'); } catch(e) { progressionMap = {}; }
     }
 
+    // Store for modal access
+    _matches       = matches;
+    _participants  = participants;
+    _progressionMap = progressionMap;
+
     const scores = computeScores(matches, participants, progressionMap);
 
-    // Compute position deltas vs. leaderboard before today's comparison window
-    // Monday: compare against pre-Friday (full weekend); otherwise: pre-yesterday
-    const now = new Date();
+    // Position deltas — Monday covers full weekend, otherwise yesterday
+    const now      = new Date();
     const isMonday = now.getDay() === 1;
-    const toDateStr = d => d.toLocaleDateString('en-CA');
-    let deltaExcludeDates;
+    const toDS     = d => d.toLocaleDateString('en-CA');
+    let excludeDates;
     if (isMonday) {
       const fri = new Date(now); fri.setDate(now.getDate() - 3);
       const sat = new Date(now); sat.setDate(now.getDate() - 2);
       const sun = new Date(now); sun.setDate(now.getDate() - 1);
-      deltaExcludeDates = new Set([toDateStr(fri), toDateStr(sat), toDateStr(sun)]);
+      excludeDates = new Set([toDS(fri), toDS(sat), toDS(sun)]);
     } else {
-      const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
-      deltaExcludeDates = new Set([toDateStr(yesterday)]);
+      const yday = new Date(now); yday.setDate(now.getDate() - 1);
+      excludeDates = new Set([toDS(yday)]);
     }
-    const prevMatches = matches.filter(m => !deltaExcludeDates.has(m.date));
-    const hasYesterdayMatches = prevMatches.length < matches.length;
-
-    if (hasYesterdayMatches) {
+    const prevMatches = matches.filter(m => !excludeDates.has(m.date));
+    if (prevMatches.length < matches.length) {
       const prevScores = computeScores(prevMatches, participants, progressionMap);
       const prevRankMap = {};
-      let pr = 0, pPrev = null, pc = 0;
-      prevScores.forEach(row => {
-        pc++;
-        if (row.total !== pPrev) { pr = pc; pPrev = row.total; }
-        prevRankMap[row.name] = pr;
-      });
-      let cr = 0, cPrev = null, cc = 0;
-      scores.forEach(row => {
-        cc++;
-        if (row.total !== cPrev) { cr = cc; cPrev = row.total; }
-        const prev = prevRankMap[row.name];
-        row.delta = prev === undefined ? null : prev - cr;
-      });
+      let pr = 0, pp = null, pc = 0;
+      prevScores.forEach(r => { pc++; if (r.total !== pp) { pr = pc; pp = r.total; } prevRankMap[r.name] = pr; });
+      let cr = 0, cp = null, cc = 0;
+      scores.forEach(r => { cc++; if (r.total !== cp) { cr = cc; cp = r.total; } r.delta = prevRankMap[r.name] === undefined ? null : prevRankMap[r.name] - cr; });
     }
 
-    renderLeaderboard(scores, participants);
+    renderLeaderboard(scores);
     renderSidebar(matches);
 
     const source = localStorage.getItem(STORAGE_KEY) ? 'live' : 'deployed';
@@ -269,60 +463,34 @@ async function loadAndRender() {
 loadAndRender();
 setInterval(loadAndRender, REFRESH_MS);
 
-// ── Trophy → admin (secret tap) ──────────────────────────────────────────
-document.getElementById('trophy-btn').addEventListener('click', () => {
-  window.location.href = 'admin.html';
-});
-
 // ── Auto-scroll for signage ───────────────────────────────────────────────
-const SCROLL_SPEED_PX_S  = 40;    // pixels per second — raise to scroll faster
-const PAUSE_AT_BOTTOM_MS = 3000;
-const PAUSE_AT_TOP_MS    = 2000;
-
 function startAutoScroll() {
-  // Use window scroll if lb-main isn't independently scrollable
-  // Interval-based (simpler and more reliable than rAF for signage)
-  const STEP_PX       = 1;     // px per tick
-  const TICK_MS       = 25;    // ms per tick  →  1px / 25ms = 40px/s
+  const SPEED_PX_S   = 50;
+  const PAUSE_BOTTOM = 4000;
+  const PAUSE_TOP    = 2000;
+  const TICK_MS      = 16;
+  const STEP         = SPEED_PX_S * TICK_MS / 1000;
 
-  let paused = false;
+  let state = 'scrolling';
 
-  function doScroll() {
-    if (paused) return;
-
+  function tick() {
+    if (state !== 'scrolling') return;
     const el = document.querySelector('.lb-main');
     if (!el) return;
-
-    const canScroll = el.scrollHeight > el.clientHeight;
-
-    if (canScroll) {
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-      if (atBottom) {
-        paused = true;
-        setTimeout(() => {
-          el.scrollTop = 0;
-          setTimeout(() => { paused = false; }, PAUSE_AT_TOP_MS);
-        }, PAUSE_AT_BOTTOM_MS);
-      } else {
-        el.scrollTop += STEP_PX;
-      }
+    const max = el.scrollHeight - el.clientHeight;
+    if (max <= 0) return;
+    if (el.scrollTop >= max - 1) {
+      state = 'paused';
+      setTimeout(() => {
+        el.scrollTop = 0;
+        setTimeout(() => { state = 'scrolling'; }, PAUSE_TOP);
+      }, PAUSE_BOTTOM);
     } else {
-      // lb-main isn't scrollable — try scrolling the whole page instead
-      const atBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 2;
-      if (atBottom) {
-        paused = true;
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          setTimeout(() => { paused = false; }, PAUSE_AT_TOP_MS);
-        }, PAUSE_AT_BOTTOM_MS);
-      } else {
-        window.scrollBy(0, STEP_PX);
-      }
+      el.scrollTop += STEP;
     }
   }
 
-  // Wait for first render, then start
-  setTimeout(() => setInterval(doScroll, TICK_MS), 2000);
+  setTimeout(() => setInterval(tick, TICK_MS), 3000);
 }
 
 startAutoScroll();

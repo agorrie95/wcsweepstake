@@ -1,1 +1,60 @@
-[]
+[
+  {
+    "id": "1781252144527",
+    "date": "2026-06-11",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Mexico",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Julian Quinones"
+        },
+        {
+          "player": "Raul Jimenez"
+        }
+      ],
+      "redCards": 1,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "South Africa",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 2,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781252144528",
+    "date": "2026-06-11",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "South Korea",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Hwang In-beom"
+        },
+        {
+          "player": "Oh Hyeon-gu"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Czechia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Ladislav Krejci"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  }
+]

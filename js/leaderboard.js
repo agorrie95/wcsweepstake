@@ -109,17 +109,34 @@ function renderSidebar(matches) {
   const el = document.getElementById('sidebar-results');
   if (!el) return;
 
-  // Yesterday as YYYY-MM-DD in local time
-  const d = new Date();
-  d.setDate(d.getDate() - 1);
-  const yesterday = d.toLocaleDateString('en-CA'); // gives YYYY-MM-DD
+  // On Mondays show Fri/Sat/Sun; otherwise show yesterday
+  const today = new Date();
+  const isMonday = today.getDay() === 1;
 
-  const yMatches = matches.filter(m => m.finished && m.date === yesterday);
+  const toDateStr = d => d.toLocaleDateString('en-CA');
+  let sidebarDates, sidebarTitle, emptyLabel;
+
+  if (isMonday) {
+    const fri = new Date(today); fri.setDate(today.getDate() - 3);
+    const sat = new Date(today); sat.setDate(today.getDate() - 2);
+    const sun = new Date(today); sun.setDate(today.getDate() - 1);
+    sidebarDates = new Set([toDateStr(fri), toDateStr(sat), toDateStr(sun)]);
+    sidebarTitle = "Weekend's Results";
+    emptyLabel   = 'No matches played this weekend';
+  } else {
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    sidebarDates = new Set([toDateStr(yesterday)]);
+    sidebarTitle = "Yesterday's Results";
+    emptyLabel   = 'No matches played yesterday';
+  }
+
+  const yMatches = matches.filter(m => m.finished && sidebarDates.has(m.date));
 
   if (!yMatches.length) {
     el.innerHTML = `
-      <div class="sidebar-title">Yesterday's Results</div>
-      <div class="sidebar-empty">No matches played yesterday</div>`;
+      <div class="sidebar-title">${sidebarTitle}</div>
+      <div class="sidebar-empty">${emptyLabel}</div>`;
     return;
   }
 
@@ -177,7 +194,7 @@ function renderSidebar(matches) {
   }).join('');
 
   el.innerHTML = `
-    <div class="sidebar-title">Yesterday's Results</div>
+    <div class="sidebar-title">${sidebarTitle}</div>
     ${matchCards}
     <div class="sidebar-empty" style="font-size:10px;padding-top:4px">Raw pts shown · multiply by your team's ×</div>`;
 }
@@ -200,11 +217,22 @@ async function loadAndRender() {
 
     const scores = computeScores(matches, participants, progressionMap);
 
-    // Compute position deltas vs. leaderboard without yesterday's matches
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
-    const yesterday = d.toLocaleDateString('en-CA');
-    const prevMatches = matches.filter(m => m.date !== yesterday);
+    // Compute position deltas vs. leaderboard before today's comparison window
+    // Monday: compare against pre-Friday (full weekend); otherwise: pre-yesterday
+    const now = new Date();
+    const isMonday = now.getDay() === 1;
+    const toDateStr = d => d.toLocaleDateString('en-CA');
+    let deltaExcludeDates;
+    if (isMonday) {
+      const fri = new Date(now); fri.setDate(now.getDate() - 3);
+      const sat = new Date(now); sat.setDate(now.getDate() - 2);
+      const sun = new Date(now); sun.setDate(now.getDate() - 1);
+      deltaExcludeDates = new Set([toDateStr(fri), toDateStr(sat), toDateStr(sun)]);
+    } else {
+      const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+      deltaExcludeDates = new Set([toDateStr(yesterday)]);
+    }
+    const prevMatches = matches.filter(m => !deltaExcludeDates.has(m.date));
     const hasYesterdayMatches = prevMatches.length < matches.length;
 
     if (hasYesterdayMatches) {

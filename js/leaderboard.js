@@ -281,23 +281,29 @@ function openParticipantModal(name) {
       const side   = isHome ? homeSide : awaySide;
       const opp    = isHome ? m.away   : m.home;
       const result = isHome ? homeResult : awayResult;
-      const pts    = scoreTeamInMatch(side, isNilNil);
-      const final  = multipliedPts(pts, team.multiplier);
-      matchTotal  += final;
+      const pts          = scoreTeamInMatch(side, isNilNil);
+      const raw          = rawTotal(pts);
+      const effectiveMult = raw < 0 ? 1 : team.multiplier;
+      const final        = raw * effectiveMult;
+      matchTotal        += final;
 
       const score = isHome
         ? `${m.home.goals}–${m.away.goals}`
         : `${m.away.goals}–${m.home.goals}`;
 
-      const events = buildEventsStr(pts, side, result, isNilNil);
-      const ptsCls = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
+      const events  = buildEventsStr(pts, side, result, isNilNil);
+      const ptsCls  = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
+      const capNote = (raw < 0 && team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
+      const calcStr = raw === 0
+        ? '0'
+        : `${raw > 0 ? '+' : ''}${raw} × ${effectiveMult} = <strong>${final >= 0 ? '+' : ''}${final.toFixed(1)}</strong>${capNote}`;
 
       matchRows += `
         <div class="lb-modal-match-row lb-match-link" data-match-id="${m.id}">
           <span class="lb-modal-mr-date">${m.date}</span>
           <span class="lb-modal-mr-fixture">${team.name} ${score} ${opp.name}</span>
           <span class="lb-modal-mr-events">${events}</span>
-          <span class="lb-modal-mr-pts ${ptsCls}">${final >= 0 ? '+' : ''}${final.toFixed(1)}</span>
+          <span class="lb-modal-mr-pts ${ptsCls}">${calcStr}</span>
         </div>`;
     }
 
@@ -351,9 +357,11 @@ function openMatchModal(matchId) {
       const isHome = team.name === m.home.name;
       const side   = isHome ? homeSide : awaySide;
       const result = isHome ? homeResult : awayResult;
-      const pts    = scoreTeamInMatch(side, isNilNil);
-      const final  = multipliedPts(pts, team.multiplier);
-      earners.push({ name: p.name, team, side, result, pts, final });
+      const pts           = scoreTeamInMatch(side, isNilNil);
+      const raw           = rawTotal(pts);
+      const effectiveMult = raw < 0 ? 1 : team.multiplier;
+      const final         = raw * effectiveMult;
+      earners.push({ name: p.name, team, side, result, pts, raw, effectiveMult, final });
     }
   }
 
@@ -367,16 +375,20 @@ function openMatchModal(matchId) {
   earners.sort((a, b) => b.final - a.final);
 
   for (const e of earners) {
-    const events  = buildEventsStr(e.pts, e.side, e.result, isNilNil);
-    const ptsCls  = e.final < 0 ? 'neg' : e.final > 0 ? 'pos' : '';
+    const events       = buildEventsStr(e.pts, e.side, e.result, isNilNil);
+    const ptsCls       = e.final < 0 ? 'neg' : e.final > 0 ? 'pos' : '';
     const bracketClass = `team-chip--${e.team.bracket}`;
+    const capNote      = (e.raw < 0 && e.team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
+    const calcStr      = e.raw === 0
+      ? '0'
+      : `${e.raw > 0 ? '+' : ''}${e.raw} × ${e.effectiveMult} = <strong>${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</strong>${capNote}`;
 
     html += `
       <div class="lb-modal-earner-row lb-name-link" data-participant="${e.name}">
         <span class="lb-modal-earner-name">${e.name}</span>
         <span class="team-chip ${bracketClass} lb-modal-earner-chip">${e.team.name}<span class="team-chip__mult"> ×${e.team.multiplier}</span></span>
         <span class="lb-modal-earner-events">${events}</span>
-        <span class="lb-modal-earner-pts ${ptsCls}">${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</span>
+        <span class="lb-modal-earner-pts ${ptsCls}">${calcStr}</span>
       </div>`;
   }
 

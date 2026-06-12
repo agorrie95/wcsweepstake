@@ -41,6 +41,13 @@ function rowClass(rank) {
   return rank <= 3 ? `top-${rank}` : '';
 }
 
+function deltaIndicator(delta) {
+  if (delta === null)    return '<span class="rank-delta rank-delta--new">NEW</span>';
+  if (delta > 0)  return `<span class="rank-delta rank-delta--up">▲${delta}</span>`;
+  if (delta < 0)  return `<span class="rank-delta rank-delta--down">▼${Math.abs(delta)}</span>`;
+  return '<span class="rank-delta rank-delta--same">—</span>';
+}
+
 function renderLeaderboard(scores, participants) {
   const container = document.getElementById('leaderboard-container');
 
@@ -75,7 +82,7 @@ function renderLeaderboard(scores, participants) {
 
     return `
       <tr class="${rowClass(row.rank)}">
-        <td class="rank-cell">${rankDisplay(row.rank)}</td>
+        <td class="rank-cell">${rankDisplay(row.rank)}${row.delta !== undefined ? deltaIndicator(row.delta) : ''}</td>
         <td class="name-cell">${row.name}</td>
         <td><div class="teams-cell">${teamChips}</div></td>
         <td class="breakdown-cell">${breakdown}</td>
@@ -192,6 +199,32 @@ async function loadAndRender() {
     }
 
     const scores = computeScores(matches, participants, progressionMap);
+
+    // Compute position deltas vs. leaderboard without yesterday's matches
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    const yesterday = d.toLocaleDateString('en-CA');
+    const prevMatches = matches.filter(m => m.date !== yesterday);
+    const hasYesterdayMatches = prevMatches.length < matches.length;
+
+    if (hasYesterdayMatches) {
+      const prevScores = computeScores(prevMatches, participants, progressionMap);
+      const prevRankMap = {};
+      let pr = 0, pPrev = null, pc = 0;
+      prevScores.forEach(row => {
+        pc++;
+        if (row.total !== pPrev) { pr = pc; pPrev = row.total; }
+        prevRankMap[row.name] = pr;
+      });
+      let cr = 0, cPrev = null, cc = 0;
+      scores.forEach(row => {
+        cc++;
+        if (row.total !== cPrev) { cr = cc; cPrev = row.total; }
+        const prev = prevRankMap[row.name];
+        row.delta = prev === undefined ? null : prev - cr;
+      });
+    }
+
     renderLeaderboard(scores, participants);
     renderSidebar(matches);
 

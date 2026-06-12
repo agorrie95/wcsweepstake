@@ -303,6 +303,19 @@ a { color: var(--accent); text-decoration: none; }
 /* Rank medal icons */
 .rank-medal { font-size: 52px; }
 
+/* Position change indicators */
+.rank-delta {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 6px;
+  letter-spacing: 0;
+}
+.rank-delta--up   { color: var(--green); }
+.rank-delta--down { color: var(--red); }
+.rank-delta--same { color: var(--text-muted); opacity: 0.35; }
+.rank-delta--new  { color: var(--accent); font-size: 18px; }
+
 /* Name cell */
 .name-cell { font-size: 38px; font-weight: 700; }
 

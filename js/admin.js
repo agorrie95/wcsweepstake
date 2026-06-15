@@ -476,6 +476,38 @@ function deleteMatch(id) {
 
 // ── Export / Import ───────────────────────────────────────────────────────
 
+async function syncFromDeployed() {
+  const statusEl = document.getElementById('sync-status');
+  statusEl.textContent = 'Fetching…';
+  try {
+    const bust = '?_=' + Date.now();
+    const [matchesRes, progRes] = await Promise.all([
+      fetch('data/matches.json' + bust),
+      fetch('data/progression.json' + bust),
+    ]);
+    if (!matchesRes.ok) throw new Error('matches.json: ' + matchesRes.status);
+    if (!progRes.ok)    throw new Error('progression.json: ' + progRes.status);
+
+    const matchesData = await matchesRes.json();
+    const progData    = await progRes.json();
+
+    if (!Array.isArray(matchesData)) throw new Error('matches.json is not an array');
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(matchesData));
+    localStorage.setItem(PROG_KEY,    JSON.stringify(progData));
+
+    matches       = matchesData;
+    progressionMap = progData;
+    renderHistory();
+    renderExportStats();
+    statusEl.style.color = 'var(--green, #22c55e)';
+    statusEl.textContent = `Synced ${matchesData.length} match${matchesData.length !== 1 ? 'es' : ''} and progression data.`;
+  } catch (err) {
+    statusEl.style.color = 'var(--red, #ef4444)';
+    statusEl.textContent = 'Sync failed: ' + err.message;
+  }
+}
+
 function exportMatches() {
   const blob = new Blob([JSON.stringify(matches, null, 2)], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);

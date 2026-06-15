@@ -212,6 +212,20 @@
         </div>
 
         <div class="card" style="margin-top:20px">
+          <h2 class="card__title">Sync from Deployed</h2>
+          <p class="card__desc">
+            Fetch the live <code>data/matches.json</code> and <code>data/progression.json</code>
+            from the deployed Vercel site and overwrite local browser storage with them.
+            Use this if the Cowork task has pushed new results but your admin panel is still
+            showing old data.
+          </p>
+          <div class="card__actions">
+            <button class="btn btn--primary" onclick="syncFromDeployed()">🔄 Sync from deployed</button>
+          </div>
+          <div id="sync-status" style="margin-top:10px;font-size:0.85rem;color:var(--text-muted)"></div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
           <h2 class="card__title">Import Data</h2>
           <p class="card__desc">Load an existing <code>matches.json</code> to continue editing.</p>
           <div class="card__actions">

@@ -56,5 +56,321 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1749772800001",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Qatar",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Miro Muheim (OG)"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Switzerland",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Breel Embolo"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749772800002",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Brazil",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Vinicius Junior"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Morocco",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Ismael Saibari"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749772800003",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Haiti",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Scotland",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "John McGinn"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749772800004",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Australia",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Nestory Irankunda"
+        },
+        {
+          "player": "Connor Metcalfe"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Türkiye",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749772800005",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "USA",
+      "goals": 4,
+      "goalScorers": [
+        {
+          "player": "Damian Bobadilla (OG)"
+        },
+        {
+          "player": "Folarin Balogun"
+        },
+        {
+          "player": "Folarin Balogun"
+        },
+        {
+          "player": "Giovanni Reyna"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Paraguay",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mauricio"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749772800006",
+    "date": "2026-06-13",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Canada",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Cyle Larin"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Bosnia & Herzegovina",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Jovo Lukic"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749859200001",
+    "date": "2026-06-14",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Germany",
+      "goals": 7,
+      "goalScorers": [
+        {
+          "player": "Felix Nmecha"
+        },
+        {
+          "player": "Nico Schlotterbeck"
+        },
+        {
+          "player": "Kai Havertz"
+        },
+        {
+          "player": "Jamal Musiala"
+        },
+        {
+          "player": "Nathaniel Brown"
+        },
+        {
+          "player": "Deniz Undav"
+        },
+        {
+          "player": "Kai Havertz"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Curaçao",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Livano Comenencia"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749859200002",
+    "date": "2026-06-14",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Netherlands",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Virgil van Dijk"
+        },
+        {
+          "player": "Crysencio Summerville"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Japan",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Keito Nakamura"
+        },
+        {
+          "player": "Daichi Kamada"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749859200003",
+    "date": "2026-06-14",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Ivory Coast",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Amad Diallo"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Ecuador",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1749859200004",
+    "date": "2026-06-14",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Sweden",
+      "goals": 5,
+      "goalScorers": [
+        {
+          "player": "Yasin Ayari"
+        },
+        {
+          "player": "Alexander Isak"
+        },
+        {
+          "player": "Viktor Gyokeres"
+        },
+        {
+          "player": "Mattias Svanberg"
+        },
+        {
+          "player": "Yasin Ayari"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Tunisia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Omar Rekik"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

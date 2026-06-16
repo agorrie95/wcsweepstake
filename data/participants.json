@@ -18,7 +18,7 @@
       {
         "name": "Jordan",
         "group": "J",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -42,7 +42,7 @@
       {
         "name": "South Korea",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -54,7 +54,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -66,7 +66,7 @@
       {
         "name": "Czechia",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -90,7 +90,7 @@
       {
         "name": "Czechia",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -114,7 +114,7 @@
       {
         "name": "Australia",
         "group": "D",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -126,7 +126,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -138,7 +138,7 @@
       {
         "name": "Panama",
         "group": "L",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -150,7 +150,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -162,7 +162,7 @@
       {
         "name": "DR Congo",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -174,7 +174,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -186,7 +186,7 @@
       {
         "name": "South Korea",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -210,7 +210,7 @@
       {
         "name": "South Africa",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -234,7 +234,7 @@
       {
         "name": "Curaçao",
         "group": "E",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -246,7 +246,7 @@
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -258,7 +258,7 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -282,7 +282,7 @@
       {
         "name": "Cape Verde",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -294,7 +294,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -306,7 +306,7 @@
       {
         "name": "New Zealand",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -318,7 +318,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -330,13 +330,13 @@
       {
         "name": "Cape Verde",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Chimuanya Okafor",
+    "name": "Chichi Okafor",
     "office": "New York",
     "teams": [
       {
@@ -354,7 +354,7 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -378,7 +378,7 @@
       {
         "name": "Bosnia & Herzegovina",
         "group": "B",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -402,7 +402,7 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -414,7 +414,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -426,7 +426,7 @@
       {
         "name": "Iran",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -438,7 +438,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -450,7 +450,7 @@
       {
         "name": "Qatar",
         "group": "B",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -474,19 +474,19 @@
       {
         "name": "Panama",
         "group": "L",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Edward Nethersole",
+    "name": "Ed Nethersole",
     "office": "Hong Kong",
     "teams": [
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -498,7 +498,7 @@
       {
         "name": "Panama",
         "group": "L",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -522,7 +522,7 @@
       {
         "name": "South Korea",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -546,7 +546,7 @@
       {
         "name": "Czechia",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -558,7 +558,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -570,7 +570,7 @@
       {
         "name": "Jordan",
         "group": "J",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -594,7 +594,7 @@
       {
         "name": "Iran",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -618,7 +618,7 @@
       {
         "name": "Uzbekistan",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -630,7 +630,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -642,7 +642,7 @@
       {
         "name": "South Africa",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -654,7 +654,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -666,7 +666,7 @@
       {
         "name": "Jordan",
         "group": "J",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -678,7 +678,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -690,19 +690,19 @@
       {
         "name": "Bosnia & Herzegovina",
         "group": "B",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Hannah Louise Carleton-Jepson",
+    "name": "Hannah Carleton-Jepson",
     "office": "London",
     "teams": [
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -714,7 +714,7 @@
       {
         "name": "Curaçao",
         "group": "E",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -726,7 +726,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -738,7 +738,55 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Hugo Ayao",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Netherlands",
+        "group": "F",
+        "multiplier": 3,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Japan",
+        "group": "F",
+        "multiplier": 5.01,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Qatar",
+        "group": "B",
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Isa Blanco-Bush",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Argentina",
+        "group": "J",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Norway",
+        "group": "I",
+        "multiplier": 4.63,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "DR Congo",
+        "group": "K",
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -762,7 +810,7 @@
       {
         "name": "Qatar",
         "group": "B",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -786,7 +834,7 @@
       {
         "name": "New Zealand",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -798,7 +846,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -810,7 +858,7 @@
       {
         "name": "Haiti",
         "group": "C",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -822,7 +870,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -834,7 +882,7 @@
       {
         "name": "Iraq",
         "group": "I",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -858,7 +906,7 @@
       {
         "name": "Australia",
         "group": "D",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -870,7 +918,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -882,7 +930,7 @@
       {
         "name": "Qatar",
         "group": "B",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -906,7 +954,7 @@
       {
         "name": "Haiti",
         "group": "C",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -930,7 +978,7 @@
       {
         "name": "Iran",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -942,7 +990,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -954,7 +1002,7 @@
       {
         "name": "South Korea",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -978,7 +1026,7 @@
       {
         "name": "Haiti",
         "group": "C",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -990,7 +1038,7 @@
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1002,31 +1050,7 @@
       {
         "name": "Bosnia & Herzegovina",
         "group": "B",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Luisa Blanco-Bush",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Argentina",
-        "group": "J",
-        "multiplier": 2.19,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Norway",
-        "group": "I",
-        "multiplier": 4.63,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "DR Congo",
-        "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1050,7 +1074,7 @@
       {
         "name": "Haiti",
         "group": "C",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1062,7 +1086,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1074,7 +1098,7 @@
       {
         "name": "Iran",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1098,7 +1122,7 @@
       {
         "name": "New Zealand",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1110,7 +1134,7 @@
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1122,13 +1146,13 @@
       {
         "name": "New Zealand",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Mitchell Myers II",
+    "name": "Mitch Myers",
     "office": "New York",
     "teams": [
       {
@@ -1146,7 +1170,7 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1158,7 +1182,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1170,7 +1194,7 @@
       {
         "name": "Australia",
         "group": "D",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1182,7 +1206,7 @@
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1194,7 +1218,7 @@
       {
         "name": "Czechia",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1218,19 +1242,19 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Nicholas Guerriero",
+    "name": "Nick Guerriero",
     "office": "New York",
     "teams": [
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1242,13 +1266,13 @@
       {
         "name": "Uzbekistan",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Oliver Thompson",
+    "name": "Olly Thompson",
     "office": "London",
     "teams": [
       {
@@ -1266,7 +1290,7 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1278,7 +1302,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1290,7 +1314,7 @@
       {
         "name": "Curaçao",
         "group": "E",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1314,7 +1338,7 @@
       {
         "name": "Iraq",
         "group": "I",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1338,7 +1362,7 @@
       {
         "name": "Czechia",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1362,7 +1386,7 @@
       {
         "name": "Cape Verde",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1374,7 +1398,7 @@
       {
         "name": "Netherlands",
         "group": "F",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1386,7 +1410,7 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1398,7 +1422,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1410,7 +1434,7 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1434,7 +1458,7 @@
       {
         "name": "Iraq",
         "group": "I",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1458,7 +1482,7 @@
       {
         "name": "Iran",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1470,7 +1494,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1482,7 +1506,7 @@
       {
         "name": "Australia",
         "group": "D",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1506,7 +1530,7 @@
       {
         "name": "DR Congo",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1530,7 +1554,7 @@
       {
         "name": "South Korea",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1554,19 +1578,19 @@
       {
         "name": "Haiti",
         "group": "C",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
   },
   {
-    "name": "Szabolcs Wiksell",
+    "name": "Szaby Wiksell",
     "office": "New York",
     "teams": [
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1578,7 +1602,7 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1590,7 +1614,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1602,7 +1626,7 @@
       {
         "name": "DR Congo",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1614,7 +1638,7 @@
       {
         "name": "Germany",
         "group": "E",
-        "multiplier": 3.0,
+        "multiplier": 3,
         "bracket": "front-runner"
       },
       {
@@ -1626,55 +1650,7 @@
       {
         "name": "DR Congo",
         "group": "K",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Tom Bradbeer",
-    "office": "West Palm Beach",
-    "teams": [
-      {
-        "name": "Brazil",
-        "group": "C",
-        "multiplier": 1.98,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "USA",
-        "group": "D",
-        "multiplier": 5.99,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Qatar",
-        "group": "B",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Tom Chambers",
-    "office": "London",
-    "teams": [
-      {
-        "name": "England",
-        "group": "L",
-        "multiplier": 1.75,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Norway",
-        "group": "I",
-        "multiplier": 4.63,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Tunisia",
-        "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1698,7 +1674,7 @@
       {
         "name": "DR Congo",
         "group": "K",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1722,7 +1698,55 @@
       {
         "name": "South Africa",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Tom Bradbeer",
+    "office": "West Palm Beach",
+    "teams": [
+      {
+        "name": "Brazil",
+        "group": "C",
+        "multiplier": 1.98,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "USA",
+        "group": "D",
+        "multiplier": 5.99,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Qatar",
+        "group": "B",
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Tom Chambers",
+    "office": "London",
+    "teams": [
+      {
+        "name": "England",
+        "group": "L",
+        "multiplier": 1.75,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Norway",
+        "group": "I",
+        "multiplier": 4.63,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Tunisia",
+        "group": "F",
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1746,7 +1770,7 @@
       {
         "name": "Cape Verde",
         "group": "H",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1758,7 +1782,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1770,7 +1794,31 @@
       {
         "name": "South Africa",
         "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Will Hannaford",
+    "office": "London",
+    "teams": [
+      {
+        "name": "Netherlands",
+        "group": "F",
+        "multiplier": 3,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Paraguay",
+        "group": "D",
+        "multiplier": 8.62,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Czechia",
+        "group": "A",
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1794,31 +1842,7 @@
       {
         "name": "Saudi Arabia",
         "group": "H",
-        "multiplier": 10.0,
-        "bracket": "not-a-chancer"
-      }
-    ]
-  },
-  {
-    "name": "Will Hannaford",
-    "office": "London",
-    "teams": [
-      {
-        "name": "Netherlands",
-        "group": "F",
-        "multiplier": 3.0,
-        "bracket": "front-runner"
-      },
-      {
-        "name": "Paraguay",
-        "group": "D",
-        "multiplier": 8.62,
-        "bracket": "long-shot"
-      },
-      {
-        "name": "Czechia",
-        "group": "A",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1830,7 +1854,7 @@
       {
         "name": "Spain",
         "group": "H",
-        "multiplier": 1.0,
+        "multiplier": 1,
         "bracket": "front-runner"
       },
       {
@@ -1842,7 +1866,7 @@
       {
         "name": "New Zealand",
         "group": "G",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]
@@ -1866,7 +1890,7 @@
       {
         "name": "Tunisia",
         "group": "F",
-        "multiplier": 10.0,
+        "multiplier": 10,
         "bracket": "not-a-chancer"
       }
     ]

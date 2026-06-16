@@ -372,5 +372,115 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1781599361263",
+    "date": "2026-06-15",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Spain",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Cape Verde",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781599361264",
+    "date": "2026-06-15",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Belgium",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mohamed Hany (OG)"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Egypt",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Emam Ashour"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781599361265",
+    "date": "2026-06-15",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Saudi Arabia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Abdulelah Al-Amri"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Uruguay",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Maxi Araujo"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781599361266",
+    "date": "2026-06-15",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Iran",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Ramin Rezaeian"
+        },
+        {
+          "player": "Mohammad Mohebbi"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "New Zealand",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Eli Just"
+        },
+        {
+          "player": "Eli Just"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

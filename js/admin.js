@@ -26,6 +26,8 @@ const BRACKET_LABELS = {
 let allTeams      = [];
 let matches       = [];    // in-memory, synced to localStorage
 let progressionMap = {};
+let participants  = [];    // in-memory, exported as participants.json
+let pendingTeams  = null;  // teams staged by randomiser, not yet confirmed
 let homeScore    = 0;
 let awayScore    = 0;
 let homeRed      = 0;
@@ -84,6 +86,12 @@ async function init() {
     try { progressionMap = JSON.parse(storedProg); } catch(e) { progressionMap = {}; }
   }
 
+  // Load participants
+  try {
+    const pr = await fetch('data/participants.json?_=' + Date.now());
+    participants = await pr.json();
+  } catch(e) { participants = []; }
+
   populateTeamDropdowns();
   setDefaultDate();
   resetCounters();
@@ -124,9 +132,10 @@ function showTab(id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
   document.getElementById(id).classList.remove('hidden');
   event.target.classList.add('tab-btn--active');
-  if (id === 'tab-history')     renderHistory();
-  if (id === 'tab-export')      renderExportStats();
-  if (id === 'tab-progression') renderProgressionTab();
+  if (id === 'tab-history')      renderHistory();
+  if (id === 'tab-export')       renderExportStats();
+  if (id === 'tab-progression')  renderProgressionTab();
+  if (id === 'tab-participants') renderParticipantsTab();
 }
 
 // ── Progression ───────────────────────────────────────────────────────────
@@ -547,6 +556,123 @@ function renderExportStats() {
     <div class="stat-pill">📋 ${matches.length} total matches</div>
     <div class="stat-pill">✅ ${finished} finished</div>
     <div class="stat-pill">📍 Rounds: ${rounds}</div>`;
+}
+
+// ── Participants ──────────────────────────────────────────────────────────
+
+function renderParticipantsTab() {
+  const countEl = document.getElementById('p-count');
+  if (countEl) countEl.textContent = `(${participants.length})`;
+  renderParticipantsList();
+}
+
+function renderParticipantsList() {
+  const el = document.getElementById('participants-list');
+  if (!el) return;
+  if (!participants.length) {
+    el.innerHTML = '<p class="muted">No participants loaded.</p>';
+    return;
+  }
+  const sorted = [...participants].sort((a, b) => a.name.localeCompare(b.name));
+  el.innerHTML = sorted.map(p => {
+    const teamChips = p.teams.map(t =>
+      `<span class="team-chip team-chip--${t.bracket}">${t.name}<span class="team-chip__mult"> ×${t.multiplier}</span></span>`
+    ).join('');
+    return `
+      <div class="p-list-row">
+        <div class="p-list-name">${p.name}<span class="p-list-office">${p.office ? ' · ' + p.office : ''}</span></div>
+        <div class="p-list-teams">${teamChips}</div>
+        <button class="btn btn--danger btn--sm" onclick="removeParticipant('${p.name.replace(/'/g, "\\'")}')">✕</button>
+      </div>`;
+  }).join('');
+}
+
+function randomiseTeams() {
+  const name   = document.getElementById('p-name').value.trim();
+  const office = document.getElementById('p-office').value.trim();
+  const statusEl = document.getElementById('p-status');
+
+  if (!name) {
+    statusEl.style.color = 'var(--red, #ef4444)';
+    statusEl.textContent = 'Please enter a name first.';
+    return;
+  }
+  statusEl.textContent = '';
+
+  const byBracket = { 'front-runner': [], 'long-shot': [], 'not-a-chancer': [] };
+  allTeams.forEach(t => { if (byBracket[t.bracket]) byBracket[t.bracket].push(t); });
+
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+  pendingTeams = [
+    pick(byBracket['front-runner']),
+    pick(byBracket['long-shot']),
+    pick(byBracket['not-a-chancer']),
+  ];
+
+  const bracketLabel = { 'front-runner': 'Front-Runner', 'long-shot': 'Long-Shot', 'not-a-chancer': 'Not-A-Chancer' };
+  document.getElementById('p-team-cards').innerHTML = pendingTeams.map(t => `
+    <div class="p-team-card team-chip--${t.bracket}">
+      <div class="p-team-card__bracket">${bracketLabel[t.bracket]}</div>
+      <div class="p-team-card__name">${t.name}</div>
+      <div class="p-team-card__mult">×${t.multiplier}</div>
+    </div>`).join('');
+
+  document.getElementById('p-team-preview').classList.remove('hidden');
+}
+
+function confirmParticipant() {
+  const name   = document.getElementById('p-name').value.trim();
+  const office = document.getElementById('p-office').value.trim();
+  const statusEl = document.getElementById('p-status');
+
+  if (!name || !pendingTeams) return;
+
+  if (participants.find(p => p.name.toLowerCase() === name.toLowerCase())) {
+    statusEl.style.color = 'var(--red, #ef4444)';
+    statusEl.textContent = `"${name}" already exists.`;
+    return;
+  }
+
+  participants.push({
+    name,
+    office: office || '',
+    teams: pendingTeams.map(t => ({
+      name: t.name,
+      group: t.group,
+      multiplier: t.multiplier,
+      bracket: t.bracket,
+    })),
+  });
+  participants.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Reset form
+  document.getElementById('p-name').value  = '';
+  document.getElementById('p-office').value = '';
+  document.getElementById('p-team-preview').classList.add('hidden');
+  pendingTeams = null;
+
+  statusEl.style.color = 'var(--green, #22c55e)';
+  statusEl.textContent = `✓ ${name} added. Download participants.json below to deploy.`;
+
+  const countEl = document.getElementById('p-count');
+  if (countEl) countEl.textContent = `(${participants.length})`;
+  renderParticipantsList();
+}
+
+function removeParticipant(name) {
+  if (!confirm(`Remove ${name} from participants?`)) return;
+  participants = participants.filter(p => p.name !== name);
+  const countEl = document.getElementById('p-count');
+  if (countEl) countEl.textContent = `(${participants.length})`;
+  renderParticipantsList();
+}
+
+function exportParticipants() {
+  const blob = new Blob([JSON.stringify(participants, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'participants.json'; a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ── Storage ───────────────────────────────────────────────────────────────

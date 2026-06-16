@@ -39,6 +39,7 @@
         <button class="tab-btn" onclick="showTab('tab-history')">📋 Match History</button>
         <button class="tab-btn" onclick="showTab('tab-progression')">🏁 Progression</button>
         <button class="tab-btn" onclick="showTab('tab-export')">💾 Export</button>
+        <button class="tab-btn" onclick="showTab('tab-participants')">👤 Participants</button>
       </div>
 
       <!-- ══ TAB: Add Result ══ -->
@@ -259,6 +260,59 @@
             <tr><td colspan="3" style="font-style:italic;color:var(--text-muted);padding-top:8px">All points × team multiplier</td></tr>
           </table>
         </div>
+      </div>
+
+      <!-- ══ TAB: Participants ══ -->
+      <div id="tab-participants" class="tab-panel hidden">
+
+        <div class="card">
+          <h2 class="card__title">Add New Participant</h2>
+          <p class="card__desc">Enter a name, select an office, then randomise to assign one team from each bracket.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="p-name" class="form-input" placeholder="e.g. Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label>Office</label>
+              <input type="text" id="p-office" class="form-input" placeholder="e.g. London"
+                list="office-suggestions" autocomplete="off" />
+              <datalist id="office-suggestions">
+                <option value="London" />
+                <option value="New York" />
+                <option value="Dubai" />
+                <option value="Hong Kong" />
+                <option value="West Palm Beach" />
+              </datalist>
+            </div>
+          </div>
+
+          <div class="card__actions" style="margin-top:16px">
+            <button class="btn btn--primary" onclick="randomiseTeams()">🎲 Randomise Teams</button>
+          </div>
+
+          <!-- Team preview (shown after randomise) -->
+          <div id="p-team-preview" class="p-team-preview hidden">
+            <div class="p-team-cards" id="p-team-cards"></div>
+            <div class="card__actions" style="margin-top:16px">
+              <button class="btn btn--ghost" onclick="randomiseTeams()">🔄 Re-roll</button>
+              <button class="btn btn--success" onclick="confirmParticipant()">✅ Add Participant</button>
+            </div>
+          </div>
+
+          <div id="p-status" style="margin-top:10px;font-size:0.85rem"></div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <h2 class="card__title">Current Participants <span id="p-count" class="card__count"></span></h2>
+          <p class="card__desc">After adding participants, download the updated file and commit it to deploy.</p>
+          <div class="card__actions" style="margin-bottom:16px">
+            <button class="btn btn--success" onclick="exportParticipants()">⬇ Download participants.json</button>
+          </div>
+          <div id="participants-list" class="participants-list"></div>
+        </div>
+
       </div>
 
     </main>

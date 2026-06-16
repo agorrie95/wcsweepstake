@@ -895,6 +895,53 @@ select.form-input { cursor: pointer; }
   color: var(--text-muted);
 }
 
+/* ── Participant tab ─────────────────────────────────────────────────── */
+
+.p-team-preview { margin-top: 20px; }
+
+.p-team-cards {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.p-team-card {
+  flex: 1;
+  min-width: 130px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.team-chip--front-runner.p-team-card { background: rgba(250,204,21,0.15); border-color: #facc15; }
+.team-chip--long-shot.p-team-card    { background: rgba(96,165,250,0.15);  border-color: #60a5fa; }
+.team-chip--not-a-chancer.p-team-card { background: rgba(167,139,250,0.15); border-color: #a78bfa; }
+
+.p-team-card__bracket { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; margin-bottom: 6px; }
+.p-team-card__name    { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.p-team-card__mult    { font-size: 13px; opacity: 0.8; }
+
+.participants-list { display: flex; flex-direction: column; gap: 8px; }
+
+.p-list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+.p-list-name   { font-weight: 600; font-size: 14px; flex: 0 0 auto; min-width: 140px; }
+.p-list-office { font-weight: 400; opacity: 0.6; font-size: 12px; }
+.p-list-teams  { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.p-list-row .btn--danger { margin-left: auto; flex-shrink: 0; }
+
+.card__count { font-size: 14px; font-weight: 400; opacity: 0.6; margin-left: 6px; }
+.btn--danger { background: #ef4444; color: #fff; border: none; }
+.btn--danger:hover { background: #dc2626; }
+
 .prog-bracket-heading {
   margin: 18px 0 8px;
   font-size: 12px;

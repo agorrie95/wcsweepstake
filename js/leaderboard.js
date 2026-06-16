@@ -190,9 +190,14 @@ function renderSidebar(matches) {
     const awayRaw = rawTotal(awayPts);
     const ptClass = v => v < 0 ? 'sidebar-team-pts__total--neg' : '';
 
+    const homeMult = _teamMultiplierMap[m.home.name] || 1;
+    const awayMult = _teamMultiplierMap[m.away.name] || 1;
+    const uBonuses = upsetBonuses(homeMult, awayMult, m.home.goals, m.away.goals);
+    const isUpset  = uBonuses.home !== 0 || uBonuses.away !== 0;
+
     return `
       <div class="sidebar-match lb-match-link" data-match-id="${m.id}">
-        <div class="sidebar-round">${m.round || 'Match'}</div>
+        <div class="sidebar-round">${m.round || 'Match'}${isUpset ? ' <span class="lb-modal-upset-badge">⚡ UPSET</span>' : ''}</div>
         <div class="sidebar-scoreline">
           <div class="sidebar-team-name">${m.home.name}</div>
           <div class="sidebar-score">${m.home.goals} - ${m.away.goals}</div>

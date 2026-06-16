@@ -575,16 +575,53 @@ function renderParticipantsList() {
   }
   const sorted = [...participants].sort((a, b) => a.name.localeCompare(b.name));
   el.innerHTML = sorted.map(p => {
+    const safe = p.name.replace(/'/g, "\\'");
     const teamChips = p.teams.map(t =>
       `<span class="team-chip team-chip--${t.bracket}">${t.name}<span class="team-chip__mult"> ×${t.multiplier}</span></span>`
     ).join('');
     return `
-      <div class="p-list-row">
-        <div class="p-list-name">${p.name}<span class="p-list-office">${p.office ? ' · ' + p.office : ''}</span></div>
+      <div class="p-list-row" id="p-row-${CSS.escape(p.name)}">
+        <div class="p-list-name" id="p-name-display-${CSS.escape(p.name)}">${p.name}<span class="p-list-office">${p.office ? ' · ' + p.office : ''}</span></div>
         <div class="p-list-teams">${teamChips}</div>
-        <button class="btn btn--danger btn--sm" onclick="removeParticipant('${p.name.replace(/'/g, "\\'")}')">✕</button>
+        <button class="btn btn--ghost btn--sm" onclick="startRenameParticipant('${safe}')">✏</button>
+        <button class="btn btn--danger btn--sm" onclick="removeParticipant('${safe}')">✕</button>
       </div>`;
   }).join('');
+}
+
+function startRenameParticipant(name) {
+  const displayEl = document.getElementById('p-name-display-' + CSS.escape(name));
+  if (!displayEl) return;
+  const p = participants.find(x => x.name === name);
+  if (!p) return;
+  const safe = name.replace(/'/g, "\\'");
+  displayEl.innerHTML = `
+    <input class="form-input p-rename-input" id="p-rename-field-${CSS.escape(name)}"
+      value="${name.replace(/"/g, '&quot;')}" />
+    <button class="btn btn--primary btn--sm" onclick="commitRenameParticipant('${safe}')">Save</button>
+    <button class="btn btn--ghost btn--sm" onclick="renderParticipantsList()">Cancel</button>`;
+  const field = document.getElementById('p-rename-field-' + CSS.escape(name));
+  if (field) { field.focus(); field.select(); }
+  field.addEventListener('keydown', e => {
+    if (e.key === 'Enter') commitRenameParticipant(name);
+    if (e.key === 'Escape') renderParticipantsList();
+  });
+}
+
+function commitRenameParticipant(oldName) {
+  const field = document.getElementById('p-rename-field-' + CSS.escape(oldName));
+  if (!field) return;
+  const newName = field.value.trim();
+  if (!newName) return;
+  if (newName !== oldName && participants.find(p => p.name.toLowerCase() === newName.toLowerCase())) {
+    field.style.borderColor = '#ef4444';
+    field.title = 'Name already exists';
+    return;
+  }
+  const p = participants.find(x => x.name === oldName);
+  if (p) p.name = newName;
+  participants.sort((a, b) => a.name.localeCompare(b.name));
+  renderParticipantsList();
 }
 
 function randomiseTeams() {

@@ -502,6 +502,9 @@ a { color: var(--accent); text-decoration: none; }
 .lb-modal-earner-pts.neg { color: var(--red); }
 .lb-modal-earner-pts strong { font-size: 16px; }
 .lb-modal-capped { font-size: 11px; font-weight: 400; opacity: 0.6; }
+.lb-modal-upset-note { font-size: 11px; font-weight: 600; color: #f59e0b; margin-left: 4px; }
+.lb-modal-upset-badge { font-size: 11px; font-weight: 700; color: #f59e0b; background: rgba(245,158,11,0.15); border-radius: 4px; padding: 1px 5px; margin-left: 6px; }
+.key-item--upset { color: #f59e0b; font-weight: 600; }
 
 .lb-modal-empty {
   color: var(--text-muted);

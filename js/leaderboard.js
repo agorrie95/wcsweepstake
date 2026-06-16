@@ -9,7 +9,7 @@ const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
 
 // Module-scope data — kept fresh after every loadAndRender, used by modals
-let _matches = [], _participants = [], _progressionMap = {};
+let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {};
 
 const PROG_PTS = {
   'group stage': 0, 'knocked out': 0, 'round of 32': 5,
@@ -284,19 +284,31 @@ function openParticipantModal(name) {
       const pts          = scoreTeamInMatch(side, isNilNil);
       const raw          = rawTotal(pts);
       const effectiveMult = raw < 0 ? 1 : team.multiplier;
-      const final        = raw * effectiveMult;
+      const multiplied   = raw * effectiveMult;
+      const oppName      = isHome ? m.away.name : m.home.name;
+      const oppMult      = _teamMultiplierMap[oppName] || 1;
+      const myMult       = parseFloat(team.multiplier) || 1;
+      const uBonus       = upsetBonuses(
+        isHome ? myMult : oppMult,
+        isHome ? oppMult : myMult,
+        m.home.goals, m.away.goals
+      );
+      const upsetBonus   = isHome ? uBonus.home : uBonus.away;
+      const final        = multiplied + upsetBonus;
       matchTotal        += final;
 
       const score = isHome
         ? `${m.home.goals}–${m.away.goals}`
         : `${m.away.goals}–${m.home.goals}`;
 
-      const events  = buildEventsStr(pts, side, result, isNilNil);
-      const ptsCls  = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
-      const capNote = (raw < 0 && team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
-      const calcStr = raw === 0
+      const events    = buildEventsStr(pts, side, result, isNilNil);
+      const ptsCls    = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
+      const capNote   = (raw < 0 && team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
+      const upsetNote = upsetBonus !== 0
+        ? ` <span class="lb-modal-upset-note">⚡ ${upsetBonus > 0 ? '+' : ''}${upsetBonus} upset</span>` : '';
+      const calcStr = raw === 0 && upsetBonus === 0
         ? '0'
-        : `${raw > 0 ? '+' : ''}${raw} × ${effectiveMult} = <strong>${final >= 0 ? '+' : ''}${final.toFixed(1)}</strong>${capNote}`;
+        : `${raw > 0 ? '+' : ''}${raw} × ${effectiveMult} = <strong>${multiplied >= 0 ? '+' : ''}${multiplied.toFixed(1)}</strong>${capNote}${upsetNote}`;
 
       matchRows += `
         <div class="lb-modal-match-row lb-match-link" data-match-id="${m.id}">
@@ -338,9 +350,14 @@ function openMatchModal(matchId) {
 
   const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
 
+  const homeTeamMult = _teamMultiplierMap[m.home.name] || 1;
+  const awayTeamMult = _teamMultiplierMap[m.away.name] || 1;
+  const matchUpset   = upsetBonuses(homeTeamMult, awayTeamMult, m.home.goals, m.away.goals);
+  const isUpsetMatch = matchUpset.home !== 0 || matchUpset.away !== 0;
+
   let html = `
     <div class="lb-modal-match-hdr">
-      <div class="lb-modal-match-round-lbl">${m.round || 'Match'} · ${m.date}</div>
+      <div class="lb-modal-match-round-lbl">${m.round || 'Match'} · ${m.date}${isUpsetMatch ? ' <span class="lb-modal-upset-badge">⚡ UPSET</span>' : ''}</div>
       <div class="lb-modal-match-scoreline">
         <span class="lb-modal-match-team">${m.home.name}</span>
         <span class="lb-modal-match-score">${m.home.goals} – ${m.away.goals}</span>
@@ -354,14 +371,15 @@ function openMatchModal(matchId) {
   for (const p of _participants) {
     for (const team of p.teams) {
       if (team.name !== m.home.name && team.name !== m.away.name) continue;
-      const isHome = team.name === m.home.name;
-      const side   = isHome ? homeSide : awaySide;
-      const result = isHome ? homeResult : awayResult;
+      const isHome    = team.name === m.home.name;
+      const side      = isHome ? homeSide : awaySide;
+      const result    = isHome ? homeResult : awayResult;
       const pts           = scoreTeamInMatch(side, isNilNil);
       const raw           = rawTotal(pts);
       const effectiveMult = raw < 0 ? 1 : team.multiplier;
-      const final         = raw * effectiveMult;
-      earners.push({ name: p.name, team, side, result, pts, raw, effectiveMult, final });
+      const upsetBonus    = isHome ? matchUpset.home : matchUpset.away;
+      const final         = raw * effectiveMult + upsetBonus;
+      earners.push({ name: p.name, team, side, result, pts, raw, effectiveMult, upsetBonus, final });
     }
   }
 
@@ -376,12 +394,15 @@ function openMatchModal(matchId) {
 
   for (const e of earners) {
     const events       = buildEventsStr(e.pts, e.side, e.result, isNilNil);
+    const multiplied   = e.raw * e.effectiveMult;
     const ptsCls       = e.final < 0 ? 'neg' : e.final > 0 ? 'pos' : '';
     const bracketClass = `team-chip--${e.team.bracket}`;
     const capNote      = (e.raw < 0 && e.team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
-    const calcStr      = e.raw === 0
+    const upsetNote    = e.upsetBonus !== 0
+      ? ` <span class="lb-modal-upset-note">⚡ ${e.upsetBonus > 0 ? '+' : ''}${e.upsetBonus} upset</span>` : '';
+    const calcStr      = e.raw === 0 && e.upsetBonus === 0
       ? '0'
-      : `${e.raw > 0 ? '+' : ''}${e.raw} × ${e.effectiveMult} = <strong>${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</strong>${capNote}`;
+      : `${e.raw > 0 ? '+' : ''}${e.raw} × ${e.effectiveMult} = <strong>${multiplied >= 0 ? '+' : ''}${multiplied.toFixed(1)}</strong>${capNote}${upsetNote}`;
 
     html += `
       <div class="lb-modal-earner-row lb-name-link" data-participant="${e.name}">
@@ -429,9 +450,15 @@ async function loadAndRender() {
     }
 
     // Store for modal access
-    _matches       = matches;
-    _participants  = participants;
+    _matches        = matches;
+    _participants   = participants;
     _progressionMap = progressionMap;
+    _teamMultiplierMap = {};
+    for (const p of participants) {
+      for (const t of (p.teams || [])) {
+        if (!_teamMultiplierMap[t.name]) _teamMultiplierMap[t.name] = parseFloat(t.multiplier) || 1;
+      }
+    }
 
     const scores = computeScores(matches, participants, progressionMap);
 

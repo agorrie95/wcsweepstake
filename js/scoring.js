@@ -22,6 +22,12 @@ const SCORING = {
     'final':         50,
   },
   WINNER: 80,
+
+  // Upset rule: front-runner (≤3×) vs minnow (10×)
+  UPSET_DRAW_BONUS:            3,
+  UPSET_WIN_BONUS:             5,
+  UPSET_FRONT_RUNNER_MAX_MULT: 3,
+  UPSET_MINNOW_MIN_MULT:       10,
 };
 
 // Stages in order from earliest to latest
@@ -103,18 +109,58 @@ function scoreTeamInMatch(side, isNilNil) {
 }
 
 /**
+ * Flat upset bonus for a match between a front-runner (≤3×) and a minnow (10×).
+ * Draw:      front-runner −3, minnow +3
+ * Minnow win: front-runner −5, minnow +5
+ * Front-runner win: no adjustment
+ * @returns {{ home: number, away: number }}
+ */
+function upsetBonuses(homeMultiplier, awayMultiplier, homeGoals, awayGoals) {
+  const FR  = SCORING.UPSET_FRONT_RUNNER_MAX_MULT;
+  const MIN = SCORING.UPSET_MINNOW_MIN_MULT;
+
+  const homeFR   = homeMultiplier <= FR;
+  const awayFR   = awayMultiplier <= FR;
+  const homeMinn = homeMultiplier >= MIN;
+  const awayMinn = awayMultiplier >= MIN;
+
+  if (!((homeFR && awayMinn) || (awayFR && homeMinn))) return { home: 0, away: 0 };
+
+  const isDraw   = homeGoals === awayGoals;
+  const DB = SCORING.UPSET_DRAW_BONUS;
+  const WB = SCORING.UPSET_WIN_BONUS;
+
+  if (isDraw) {
+    return {
+      home: homeFR ? -DB : DB,
+      away: awayFR ? -DB : DB,
+    };
+  }
+
+  const minnowWon = (homeMinn && homeGoals > awayGoals) || (awayMinn && awayGoals > homeGoals);
+  if (minnowWon) {
+    return {
+      home: homeFR ? -WB : WB,
+      away: awayFR ? -WB : WB,
+    };
+  }
+
+  return { home: 0, away: 0 };
+}
+
+/**
  * Compute total points per team across all finished matches.
  * @param {Array} matches
  * @param {object} progressionMap  - { teamName: stage } — if provided, used for progression pts
  * @returns {object} teamName -> totals incl. matchBreakdowns array
  */
-function computeTeamTotals(matches, progressionMap) {
+function computeTeamTotals(matches, progressionMap, teamMultiplierMap) {
   const totals = {};
   const teamRounds = {};
   let winner = null;
 
   const ensure = name => {
-    if (!totals[name]) totals[name] = { goals:0, hatTrickBonus:0, cleanSheet:0, penSaves:0, redCards:0, result:0, progression:0, matchBreakdowns:[] };
+    if (!totals[name]) totals[name] = { goals:0, hatTrickBonus:0, cleanSheet:0, penSaves:0, redCards:0, result:0, progression:0, upsetPts:0, matchBreakdowns:[] };
     if (!teamRounds[name]) teamRounds[name] = new Set();
   };
 
@@ -130,12 +176,20 @@ function computeTeamTotals(matches, progressionMap) {
     const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
     const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
 
-    for (const [side, name] of [[homeSide, home.name], [awaySide, away.name]]) {
+    const homeMult = (teamMultiplierMap && teamMultiplierMap[home.name]) || 1;
+    const awayMult = (teamMultiplierMap && teamMultiplierMap[away.name]) || 1;
+    const upset    = upsetBonuses(homeMult, awayMult, home.goals, away.goals);
+
+    for (const [side, name, upsetBonus] of [
+      [homeSide, home.name, upset.home],
+      [awaySide, away.name, upset.away],
+    ]) {
       ensure(name);
       const pts = scoreTeamInMatch(side, isNilNil);
       Object.keys(pts).forEach(k => { totals[name][k] += pts[k]; });
       const inGame = pts.goals + pts.hatTrickBonus + pts.cleanSheet + pts.penSaves + pts.redCards;
-      totals[name].matchBreakdowns.push({ inGame, result: pts.result });
+      totals[name].matchBreakdowns.push({ inGame, result: pts.result, upsetBonus });
+      totals[name].upsetPts += upsetBonus;
       teamRounds[name].add(roundKey);
       if (roundKey === 'final' && side.result === 'win') winner = name;
     }
@@ -171,10 +225,17 @@ function computeTeamTotals(matches, progressionMap) {
  * @returns {Array} sorted scores array
  */
 function computeScores(matches, participants, progressionMap) {
-  const teamTotals = computeTeamTotals(matches, progressionMap);
+  const teamMultiplierMap = {};
+  for (const p of participants) {
+    for (const t of (p.teams || [])) {
+      if (!teamMultiplierMap[t.name]) teamMultiplierMap[t.name] = parseFloat(t.multiplier) || 1;
+    }
+  }
+
+  const teamTotals = computeTeamTotals(matches, progressionMap, teamMultiplierMap);
 
   return participants.map(p => {
-    let totalGoalsPts = 0, totalResultsPts = 0, totalProgressionPts = 0;
+    let totalGoalsPts = 0, totalResultsPts = 0, totalProgressionPts = 0, totalUpsetPts = 0;
     const teamDetails = [];
 
     for (const team of (p.teams || [])) {
@@ -182,12 +243,14 @@ function computeScores(matches, participants, progressionMap) {
       const raw = teamTotals[team.name] || {};
 
       // Apply multiplier per match; if a match's raw total is negative, cap at ×1
-      // so the multiplier never amplifies a bad game further
-      let teamInGamePts = 0, teamResultPts = 0;
-      for (const { inGame, result } of (raw.matchBreakdowns || [])) {
+      // so the multiplier never amplifies a bad game further.
+      // Upset bonus is flat (not multiplied).
+      let teamInGamePts = 0, teamResultPts = 0, teamUpsetPts = 0;
+      for (const { inGame, result, upsetBonus } of (raw.matchBreakdowns || [])) {
         const effectiveMult = (inGame + result) < 0 ? 1 : mult;
         teamInGamePts += inGame * effectiveMult;
         teamResultPts += result * effectiveMult;
+        teamUpsetPts  += (upsetBonus || 0);
       }
 
       const progRaw = raw.progression || 0;
@@ -196,17 +259,19 @@ function computeScores(matches, participants, progressionMap) {
       totalGoalsPts       += teamInGamePts;
       totalResultsPts     += teamResultPts;
       totalProgressionPts += teamProgPts;
+      totalUpsetPts       += teamUpsetPts;
 
       teamDetails.push({
         name:       team.name,
         bracket:    team.bracket,
         multiplier: mult,
-        total:      Math.round((teamInGamePts + teamResultPts + teamProgPts) * 100) / 100,
+        total:      Math.round((teamInGamePts + teamResultPts + teamProgPts + teamUpsetPts) * 100) / 100,
         raw,
+        upsetPts:   teamUpsetPts,
       });
     }
 
-    const total = Math.round((totalGoalsPts + totalResultsPts + totalProgressionPts) * 100) / 100;
+    const total = Math.round((totalGoalsPts + totalResultsPts + totalProgressionPts + totalUpsetPts) * 100) / 100;
     return {
       name: p.name,
       office: p.office || '',
@@ -215,6 +280,7 @@ function computeScores(matches, participants, progressionMap) {
         goals_pts:       Math.round(totalGoalsPts * 100) / 100,
         results_pts:     Math.round(totalResultsPts * 100) / 100,
         progression_pts: Math.round(totalProgressionPts * 100) / 100,
+        upset_pts:       Math.round(totalUpsetPts * 100) / 100,
       },
       teams: teamDetails,
     };

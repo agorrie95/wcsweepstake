@@ -242,15 +242,15 @@ function computeScores(matches, participants, progressionMap) {
       const mult = parseFloat(team.multiplier) || 1;
       const raw = teamTotals[team.name] || {};
 
-      // Apply multiplier per match; if a match's raw total is negative, cap at ×1
-      // so the multiplier never amplifies a bad game further.
-      // Upset bonus is flat (not multiplied).
+      // Upset bonus is added to raw BEFORE multiplying, so it affects whether the
+      // ×1 negative cap triggers and is itself amplified by the team multiplier.
       let teamInGamePts = 0, teamResultPts = 0, teamUpsetPts = 0;
       for (const { inGame, result, upsetBonus } of (raw.matchBreakdowns || [])) {
-        const effectiveMult = (inGame + result) < 0 ? 1 : mult;
+        const matchRaw    = inGame + result + (upsetBonus || 0);
+        const effectiveMult = matchRaw < 0 ? 1 : mult;
         teamInGamePts += inGame * effectiveMult;
         teamResultPts += result * effectiveMult;
-        teamUpsetPts  += (upsetBonus || 0);
+        teamUpsetPts  += (upsetBonus || 0) * effectiveMult;
       }
 
       const progRaw = raw.progression || 0;

@@ -283,8 +283,6 @@ function openParticipantModal(name) {
       const result = isHome ? homeResult : awayResult;
       const pts          = scoreTeamInMatch(side, isNilNil);
       const raw          = rawTotal(pts);
-      const effectiveMult = raw < 0 ? 1 : team.multiplier;
-      const multiplied   = raw * effectiveMult;
       const oppName      = isHome ? m.away.name : m.home.name;
       const oppMult      = _teamMultiplierMap[oppName] || 1;
       const myMult       = parseFloat(team.multiplier) || 1;
@@ -294,21 +292,23 @@ function openParticipantModal(name) {
         m.home.goals, m.away.goals
       );
       const upsetBonus   = isHome ? uBonus.home : uBonus.away;
-      const final        = multiplied + upsetBonus;
+      const adjustedRaw  = raw + upsetBonus;
+      const effectiveMult = adjustedRaw < 0 ? 1 : myMult;
+      const final        = adjustedRaw * effectiveMult;
       matchTotal        += final;
 
       const score = isHome
         ? `${m.home.goals}–${m.away.goals}`
         : `${m.away.goals}–${m.home.goals}`;
 
-      const events    = buildEventsStr(pts, side, result, isNilNil);
-      const ptsCls    = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
-      const capNote   = (raw < 0 && team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
-      const upsetNote = upsetBonus !== 0
-        ? ` <span class="lb-modal-upset-note">⚡ ${upsetBonus > 0 ? '+' : ''}${upsetBonus} upset</span>` : '';
-      const calcStr = raw === 0 && upsetBonus === 0
+      const events  = buildEventsStr(pts, side, result, isNilNil);
+      const ptsCls  = final < 0 ? 'neg' : final > 0 ? 'pos' : '';
+      const capNote = (adjustedRaw < 0 && myMult > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
+      const calcStr = adjustedRaw === 0
         ? '0'
-        : `${raw > 0 ? '+' : ''}${raw} × ${effectiveMult} = <strong>${multiplied >= 0 ? '+' : ''}${multiplied.toFixed(1)}</strong>${capNote}${upsetNote}`;
+        : upsetBonus !== 0
+          ? `(${raw > 0 ? '+' : ''}${raw} <span class="lb-modal-upset-note">⚡${upsetBonus > 0 ? '+' : ''}${upsetBonus}</span>) × ${effectiveMult} = <strong>${final >= 0 ? '+' : ''}${final.toFixed(1)}</strong>${capNote}`
+          : `${raw > 0 ? '+' : ''}${raw} × ${effectiveMult} = <strong>${final >= 0 ? '+' : ''}${final.toFixed(1)}</strong>${capNote}`;
 
       matchRows += `
         <div class="lb-modal-match-row lb-match-link" data-match-id="${m.id}">
@@ -376,10 +376,11 @@ function openMatchModal(matchId) {
       const result    = isHome ? homeResult : awayResult;
       const pts           = scoreTeamInMatch(side, isNilNil);
       const raw           = rawTotal(pts);
-      const effectiveMult = raw < 0 ? 1 : team.multiplier;
       const upsetBonus    = isHome ? matchUpset.home : matchUpset.away;
-      const final         = raw * effectiveMult + upsetBonus;
-      earners.push({ name: p.name, team, side, result, pts, raw, effectiveMult, upsetBonus, final });
+      const adjustedRaw   = raw + upsetBonus;
+      const effectiveMult = adjustedRaw < 0 ? 1 : parseFloat(team.multiplier) || 1;
+      const final         = adjustedRaw * effectiveMult;
+      earners.push({ name: p.name, team, side, result, pts, raw, adjustedRaw, effectiveMult, upsetBonus, final });
     }
   }
 
@@ -394,15 +395,14 @@ function openMatchModal(matchId) {
 
   for (const e of earners) {
     const events       = buildEventsStr(e.pts, e.side, e.result, isNilNil);
-    const multiplied   = e.raw * e.effectiveMult;
     const ptsCls       = e.final < 0 ? 'neg' : e.final > 0 ? 'pos' : '';
     const bracketClass = `team-chip--${e.team.bracket}`;
-    const capNote      = (e.raw < 0 && e.team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
-    const upsetNote    = e.upsetBonus !== 0
-      ? ` <span class="lb-modal-upset-note">⚡ ${e.upsetBonus > 0 ? '+' : ''}${e.upsetBonus} upset</span>` : '';
-    const calcStr      = e.raw === 0 && e.upsetBonus === 0
+    const capNote      = (e.adjustedRaw < 0 && e.team.multiplier > 1) ? ' <span class="lb-modal-capped">(×1 cap)</span>' : '';
+    const calcStr      = e.adjustedRaw === 0
       ? '0'
-      : `${e.raw > 0 ? '+' : ''}${e.raw} × ${e.effectiveMult} = <strong>${multiplied >= 0 ? '+' : ''}${multiplied.toFixed(1)}</strong>${capNote}${upsetNote}`;
+      : e.upsetBonus !== 0
+        ? `(${e.raw > 0 ? '+' : ''}${e.raw} <span class="lb-modal-upset-note">⚡${e.upsetBonus > 0 ? '+' : ''}${e.upsetBonus}</span>) × ${e.effectiveMult} = <strong>${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</strong>${capNote}`
+        : `${e.raw > 0 ? '+' : ''}${e.raw} × ${e.effectiveMult} = <strong>${e.final >= 0 ? '+' : ''}${e.final.toFixed(1)}</strong>${capNote}`;
 
     html += `
       <div class="lb-modal-earner-row lb-name-link" data-participant="${e.name}">

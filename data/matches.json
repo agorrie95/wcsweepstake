@@ -157,7 +157,7 @@
       "penaltySaves": 0
     },
     "away": {
-      "name": "Türkiye",
+      "name": "TÃ¼rkiye",
       "goals": 0,
       "goalScorers": [],
       "redCards": 0,
@@ -264,7 +264,7 @@
       "penaltySaves": 0
     },
     "away": {
-      "name": "Curaçao",
+      "name": "CuraÃ§ao",
       "goals": 1,
       "goalScorers": [
         {
@@ -614,6 +614,132 @@
           "player": "Ali Olwan"
         }
       ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781775235896",
+    "date": "2026-06-17",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Portugal",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Joao Neves"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "DR Congo",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Yoane Wissa"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781775235897",
+    "date": "2026-06-17",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Uzbekistan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Abbosbek Fayzullaev"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Colombia",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Daniel Munoz"
+        },
+        {
+          "player": "Luis Diaz"
+        },
+        {
+          "player": "Jaminton Campaz"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781775235898",
+    "date": "2026-06-17",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "England",
+      "goals": 4,
+      "goalScorers": [
+        {
+          "player": "Harry Kane"
+        },
+        {
+          "player": "Harry Kane"
+        },
+        {
+          "player": "Jude Bellingham"
+        },
+        {
+          "player": "Marcus Rashford"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Croatia",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Martin Baturina"
+        },
+        {
+          "player": "Petar Musa"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1781775235899",
+    "date": "2026-06-17",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Ghana",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Caleb Yirenkyi"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Panama",
+      "goals": 0,
+      "goalScorers": [],
       "redCards": 0,
       "penaltySaves": 0
     }

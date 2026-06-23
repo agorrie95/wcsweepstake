@@ -1221,5 +1221,130 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1782202305436",
+    "date": "2026-06-22",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "France",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Ousmane Dembele"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Iraq",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782202305437",
+    "date": "2026-06-22",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Norway",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Marcus Holmgren Pedersen"
+        },
+        {
+          "player": "Erling Haaland"
+        },
+        {
+          "player": "Erling Haaland"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Senegal",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Ismaila Sarr"
+        },
+        {
+          "player": "Ismaila Sarr"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782202305438",
+    "date": "2026-06-22",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Argentina",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Lionel Messi"
+        },
+        {
+          "player": "Lionel Messi"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Austria",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782202305439",
+    "date": "2026-06-22",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Jordan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Nizar Al Rashdan"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Algeria",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Nadhir Benbouali"
+        },
+        {
+          "player": "Amine Gouiri"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

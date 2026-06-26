@@ -1639,5 +1639,182 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1750812001001",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Türkiye",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Arda Güler"
+        },
+        {
+          "player": "Baris Alper Yilmaz"
+        },
+        {
+          "player": "Kaan Ayhan"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "USA",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Auston Trusty"
+        },
+        {
+          "player": "Sebastian Berhalter"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1750812001002",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Paraguay",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Australia",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1750812001003",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Ecuador",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Nilson Angulo"
+        },
+        {
+          "player": "Gonzalo Plata"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Germany",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Leroy Sané"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1750812001004",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Curaçao",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Ivory Coast",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Nicolas Pepe"
+        },
+        {
+          "player": "Nicolas Pepe"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1750812001005",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Japan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Daizen Maeda"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Sweden",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Anthony Elanga"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1750812001006",
+    "date": "2026-06-25",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Tunisia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Hazem Mastouri"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Netherlands",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Ellyes Shkiri (OG)"
+        },
+        {
+          "player": "Brian Brobbey"
+        },
+        {
+          "player": "Jan Paul Van Hecke"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

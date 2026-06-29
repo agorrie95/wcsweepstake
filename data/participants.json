@@ -384,6 +384,30 @@
     ]
   },
   {
+    "name": "Connor Hughes",
+    "office": "",
+    "teams": [
+      {
+        "name": "Portugal",
+        "group": "K",
+        "multiplier": 2.19,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Morocco",
+        "group": "C",
+        "multiplier": 5.44,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Bosnia & Herzegovina",
+        "group": "B",
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
     "name": "Daniel Kalish",
     "office": "New York",
     "teams": [
@@ -1050,6 +1074,30 @@
       {
         "name": "Bosnia & Herzegovina",
         "group": "B",
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
+    "name": "Maddy Rudge",
+    "office": "",
+    "teams": [
+      {
+        "name": "Germany",
+        "group": "E",
+        "multiplier": 3,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Türkiye",
+        "group": "D",
+        "multiplier": 6.37,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Iraq",
+        "group": "I",
         "multiplier": 10,
         "bracket": "not-a-chancer"
       }

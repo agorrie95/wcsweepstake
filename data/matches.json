@@ -157,7 +157,7 @@
       "penaltySaves": 0
     },
     "away": {
-      "name": "TÃ¼rkiye",
+      "name": "Türkiye",
       "goals": 0,
       "goalScorers": [],
       "redCards": 0,
@@ -264,7 +264,7 @@
       "penaltySaves": 0
     },
     "away": {
-      "name": "CuraÃ§ao",
+      "name": "Curaçao",
       "goals": 1,
       "goalScorers": [
         {
@@ -905,7 +905,7 @@
     "round": "group stage",
     "finished": true,
     "home": {
-      "name": "TÃ¼rkiye",
+      "name": "Türkiye",
       "goals": 0,
       "goalScorers": [],
       "redCards": 0,
@@ -1094,7 +1094,7 @@
       "penaltySaves": 0
     },
     "away": {
-      "name": "CuraÃ§ao",
+      "name": "Curaçao",
       "goals": 0,
       "goalScorers": [],
       "redCards": 0,
@@ -1811,6 +1811,401 @@
         },
         {
           "player": "Jan Paul Van Hecke"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272606",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Egypt",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mahmoud Saber"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Iran",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Ramin Rezaeian"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272607",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "New Zealand",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Elijah Just"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Belgium",
+      "goals": 5,
+      "goalScorers": [
+        {
+          "player": "Leandro Trossard"
+        },
+        {
+          "player": "Leandro Trossard"
+        },
+        {
+          "player": "Kevin De Bruyne"
+        },
+        {
+          "player": "Romelu Lukaku"
+        },
+        {
+          "player": "Alexis Saelemaekers"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272608",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Cape Verde",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Saudi Arabia",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272609",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Uruguay",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Spain",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Alex Baena"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272610",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Norway",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Thelo Aasgaard"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "France",
+      "goals": 4,
+      "goalScorers": [
+        {
+          "player": "Ousmane Dembele"
+        },
+        {
+          "player": "Ousmane Dembele"
+        },
+        {
+          "player": "Ousmane Dembele"
+        },
+        {
+          "player": "Desire Doue"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272611",
+    "date": "2026-06-26",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Senegal",
+      "goals": 5,
+      "goalScorers": [
+        {
+          "player": "Habib Diarra"
+        },
+        {
+          "player": "Ismaila Sarr"
+        },
+        {
+          "player": "Pape Gueye"
+        },
+        {
+          "player": "Pape Gueye"
+        },
+        {
+          "player": "Iliman Ndiaye"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Iraq",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 1,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272612",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Panama",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "England",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Jude Bellingham"
+        },
+        {
+          "player": "Harry Kane"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272613",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Croatia",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Petar Sucic"
+        },
+        {
+          "player": "Nikola Vlasic"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Ghana",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Derrick Luckassen"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272614",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Colombia",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Portugal",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272615",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "DR Congo",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Yoane Wissa"
+        },
+        {
+          "player": "Fiston Mayele"
+        },
+        {
+          "player": "Yoane Wissa"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Uzbekistan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Eldor Shomurodov"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272616",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Jordan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mousa Al-Tamari"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Argentina",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Giovani Lo Celso"
+        },
+        {
+          "player": "Lautaro Martinez"
+        },
+        {
+          "player": "Lionel Messi"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272617",
+    "date": "2026-06-27",
+    "round": "group stage",
+    "finished": true,
+    "home": {
+      "name": "Algeria",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Youcef Belghali"
+        },
+        {
+          "player": "Riyad Mahrez"
+        },
+        {
+          "player": "Riyad Mahrez"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Austria",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Marko Arnautovic"
+        },
+        {
+          "player": "Marcel Sabitzer"
+        },
+        {
+          "player": "Sasa Kalajdzic"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782728272618",
+    "date": "2026-06-28",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "South Africa",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Canada",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Stephen Eustaquio"
         }
       ],
       "redCards": 0,

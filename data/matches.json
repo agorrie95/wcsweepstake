@@ -2211,5 +2211,92 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1782807206613",
+    "date": "2026-06-29",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Brazil",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Casemiro"
+        },
+        {
+          "player": "Gabriel Martinelli"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Japan",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Kaishu Sano"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782807206614",
+    "date": "2026-06-29",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Germany",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Kai Havertz"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Paraguay",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Julio Enciso"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 2
+    }
+  },
+  {
+    "id": "1782807206615",
+    "date": "2026-06-29",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Netherlands",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Cody Gakpo"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Morocco",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Issa Diop"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 1
+    }
   }
 ]

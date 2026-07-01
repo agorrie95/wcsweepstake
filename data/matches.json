@@ -2298,5 +2298,93 @@
       "redCards": 0,
       "penaltySaves": 1
     }
+  },
+  {
+    "id": "1782893342827",
+    "date": "2026-06-30",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "France",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Bradley Barcola"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Sweden",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782893342828",
+    "date": "2026-06-30",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Ivory Coast",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Amad Diallo"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Norway",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Antonio Nusa"
+        },
+        {
+          "player": "Erling Haaland"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1782893342829",
+    "date": "2026-06-30",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Mexico",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Julian Quinones"
+        },
+        {
+          "player": "Raul Jimenez"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Ecuador",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 1,
+      "penaltySaves": 0
+    }
   }
 ]

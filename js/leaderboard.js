@@ -176,8 +176,9 @@ function renderBestTeams(matches, participants, progressionMap, teamInfoMap) {
   });
 
   const resultChip = renderBestResultChip(matches, participants, teamInfoMap);
+  const worstChip  = renderWorstTeamChip(matches, participants, progressionMap, teamInfoMap);
 
-  el.innerHTML = bracketChips.join('') + resultChip;
+  el.innerHTML = bracketChips.join('') + resultChip + worstChip;
 }
 
 function renderBestResultChip(matches, participants, teamInfoMap) {
@@ -195,6 +196,21 @@ function renderBestResultChip(matches, participants, teamInfoMap) {
       <span class="best-team-chip__label">Best Result</span>
       <span class="best-team-chip__name">${flagImgHtml(info)}${code}<span class="best-team-chip__mult"> ×${best.multiplier}</span></span>
       <span class="best-team-chip__pts">+${best.final.toFixed(1)}pts <span class="best-team-chip__sub">vs ${best.opponent} (${score})</span></span>
+    </div>`;
+}
+
+function renderWorstTeamChip(matches, participants, progressionMap, teamInfoMap) {
+  const worst = computeWorstTeam(matches, participants, progressionMap);
+  if (!worst) return '';
+
+  const info = teamInfoMap[worst.name] || {};
+  const code = info.code || worst.name.slice(0,3).toUpperCase();
+
+  return `
+    <div class="best-team-chip best-team-chip--worst" title="${worst.name}">
+      <span class="best-team-chip__label">Worst Team</span>
+      <span class="best-team-chip__name">${flagImgHtml(info)}${code}<span class="best-team-chip__mult"> ×${worst.multiplier}</span></span>
+      <span class="best-team-chip__pts">${worst.total >= 0 ? '+' : ''}${worst.total.toFixed(1)}pts</span>
     </div>`;
 }
 

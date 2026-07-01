@@ -7,14 +7,13 @@ const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
 
 const PROG_STAGES = [
-  { value: 'group stage',    label: 'Group Stage' },
-  { value: 'knocked out',    label: 'Knocked Out' },
-  { value: 'round of 32',    label: 'Round of 32' },
-  { value: 'round of 16',    label: 'Round of 16' },
-  { value: 'quarter-finals', label: 'Quarter-Finals' },
-  { value: 'semi-finals',    label: 'Semi-Finals' },
-  { value: 'final',          label: 'Final' },
-  { value: 'winner',         label: 'Winner 🏆' },
+  { value: 'group stage',    label: 'Groups' },
+  { value: 'round of 32',    label: 'R32'    },
+  { value: 'round of 16',    label: 'R16'    },
+  { value: 'quarter-finals', label: 'QF'     },
+  { value: 'semi-finals',    label: 'SF'     },
+  { value: 'final',          label: 'Final'  },
+  { value: 'winner',         label: '🏆'     },
 ];
 
 const BRACKET_LABELS = {
@@ -144,14 +143,7 @@ function renderProgressionTab() {
   const wrap = document.getElementById('progression-table-wrap');
   if (!allTeams.length) { wrap.innerHTML = '<p class="muted">Loading teams…</p>'; return; }
 
-  const stageOpts = PROG_STAGES.map(s =>
-    `<option value="${s.value}">${s.label}</option>`
-  ).join('');
-
-  const optionsFor = teamName => PROG_STAGES.map(s => {
-    const sel = (progressionMap[teamName] || 'group stage') === s.value ? ' selected' : '';
-    return `<option value="${s.value}"${sel}>${s.label}</option>`;
-  }).join('');
+  const stageOrder = PROG_STAGES.map(s => s.value);
 
   let html = '';
   for (const bracket of ['front-runner', 'long-shot', 'not-a-chancer']) {
@@ -160,53 +152,45 @@ function renderProgressionTab() {
       .sort((a, b) => a.name.localeCompare(b.name));
     if (!teams.length) continue;
 
-    html += `
-      <h3 class="prog-bracket-heading">${BRACKET_LABELS[bracket]}</h3>
-      <table class="existing-table prog-table">
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th style="width:60px">×Mult</th>
-            <th style="width:210px">Stage Reached</th>
-            <th style="width:90px;text-align:right">Prog Pts</th>
-          </tr>
-        </thead>
-        <tbody>`;
+    html += `<h3 class="prog-bracket-heading">${BRACKET_LABELS[bracket]}</h3>`;
 
     for (const team of teams) {
-      const stage = progressionMap[team.name] || 'group stage';
-      const pts   = computeProgressionPts(stage);
-      html += `
-          <tr id="prog-row-${team.name.replace(/\W/g,'_')}">
-            <td>${team.name}</td>
-            <td style="color:var(--text-muted)">×${team.multiplier}</td>
-            <td>
-              <select class="form-input" style="padding:5px 8px;font-size:13px"
-                  data-team="${team.name}"
-                  onchange="onProgressionChange(this)">
-                ${optionsFor(team.name)}
-              </select>
-            </td>
-            <td style="text-align:right;font-weight:700;color:var(--accent2)" id="prog-pts-${team.name.replace(/\W/g,'_')}">${pts}</td>
-          </tr>`;
-    }
+      const stage    = progressionMap[team.name] || 'group stage';
+      const pts      = computeProgressionPts(stage);
+      const stageIdx = stageOrder.indexOf(stage);
+      const safeId   = team.name.replace(/\W/g, '_');
+      const teamSafe = team.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
-    html += `</tbody></table>`;
+      const pills = PROG_STAGES.map((s, i) => {
+        const reached = i <= stageIdx;
+        const current = i === stageIdx;
+        const cls = current ? 'prog-pill prog-pill--current'
+                  : reached  ? 'prog-pill prog-pill--reached'
+                  :            'prog-pill';
+        const stageSafe = s.value.replace(/'/g, "\\'");
+        return `<button class="${cls}" onclick="setProgressionStage('${teamSafe}','${stageSafe}')">${s.label}</button>`;
+      }).join('');
+
+      const ptsDisplay = pts > 0 ? `+${pts}` : '0';
+      html += `
+        <div class="prog-stage-row">
+          <div class="prog-stage-info">
+            <span class="prog-stage-name">${team.name}</span>
+            <span class="prog-stage-mult"> ×${team.multiplier}</span>
+          </div>
+          <div class="prog-pills">${pills}</div>
+          <div class="prog-pts-badge" id="prog-pts-${safeId}">${ptsDisplay} pts</div>
+        </div>`;
+    }
   }
 
   wrap.innerHTML = html;
 }
 
-function onProgressionChange(sel) {
-  const teamName = sel.dataset.team;
-  const stage    = sel.value;
+function setProgressionStage(teamName, stage) {
   progressionMap[teamName] = stage;
   localStorage.setItem(PROG_KEY, JSON.stringify(progressionMap));
-
-  // Update the pts display in the same row without a full re-render
-  const safeId = teamName.replace(/\W/g, '_');
-  const ptsEl  = document.getElementById('prog-pts-' + safeId);
-  if (ptsEl) ptsEl.textContent = computeProgressionPts(stage);
+  renderProgressionTab();
 }
 
 function exportProgression() {

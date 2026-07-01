@@ -955,6 +955,68 @@ select.form-input { cursor: pointer; }
 
 .prog-table { margin-bottom: 4px; }
 
+/* ── Progression stage pill stepper ─────────────────────────────────────── */
+.prog-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 2px;
+  border-bottom: 1px solid var(--border);
+}
+.prog-stage-row:last-child { border-bottom: none; }
+.prog-stage-info {
+  min-width: 170px;
+  flex-shrink: 0;
+}
+.prog-stage-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+.prog-stage-mult {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.prog-pills {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.prog-pill {
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font);
+  transition: border-color 0.1s, color 0.1s;
+}
+.prog-pill:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+.prog-pill--reached {
+  background: rgba(59,130,246,0.15);
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+.prog-pill--current {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: #fff;
+  font-weight: 700;
+}
+.prog-pts-badge {
+  min-width: 60px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--accent2);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
 code {
   background: var(--bg);
   padding: 2px 6px;

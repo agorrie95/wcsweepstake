@@ -55,7 +55,7 @@ const PROG_STAGE_ORDER = [
  *   winner        → also played and won final   → +205
  */
 function computeProgressionPts(stage) {
-  if (!stage || stage === 'knocked out' || stage === 'group stage') return 0;
+  if (!stage || stage === 'group stage') return 0;
   const s = stage === 'winner' ? 'final' : stage;
   const idx = PROG_STAGE_ORDER.indexOf(s);
   if (idx < 1) return 0;

@@ -173,7 +173,6 @@ a { color: var(--accent); text-decoration: none; }
 .best-team-chip--long-shot     { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
 .best-team-chip--not-a-chancer { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 .best-team-chip--result        { background: rgba(232,184,75,0.15); color: #e8b84b; border: 1px solid rgba(232,184,75,0.35); }
-.best-team-chip--worst         { background: rgba(120,113,108,0.15); color: #a8a29e; border: 1px solid rgba(120,113,108,0.35); }
 
 .best-team-chip__sub {
   font-size: 13px;

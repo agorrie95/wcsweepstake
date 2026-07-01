@@ -276,39 +276,6 @@ function computeBestTeamsByBracket(matches, participants, progressionMap) {
 }
 
 /**
- * Find the lowest-scoring team across the whole tournament (any bracket),
- * by the same multiplied points used on the leaderboard.
- * @param {Array} matches
- * @param {Array} participants
- * @param {object} progressionMap
- * @returns {object|null} { name, bracket, multiplier, total } | null
- */
-function computeWorstTeam(matches, participants, progressionMap) {
-  const teamMultiplierMap = {};
-  const teamBracketMap = {};
-  for (const p of participants) {
-    for (const t of (p.teams || [])) {
-      if (!(t.name in teamMultiplierMap)) {
-        teamMultiplierMap[t.name] = parseFloat(t.multiplier) || 1;
-        teamBracketMap[t.name]   = t.bracket;
-      }
-    }
-  }
-
-  const teamTotals = computeTeamTotals(matches, progressionMap, teamMultiplierMap);
-  let worst = null;
-
-  for (const [name, bracket] of Object.entries(teamBracketMap)) {
-    const total = computeTeamPoints(teamTotals, name, teamMultiplierMap[name]);
-    if (!worst || total < worst.total) {
-      worst = { name, bracket, multiplier: teamMultiplierMap[name], total };
-    }
-  }
-
-  return worst;
-}
-
-/**
  * Find the single biggest point swing earned by one team in one match
  * (goals + result + upset bonus, multiplied — same maths as the match modal).
  * @param {Array} matches

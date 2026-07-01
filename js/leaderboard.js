@@ -151,26 +151,51 @@ const BRACKET_LABELS = {
   'not-a-chancer': 'Best Not-A-Chancer',
 };
 
+function flagImgHtml(info) {
+  return info && info.iso2
+    ? `<img class="best-team-chip__flag" src="https://flagcdn.com/24x18/${info.iso2}.png" srcset="https://flagcdn.com/48x36/${info.iso2}.png 2x" alt="" />`
+    : '';
+}
+
 function renderBestTeams(matches, participants, progressionMap, teamInfoMap) {
   const el = document.getElementById('best-teams-widget');
   if (!el) return;
 
   const best = computeBestTeamsByBracket(matches, participants, progressionMap);
 
-  el.innerHTML = BRACKET_ORDER.filter(b => best[b]).map(b => {
+  const bracketChips = BRACKET_ORDER.filter(b => best[b]).map(b => {
     const t = best[b];
     const info = teamInfoMap[t.name] || {};
     const code = info.code || t.name.slice(0,3).toUpperCase();
-    const flagImg = info.iso2
-      ? `<img class="best-team-chip__flag" src="https://flagcdn.com/24x18/${info.iso2}.png" srcset="https://flagcdn.com/48x36/${info.iso2}.png 2x" alt="" />`
-      : '';
     return `
       <div class="best-team-chip best-team-chip--${b}" title="${t.name}">
         <span class="best-team-chip__label">${BRACKET_LABELS[b]}</span>
-        <span class="best-team-chip__name">${flagImg}${code}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
+        <span class="best-team-chip__name">${flagImgHtml(info)}${code}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
         <span class="best-team-chip__pts">${t.total >= 0 ? '+' : ''}${t.total.toFixed(1)}pts</span>
       </div>`;
-  }).join('');
+  });
+
+  const resultChip = renderBestResultChip(matches, participants, teamInfoMap);
+
+  el.innerHTML = bracketChips.join('') + resultChip;
+}
+
+function renderBestResultChip(matches, participants, teamInfoMap) {
+  const best = computeBestSingleMatchResult(matches, participants);
+  if (!best) return '';
+
+  const info = teamInfoMap[best.team] || {};
+  const code = info.code || best.team.slice(0,3).toUpperCase();
+  const score = best.isHome
+    ? `${best.homeGoals}–${best.awayGoals}`
+    : `${best.awayGoals}–${best.homeGoals}`;
+
+  return `
+    <div class="best-team-chip best-team-chip--result" title="${best.team} vs ${best.opponent} · ${best.date}">
+      <span class="best-team-chip__label">Best Result</span>
+      <span class="best-team-chip__name">${flagImgHtml(info)}${code}<span class="best-team-chip__mult"> ×${best.multiplier}</span></span>
+      <span class="best-team-chip__pts">+${best.final.toFixed(1)}pts <span class="best-team-chip__sub">vs ${best.opponent} (${score})</span></span>
+    </div>`;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────

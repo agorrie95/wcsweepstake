@@ -120,6 +120,8 @@ a { color: var(--accent); text-decoration: none; }
 
 .best-teams-widget {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 12px;
 }
 
@@ -170,6 +172,13 @@ a { color: var(--accent); text-decoration: none; }
 .best-team-chip--front-runner  { background: rgba(34,197,94,0.15);  color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
 .best-team-chip--long-shot     { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
 .best-team-chip--not-a-chancer { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+.best-team-chip--result        { background: rgba(232,184,75,0.15); color: #e8b84b; border: 1px solid rgba(232,184,75,0.35); }
+
+.best-team-chip__sub {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.8;
+}
 
 /* Body row (main + sidebar) */
 .lb-body {

@@ -276,6 +276,61 @@ function computeBestTeamsByBracket(matches, participants, progressionMap) {
 }
 
 /**
+ * Find the single biggest point swing earned by one team in one match
+ * (goals + result + upset bonus, multiplied — same maths as the match modal).
+ * @param {Array} matches
+ * @param {Array} participants
+ * @returns {object|null} { team, opponent, date, round, homeGoals, awayGoals, final } | null
+ */
+function computeBestSingleMatchResult(matches, participants) {
+  const teamMultiplierMap = {};
+  for (const p of participants) {
+    for (const t of (p.teams || [])) {
+      if (!(t.name in teamMultiplierMap)) teamMultiplierMap[t.name] = parseFloat(t.multiplier) || 1;
+    }
+  }
+
+  let best = null;
+
+  for (const match of matches) {
+    if (!match.finished) continue;
+    const { home, away } = match;
+    const isNilNil = home.goals === 0 && away.goals === 0;
+
+    const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
+    const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+
+    const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
+    const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
+
+    const homeMult = teamMultiplierMap[home.name] || 1;
+    const awayMult = teamMultiplierMap[away.name] || 1;
+    const upset    = upsetBonuses(homeMult, awayMult, home.goals, away.goals);
+
+    for (const [side, name, opponent, mult, upsetBonus] of [
+      [homeSide, home.name, away.name, homeMult, upset.home],
+      [awaySide, away.name, home.name, awayMult, upset.away],
+    ]) {
+      const pts          = scoreTeamInMatch(side, isNilNil);
+      const raw          = pts.goals + pts.hatTrickBonus + pts.cleanSheet + pts.penSaves + pts.redCards + pts.result;
+      const adjustedRaw  = raw + upsetBonus;
+      const effectiveMult = adjustedRaw < 0 ? 1 : mult;
+      const final        = Math.round(adjustedRaw * effectiveMult * 100) / 100;
+
+      if (!best || final > best.final) {
+        best = {
+          team: name, opponent, date: match.date, round: match.round,
+          homeGoals: home.goals, awayGoals: away.goals, isHome: name === home.name,
+          multiplier: mult, final,
+        };
+      }
+    }
+  }
+
+  return best;
+}
+
+/**
  * Compute per-participant scores.
  * @param {Array} matches
  * @param {Array} participants  – [{ name, teams:[{name, multiplier, bracket}] }]

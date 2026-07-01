@@ -179,8 +179,10 @@
           <h2 class="card__title">Team Progression</h2>
           <p class="card__desc">
             Set the furthest stage each team has reached. Progression bonus points are awarded based on
-            this table — not from individual match results. Changes save to this browser instantly,
-            and push straight to GitHub if you've set up a token below.
+            this table — not from individual match results. Tick <strong>K.O.'d</strong> once a team is
+            eliminated — it locks the stage pills so you don't accidentally change a team's furthest
+            round reached, but keeps the points they already earned. Changes save to this browser
+            instantly, and push straight to GitHub if you've set up a token below.
           </p>
           <div id="progression-table-wrap">
             <p class="muted">Loading teams…</p>
@@ -211,12 +213,12 @@
         <div class="card" style="margin-top:20px">
           <h2 class="card__title">Export Progression</h2>
           <p class="card__desc">
-            Manual fallback — download <code>progression.json</code> and replace
-            <code>data/progression.json</code> in your repository if auto-push is
-            unavailable or fails.
+            Manual fallback — download <code>progression.json</code> and <code>knockedout.json</code>
+            and replace them in your repository if auto-push is unavailable or fails.
           </p>
           <div class="card__actions">
             <button class="btn btn--success" onclick="exportProgression()">⬇ Download progression.json</button>
+            <button class="btn btn--success" onclick="exportKnockouts()">⬇ Download knockedout.json</button>
           </div>
         </div>
       </div>

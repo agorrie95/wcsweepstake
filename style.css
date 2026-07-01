@@ -597,6 +597,14 @@ a { color: var(--accent); text-decoration: none; }
 .team-chip--long-shot     { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
 .team-chip--not-a-chancer { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 
+.team-chip--ko {
+  background: rgba(120,113,108,0.12) !important;
+  color: #78716c !important;
+  border-color: rgba(120,113,108,0.3) !important;
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
 .team-chip__mult {
   font-size: 18px;
   opacity: .7;
@@ -1078,6 +1086,45 @@ select.form-input { cursor: pointer; }
   color: var(--accent2);
   font-size: 13px;
   flex-shrink: 0;
+}
+
+.prog-stage-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.prog-ko-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 8px;
+}
+.prog-ko-toggle input {
+  cursor: pointer;
+}
+.prog-ko-toggle--active {
+  color: var(--red, #ef4444);
+}
+
+.prog-stage-main--ko {
+  opacity: 0.45;
+}
+.prog-stage-main--ko .prog-stage-name {
+  text-decoration: line-through;
+}
+.prog-stage-main--ko .prog-pill {
+  cursor: not-allowed;
 }
 
 code {

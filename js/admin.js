@@ -5,9 +5,11 @@
 const PASSWORD    = '123sausages';
 const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
+const KO_KEY      = 'wc2026_knockedout';
 const GH_PAT_KEY  = 'wc2026_gh_pat';
 const GH_REPO     = 'agorrie95/wcsweepstake';
 const GH_PROG_PATH = 'data/progression.json';
+const GH_KO_PATH   = 'data/knockedout.json';
 
 const PROG_STAGES = [
   { value: 'group stage',    label: 'Groups' },
@@ -28,6 +30,7 @@ const BRACKET_LABELS = {
 let allTeams      = [];
 let matches       = [];    // in-memory, synced to localStorage
 let progressionMap = {};
+let knockedOutMap = {};    // { teamName: true } — independent of progression stage
 let participants  = [];    // in-memory, exported as participants.json
 let pendingTeams  = null;  // teams staged by randomiser, not yet confirmed
 let homeScore    = 0;
@@ -86,6 +89,12 @@ async function init() {
   const storedProg = localStorage.getItem(PROG_KEY);
   if (storedProg) {
     try { progressionMap = JSON.parse(storedProg); } catch(e) { progressionMap = {}; }
+  }
+
+  // Load knocked-out flags from localStorage
+  const storedKO = localStorage.getItem(KO_KEY);
+  if (storedKO) {
+    try { knockedOutMap = JSON.parse(storedKO); } catch(e) { knockedOutMap = {}; }
   }
 
   // Load participants
@@ -163,6 +172,7 @@ function renderProgressionTab() {
       const stageIdx = stageOrder.indexOf(stage);
       const safeId   = team.name.replace(/\W/g, '_');
       const teamSafe = team.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      const isKO     = !!knockedOutMap[team.name];
 
       const pills = PROG_STAGES.map((s, i) => {
         const reached = i <= stageIdx;
@@ -171,18 +181,25 @@ function renderProgressionTab() {
                   : reached  ? 'prog-pill prog-pill--reached'
                   :            'prog-pill';
         const stageSafe = s.value.replace(/'/g, "\\'");
-        return `<button class="${cls}" onclick="setProgressionStage('${teamSafe}','${stageSafe}')">${s.label}</button>`;
+        const disabledAttr = isKO ? 'disabled' : '';
+        return `<button class="${cls}" ${disabledAttr} onclick="setProgressionStage('${teamSafe}','${stageSafe}')">${s.label}</button>`;
       }).join('');
 
       const ptsDisplay = pts > 0 ? `+${pts}` : '0';
       html += `
         <div class="prog-stage-row">
-          <div class="prog-stage-info">
-            <span class="prog-stage-name">${team.name}</span>
-            <span class="prog-stage-mult"> ×${team.multiplier}</span>
+          <div class="prog-stage-main ${isKO ? 'prog-stage-main--ko' : ''}">
+            <div class="prog-stage-info">
+              <span class="prog-stage-name">${team.name}</span>
+              <span class="prog-stage-mult"> ×${team.multiplier}</span>
+            </div>
+            <div class="prog-pills">${pills}</div>
+            <div class="prog-pts-badge" id="prog-pts-${safeId}">${ptsDisplay} pts</div>
           </div>
-          <div class="prog-pills">${pills}</div>
-          <div class="prog-pts-badge" id="prog-pts-${safeId}">${ptsDisplay} pts</div>
+          <label class="prog-ko-toggle ${isKO ? 'prog-ko-toggle--active' : ''}">
+            <input type="checkbox" ${isKO ? 'checked' : ''} onchange="setTeamKnockedOut('${teamSafe}', this.checked)" />
+            K.O.'d
+          </label>
         </div>`;
     }
   }
@@ -191,10 +208,19 @@ function renderProgressionTab() {
 }
 
 function setProgressionStage(teamName, stage) {
+  if (knockedOutMap[teamName]) return; // locked while marked K.O.'d
   progressionMap[teamName] = stage;
   localStorage.setItem(PROG_KEY, JSON.stringify(progressionMap));
   renderProgressionTab();
   queueProgressionPush();
+}
+
+function setTeamKnockedOut(teamName, checked) {
+  if (checked) knockedOutMap[teamName] = true;
+  else delete knockedOutMap[teamName];
+  localStorage.setItem(KO_KEY, JSON.stringify(knockedOutMap));
+  renderProgressionTab();
+  queueKnockoutPush();
 }
 
 // ── GitHub auto-push ──────────────────────────────────────────────────────
@@ -239,11 +265,26 @@ function clearGitHubToken() {
 }
 
 // Debounce rapid pill clicks into a single push
+let knockoutPushTimer = null;
+
 function queueProgressionPush() {
   if (!getGitHubToken()) return;
   clearTimeout(progressionPushTimer);
   setProgressionPushStatus('Saving…', 'var(--text-muted)');
-  progressionPushTimer = setTimeout(pushProgressionToGitHub, 900);
+  progressionPushTimer = setTimeout(
+    () => pushJSONToGitHub(GH_PROG_PATH, progressionMap, 'Update progression via admin panel'),
+    900
+  );
+}
+
+function queueKnockoutPush() {
+  if (!getGitHubToken()) return;
+  clearTimeout(knockoutPushTimer);
+  setProgressionPushStatus('Saving…', 'var(--text-muted)');
+  knockoutPushTimer = setTimeout(
+    () => pushJSONToGitHub(GH_KO_PATH, knockedOutMap, 'Update knocked-out teams via admin panel'),
+    900
+  );
 }
 
 function setProgressionPushStatus(text, color) {
@@ -253,12 +294,12 @@ function setProgressionPushStatus(text, color) {
   el.textContent = text;
 }
 
-async function pushProgressionToGitHub() {
+async function pushJSONToGitHub(path, dataObj, commitMessage) {
   const token = getGitHubToken();
   if (!token) return;
 
   try {
-    const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PROG_PATH}`, {
+    const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github+json',
@@ -268,10 +309,10 @@ async function pushProgressionToGitHub() {
     const getData = await getRes.json();
     const sha = getData.sha;
 
-    const jsonStr = JSON.stringify(progressionMap, null, 2);
+    const jsonStr = JSON.stringify(dataObj, null, 2);
     const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
 
-    const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PROG_PATH}`, {
+    const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -279,7 +320,7 @@ async function pushProgressionToGitHub() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: 'Update progression via admin panel',
+        message: commitMessage,
         content: encoded,
         sha,
       }),
@@ -300,6 +341,14 @@ function exportProgression() {
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href = url; a.download = 'progression.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportKnockouts() {
+  const blob = new Blob([JSON.stringify(knockedOutMap, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'knockedout.json'; a.click();
   URL.revokeObjectURL(url);
 }
 
@@ -576,27 +625,31 @@ async function syncFromDeployed() {
   statusEl.textContent = 'Fetching…';
   try {
     const bust = '?_=' + Date.now();
-    const [matchesRes, progRes] = await Promise.all([
+    const [matchesRes, progRes, koRes] = await Promise.all([
       fetch('data/matches.json' + bust),
       fetch('data/progression.json' + bust),
+      fetch('data/knockedout.json' + bust),
     ]);
     if (!matchesRes.ok) throw new Error('matches.json: ' + matchesRes.status);
     if (!progRes.ok)    throw new Error('progression.json: ' + progRes.status);
 
     const matchesData = await matchesRes.json();
     const progData    = await progRes.json();
+    const koData      = koRes.ok ? await koRes.json() : {};
 
     if (!Array.isArray(matchesData)) throw new Error('matches.json is not an array');
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(matchesData));
     localStorage.setItem(PROG_KEY,    JSON.stringify(progData));
+    localStorage.setItem(KO_KEY,      JSON.stringify(koData));
 
     matches       = matchesData;
     progressionMap = progData;
+    knockedOutMap  = koData;
     renderHistory();
     renderExportStats();
     statusEl.style.color = 'var(--green, #22c55e)';
-    statusEl.textContent = `Synced ${matchesData.length} match${matchesData.length !== 1 ? 'es' : ''} and progression data.`;
+    statusEl.textContent = `Synced ${matchesData.length} match${matchesData.length !== 1 ? 'es' : ''}, progression, and knockout data.`;
   } catch (err) {
     statusEl.style.color = 'var(--red, #ef4444)';
     statusEl.textContent = 'Sync failed: ' + err.message;

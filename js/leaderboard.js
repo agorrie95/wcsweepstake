@@ -7,9 +7,10 @@
 const REFRESH_MS  = 15 * 1000;
 const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
+const KO_KEY      = 'wc2026_knockedout';
 
 // Module-scope data — kept fresh after every loadAndRender, used by modals
-let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {}, _teamInfoMap = {};
+let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {}, _teamInfoMap = {}, _knockedOutMap = {};
 
 // ── Data helpers ──────────────────────────────────────────────────────────
 
@@ -27,6 +28,12 @@ function getMatches() {
 
 function getProgression() {
   const stored = localStorage.getItem(PROG_KEY);
+  if (stored) { try { return JSON.parse(stored); } catch(e) {} }
+  return null;
+}
+
+function getKnockedOut() {
+  const stored = localStorage.getItem(KO_KEY);
   if (stored) { try { return JSON.parse(stored); } catch(e) {} }
   return null;
 }
@@ -107,9 +114,10 @@ function renderLeaderboard(scores) {
   });
 
   const rows = ranked.map(row => {
-    const teamChips = (row.teams || []).map(t =>
-      `<span class="team-chip team-chip--${t.bracket}">${t.name}<span class="team-chip__mult"> ×${t.multiplier}</span></span>`
-    ).join('');
+    const teamChips = (row.teams || []).map(t => {
+      const koCls = _knockedOutMap[t.name] ? ' team-chip--ko' : '';
+      return `<span class="team-chip team-chip--${t.bracket}${koCls}">${t.name}<span class="team-chip__mult"> ×${t.multiplier}</span></span>`;
+    }).join('');
 
     const bd = row.breakdown || {};
     const breakdown = `
@@ -505,6 +513,11 @@ async function loadAndRender() {
       try { progressionMap = await fetchJSON('data/progression.json'); } catch(e) { progressionMap = {}; }
     }
 
+    let knockedOutMap = getKnockedOut();
+    if (!knockedOutMap) {
+      try { knockedOutMap = await fetchJSON('data/knockedout.json'); } catch(e) { knockedOutMap = {}; }
+    }
+
     let teamInfoMap = {};
     try {
       const teamsList = await fetchJSON('data/teams.json');
@@ -516,6 +529,7 @@ async function loadAndRender() {
     _participants   = participants;
     _progressionMap = progressionMap;
     _teamInfoMap    = teamInfoMap;
+    _knockedOutMap  = knockedOutMap;
     _teamMultiplierMap = {};
     for (const p of participants) {
       for (const t of (p.teams || [])) {

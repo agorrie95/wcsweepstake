@@ -328,14 +328,13 @@ function openParticipantModal(name) {
       <div class="lb-modal-team-block">
         <div class="lb-modal-team-hdr">
           <span class="team-chip ${bracketClass}">${team.name}<span class="team-chip__mult"> ×${team.multiplier}</span></span>
-          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progPts > 0 ? ` · +${progPts.toFixed(1)} pts` : ''}</span>
+          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progRaw > 0 ? `: +${progRaw} ×${myMultForProg} = ${progPts.toFixed(1)}pts` : ''}</span>
         </div>
         ${teamMatches.length
           ? `<div class="lb-modal-match-list">${matchRows}</div>`
           : '<div class="lb-modal-no-matches">No matches played yet</div>'}
         <div class="lb-modal-team-subtotal">
-          Team subtotal: <strong>${teamTotal >= 0 ? '+' : ''}${teamTotal.toFixed(1)} pts</strong>
-          ${progPts > 0 ? `<span class="lb-modal-prog-note">(incl. +${progPts.toFixed(1)} progression)</span>` : ''}
+          Team subtotal: <strong>${teamTotal >= 0 ? '+' : ''}${teamTotal.toFixed(1)}pts</strong>
         </div>
       </div>`;
   }

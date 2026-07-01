@@ -108,14 +108,55 @@ a { color: var(--accent); text-decoration: none; }
 
 .lb-header__meta {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
 }
 
 .lb-header__updated {
   font-size: 24px;
   color: var(--text-muted);
 }
+
+.best-teams-widget {
+  display: flex;
+  gap: 12px;
+}
+
+.best-team-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+.best-team-chip__label {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.75;
+}
+
+.best-team-chip__name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.best-team-chip__mult {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.best-team-chip__pts {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.best-team-chip--front-runner  { background: rgba(34,197,94,0.15);  color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+.best-team-chip--long-shot     { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+.best-team-chip--not-a-chancer { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 
 /* Body row (main + sidebar) */
 .lb-body {

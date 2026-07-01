@@ -218,6 +218,64 @@ function computeTeamTotals(matches, progressionMap, teamMultiplierMap) {
 }
 
 /**
+ * Compute a single team's total points (match pts + progression), with the
+ * upset-then-multiplier ordering applied per match. Shared by computeScores
+ * and computeBestTeamsByBracket so the two never drift apart.
+ * @param {object} teamTotals  - from computeTeamTotals
+ * @param {string} teamName
+ * @param {number} multiplier
+ * @returns {number}
+ */
+function computeTeamPoints(teamTotals, teamName, multiplier) {
+  const raw = teamTotals[teamName] || {};
+  let inGamePts = 0, resultPts = 0, upsetPts = 0;
+
+  for (const { inGame, result, upsetBonus } of (raw.matchBreakdowns || [])) {
+    const matchRaw       = inGame + result + (upsetBonus || 0);
+    const effectiveMult  = matchRaw < 0 ? 1 : multiplier;
+    inGamePts += inGame * effectiveMult;
+    resultPts += result * effectiveMult;
+    upsetPts  += (upsetBonus || 0) * effectiveMult;
+  }
+
+  const progPts = (raw.progression || 0) * multiplier;
+  return Math.round((inGamePts + resultPts + upsetPts + progPts) * 100) / 100;
+}
+
+/**
+ * Find the highest-scoring team in each bracket (front-runner / long-shot /
+ * not-a-chancer), by the same multiplied points used on the leaderboard.
+ * @param {Array} matches
+ * @param {Array} participants
+ * @param {object} progressionMap
+ * @returns {object} bracket -> { name, multiplier, total } | undefined
+ */
+function computeBestTeamsByBracket(matches, participants, progressionMap) {
+  const teamMultiplierMap = {};
+  const teamBracketMap = {};
+  for (const p of participants) {
+    for (const t of (p.teams || [])) {
+      if (!(t.name in teamMultiplierMap)) {
+        teamMultiplierMap[t.name] = parseFloat(t.multiplier) || 1;
+        teamBracketMap[t.name]   = t.bracket;
+      }
+    }
+  }
+
+  const teamTotals = computeTeamTotals(matches, progressionMap, teamMultiplierMap);
+  const best = {};
+
+  for (const [name, bracket] of Object.entries(teamBracketMap)) {
+    const total = computeTeamPoints(teamTotals, name, teamMultiplierMap[name]);
+    if (!best[bracket] || total > best[bracket].total) {
+      best[bracket] = { name, multiplier: teamMultiplierMap[name], total };
+    }
+  }
+
+  return best;
+}
+
+/**
  * Compute per-participant scores.
  * @param {Array} matches
  * @param {Array} participants  – [{ name, teams:[{name, multiplier, bracket}] }]

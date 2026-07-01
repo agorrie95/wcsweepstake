@@ -142,6 +142,32 @@ function renderLeaderboard(scores) {
     </table>`;
 }
 
+// ── Best-teams-by-bracket widget ─────────────────────────────────────────
+
+const BRACKET_ORDER  = ['front-runner', 'long-shot', 'not-a-chancer'];
+const BRACKET_LABELS = {
+  'front-runner':  'Best Front-Runner',
+  'long-shot':     'Best Long-Shot',
+  'not-a-chancer': 'Best Not-A-Chancer',
+};
+
+function renderBestTeams(matches, participants, progressionMap) {
+  const el = document.getElementById('best-teams-widget');
+  if (!el) return;
+
+  const best = computeBestTeamsByBracket(matches, participants, progressionMap);
+
+  el.innerHTML = BRACKET_ORDER.filter(b => best[b]).map(b => {
+    const t = best[b];
+    return `
+      <div class="best-team-chip best-team-chip--${b}">
+        <span class="best-team-chip__label">${BRACKET_LABELS[b]}</span>
+        <span class="best-team-chip__name">${t.name}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
+        <span class="best-team-chip__pts">${t.total >= 0 ? '+' : ''}${t.total.toFixed(1)}pts</span>
+      </div>`;
+  }).join('');
+}
+
 // ── Sidebar ───────────────────────────────────────────────────────────────
 
 function renderSidebar(matches) {
@@ -488,6 +514,7 @@ async function loadAndRender() {
 
     renderLeaderboard(scores);
     renderSidebar(matches);
+    renderBestTeams(matches, participants, progressionMap);
 
     const source = localStorage.getItem(STORAGE_KEY) ? 'live' : 'deployed';
     const el = document.getElementById('last-updated');

@@ -160,12 +160,14 @@ function renderBestTeams(matches, participants, progressionMap, teamInfoMap) {
   el.innerHTML = BRACKET_ORDER.filter(b => best[b]).map(b => {
     const t = best[b];
     const info = teamInfoMap[t.name] || {};
-    const flag = info.flag || '';
     const code = info.code || t.name.slice(0,3).toUpperCase();
+    const flagImg = info.iso2
+      ? `<img class="best-team-chip__flag" src="https://flagcdn.com/24x18/${info.iso2}.png" srcset="https://flagcdn.com/48x36/${info.iso2}.png 2x" alt="" />`
+      : '';
     return `
       <div class="best-team-chip best-team-chip--${b}" title="${t.name}">
         <span class="best-team-chip__label">${BRACKET_LABELS[b]}</span>
-        <span class="best-team-chip__name">${flag ? `<span class="best-team-chip__flag">${flag}</span> ` : ''}${code}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
+        <span class="best-team-chip__name">${flagImg}${code}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
         <span class="best-team-chip__pts">${t.total >= 0 ? '+' : ''}${t.total.toFixed(1)}pts</span>
       </div>`;
   }).join('');
@@ -481,7 +483,7 @@ async function loadAndRender() {
     let teamInfoMap = {};
     try {
       const teamsList = await fetchJSON('data/teams.json');
-      teamsList.forEach(t => { teamInfoMap[t.name] = { flag: t.flag || '', code: t.code || t.name.slice(0,3).toUpperCase() }; });
+      teamsList.forEach(t => { teamInfoMap[t.name] = { iso2: t.iso2 || '', code: t.code || t.name.slice(0,3).toUpperCase() }; });
     } catch(e) { teamInfoMap = {}; }
 
     // Store for modal access

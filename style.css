@@ -140,10 +140,18 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .best-team-chip__flag {
-  font-size: 22px;
+  width: 24px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 6px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15);
 }
 
 .best-team-chip__name {
+  display: inline-flex;
+  align-items: center;
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;

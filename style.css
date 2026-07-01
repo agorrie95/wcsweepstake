@@ -468,7 +468,18 @@ a { color: var(--accent); text-decoration: none; }
   padding: 4px 12px;
   white-space: nowrap;
 }
-.lb-modal-stage-badge--knocked { color: var(--red); border-color: rgba(239,68,68,0.3); }
+.lb-modal-stage-badge--knocked {
+  color: #78716c;
+  background: rgba(120,113,108,0.12);
+  border-color: rgba(120,113,108,0.3);
+}
+
+.lb-modal-team-block--ko {
+  opacity: 0.55;
+}
+.lb-modal-team-block--ko .lb-modal-mr-fixture {
+  text-decoration: line-through;
+}
 
 .lb-modal-match-list { padding: 0 18px; }
 

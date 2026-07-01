@@ -330,7 +330,7 @@ function openParticipantModal(name) {
     const myMultForProg = parseFloat(team.multiplier) || 1;
     const progRaw    = computeProgressionPts(stage);
     const progPts    = progRaw * myMultForProg;
-    const knocked    = stage === 'knocked out';
+    const isKO       = !!_knockedOutMap[team.name];
     const stageLabel = stage.charAt(0).toUpperCase() + stage.slice(1);
 
     const teamMatches = _matches.filter(m =>
@@ -386,13 +386,13 @@ function openParticipantModal(name) {
 
     // Subtotal for this team = match pts + progression pts
     const teamTotal = matchTotal + progPts;
-    const bracketClass = `team-chip--${team.bracket}`;
+    const bracketClass = `team-chip--${team.bracket}${isKO ? ' team-chip--ko' : ''}`;
 
     html += `
-      <div class="lb-modal-team-block">
+      <div class="lb-modal-team-block${isKO ? ' lb-modal-team-block--ko' : ''}">
         <div class="lb-modal-team-hdr">
           <span class="team-chip ${bracketClass}">${team.name}<span class="team-chip__mult"> ×${team.multiplier}</span></span>
-          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progRaw > 0 ? `: +${progRaw} ×${myMultForProg} = ${progPts.toFixed(1)}pts` : ''}</span>
+          <span class="lb-modal-stage-badge ${isKO ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progRaw > 0 ? `: +${progRaw} ×${myMultForProg} = ${progPts.toFixed(1)}pts` : ''}</span>
         </div>
         ${teamMatches.length
           ? `<div class="lb-modal-match-list">${matchRows}</div>`

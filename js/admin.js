@@ -5,6 +5,9 @@
 const PASSWORD    = '123sausages';
 const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
+const GH_PAT_KEY  = 'wc2026_gh_pat';
+const GH_REPO     = 'agorrie95/wcsweepstake';
+const GH_PROG_PATH = 'data/progression.json';
 
 const PROG_STAGES = [
   { value: 'group stage',    label: 'Groups' },
@@ -133,7 +136,7 @@ function showTab(id) {
   event.target.classList.add('tab-btn--active');
   if (id === 'tab-history')      renderHistory();
   if (id === 'tab-export')       renderExportStats();
-  if (id === 'tab-progression')  renderProgressionTab();
+  if (id === 'tab-progression')  { renderProgressionTab(); showGitHubTokenStatus(); }
   if (id === 'tab-participants') renderParticipantsTab();
 }
 
@@ -191,6 +194,105 @@ function setProgressionStage(teamName, stage) {
   progressionMap[teamName] = stage;
   localStorage.setItem(PROG_KEY, JSON.stringify(progressionMap));
   renderProgressionTab();
+  queueProgressionPush();
+}
+
+// ── GitHub auto-push ──────────────────────────────────────────────────────
+
+let progressionPushTimer = null;
+
+function getGitHubToken() {
+  return localStorage.getItem(GH_PAT_KEY) || '';
+}
+
+function saveGitHubToken() {
+  const val = document.getElementById('gh-pat-input').value.trim();
+  const statusEl = document.getElementById('gh-pat-status');
+  if (!val) {
+    statusEl.style.color = 'var(--red, #ef4444)';
+    statusEl.textContent = 'Enter a token first.';
+    return;
+  }
+  localStorage.setItem(GH_PAT_KEY, val);
+  document.getElementById('gh-pat-input').value = '';
+  statusEl.style.color = 'var(--green, #22c55e)';
+  statusEl.textContent = '✓ Token saved to this browser. Progression changes will now auto-push.';
+}
+
+function showGitHubTokenStatus() {
+  const statusEl = document.getElementById('gh-pat-status');
+  if (!statusEl) return;
+  if (getGitHubToken()) {
+    statusEl.style.color = 'var(--green, #22c55e)';
+    statusEl.textContent = '✓ Token saved in this browser — progression edits auto-push.';
+  } else {
+    statusEl.style.color = 'var(--text-muted)';
+    statusEl.textContent = 'No token saved — progression edits only save to local storage until exported.';
+  }
+}
+
+function clearGitHubToken() {
+  localStorage.removeItem(GH_PAT_KEY);
+  const statusEl = document.getElementById('gh-pat-status');
+  statusEl.style.color = 'var(--text-muted)';
+  statusEl.textContent = 'Token cleared. Auto-push disabled — use manual export instead.';
+}
+
+// Debounce rapid pill clicks into a single push
+function queueProgressionPush() {
+  if (!getGitHubToken()) return;
+  clearTimeout(progressionPushTimer);
+  setProgressionPushStatus('Saving…', 'var(--text-muted)');
+  progressionPushTimer = setTimeout(pushProgressionToGitHub, 900);
+}
+
+function setProgressionPushStatus(text, color) {
+  const el = document.getElementById('gh-pat-status');
+  if (!el) return;
+  el.style.color = color;
+  el.textContent = text;
+}
+
+async function pushProgressionToGitHub() {
+  const token = getGitHubToken();
+  if (!token) return;
+
+  try {
+    const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PROG_PATH}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+      },
+    });
+    if (!getRes.ok) throw new Error(`GET failed: ${getRes.status}`);
+    const getData = await getRes.json();
+    const sha = getData.sha;
+
+    const jsonStr = JSON.stringify(progressionMap, null, 2);
+    const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+
+    const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PROG_PATH}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: 'Update progression via admin panel',
+        content: encoded,
+        sha,
+      }),
+    });
+    if (!putRes.ok) {
+      const errBody = await putRes.json().catch(() => ({}));
+      throw new Error(`PUT failed: ${putRes.status} ${errBody.message || ''}`);
+    }
+
+    setProgressionPushStatus('✓ Pushed to GitHub — Vercel will redeploy shortly.', 'var(--green, #22c55e)');
+  } catch (err) {
+    setProgressionPushStatus('Push failed: ' + err.message, 'var(--red, #ef4444)');
+  }
 }
 
 function exportProgression() {

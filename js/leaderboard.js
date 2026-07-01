@@ -11,12 +11,6 @@ const PROG_KEY    = 'wc2026_progression';
 // Module-scope data — kept fresh after every loadAndRender, used by modals
 let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {};
 
-const PROG_PTS = {
-  'group stage': 0, 'knocked out': 0, 'round of 32': 5,
-  'round of 16': 10, 'quarter-finals': 20, 'semi-finals': 40,
-  'final': 75, 'winner': 205
-};
-
 // ── Data helpers ──────────────────────────────────────────────────────────
 
 async function fetchJSON(path) {
@@ -269,7 +263,9 @@ function openParticipantModal(name) {
 
   for (const team of participant.teams) {
     const stage      = _progressionMap[team.name] || 'group stage';
-    const progPts    = PROG_PTS[stage] || 0;
+    const myMultForProg = parseFloat(team.multiplier) || 1;
+    const progRaw    = computeProgressionPts(stage);
+    const progPts    = progRaw * myMultForProg;
     const knocked    = stage === 'knocked out';
     const stageLabel = stage.charAt(0).toUpperCase() + stage.slice(1);
 
@@ -332,14 +328,14 @@ function openParticipantModal(name) {
       <div class="lb-modal-team-block">
         <div class="lb-modal-team-hdr">
           <span class="team-chip ${bracketClass}">${team.name}<span class="team-chip__mult"> ×${team.multiplier}</span></span>
-          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progPts > 0 ? ` · +${progPts} pts` : ''}</span>
+          <span class="lb-modal-stage-badge ${knocked ? 'lb-modal-stage-badge--knocked' : ''}">${stageLabel}${progPts > 0 ? ` · +${progPts.toFixed(1)} pts` : ''}</span>
         </div>
         ${teamMatches.length
           ? `<div class="lb-modal-match-list">${matchRows}</div>`
           : '<div class="lb-modal-no-matches">No matches played yet</div>'}
         <div class="lb-modal-team-subtotal">
           Team subtotal: <strong>${teamTotal >= 0 ? '+' : ''}${teamTotal.toFixed(1)} pts</strong>
-          ${progPts > 0 ? `<span class="lb-modal-prog-note">(incl. +${progPts} progression)</span>` : ''}
+          ${progPts > 0 ? `<span class="lb-modal-prog-note">(incl. +${progPts.toFixed(1)} progression)</span>` : ''}
         </div>
       </div>`;
   }

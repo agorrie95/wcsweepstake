@@ -139,9 +139,14 @@ a { color: var(--accent); text-decoration: none; }
   opacity: 0.75;
 }
 
+.best-team-chip__flag {
+  font-size: 22px;
+}
+
 .best-team-chip__name {
   font-size: 20px;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .best-team-chip__mult {

@@ -9,7 +9,7 @@ const STORAGE_KEY = 'wc2026_matches';
 const PROG_KEY    = 'wc2026_progression';
 
 // Module-scope data — kept fresh after every loadAndRender, used by modals
-let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {};
+let _matches = [], _participants = [], _progressionMap = {}, _teamMultiplierMap = {}, _teamInfoMap = {};
 
 // ── Data helpers ──────────────────────────────────────────────────────────
 
@@ -151,7 +151,7 @@ const BRACKET_LABELS = {
   'not-a-chancer': 'Best Not-A-Chancer',
 };
 
-function renderBestTeams(matches, participants, progressionMap) {
+function renderBestTeams(matches, participants, progressionMap, teamInfoMap) {
   const el = document.getElementById('best-teams-widget');
   if (!el) return;
 
@@ -159,10 +159,13 @@ function renderBestTeams(matches, participants, progressionMap) {
 
   el.innerHTML = BRACKET_ORDER.filter(b => best[b]).map(b => {
     const t = best[b];
+    const info = teamInfoMap[t.name] || {};
+    const flag = info.flag || '';
+    const code = info.code || t.name.slice(0,3).toUpperCase();
     return `
-      <div class="best-team-chip best-team-chip--${b}">
+      <div class="best-team-chip best-team-chip--${b}" title="${t.name}">
         <span class="best-team-chip__label">${BRACKET_LABELS[b]}</span>
-        <span class="best-team-chip__name">${t.name}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
+        <span class="best-team-chip__name">${flag ? `<span class="best-team-chip__flag">${flag}</span> ` : ''}${code}<span class="best-team-chip__mult"> ×${t.multiplier}</span></span>
         <span class="best-team-chip__pts">${t.total >= 0 ? '+' : ''}${t.total.toFixed(1)}pts</span>
       </div>`;
   }).join('');
@@ -475,10 +478,17 @@ async function loadAndRender() {
       try { progressionMap = await fetchJSON('data/progression.json'); } catch(e) { progressionMap = {}; }
     }
 
+    let teamInfoMap = {};
+    try {
+      const teamsList = await fetchJSON('data/teams.json');
+      teamsList.forEach(t => { teamInfoMap[t.name] = { flag: t.flag || '', code: t.code || t.name.slice(0,3).toUpperCase() }; });
+    } catch(e) { teamInfoMap = {}; }
+
     // Store for modal access
     _matches        = matches;
     _participants   = participants;
     _progressionMap = progressionMap;
+    _teamInfoMap    = teamInfoMap;
     _teamMultiplierMap = {};
     for (const p of participants) {
       for (const t of (p.teams || [])) {
@@ -514,7 +524,7 @@ async function loadAndRender() {
 
     renderLeaderboard(scores);
     renderSidebar(matches);
-    renderBestTeams(matches, participants, progressionMap);
+    renderBestTeams(matches, participants, progressionMap, teamInfoMap);
 
     const source = localStorage.getItem(STORAGE_KEY) ? 'live' : 'deployed';
     const el = document.getElementById('last-updated');

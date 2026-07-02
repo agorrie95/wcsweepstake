@@ -91,10 +91,34 @@ async function init() {
     try { progressionMap = JSON.parse(storedProg); } catch(e) { progressionMap = {}; }
   }
 
+  // Also try fetching current data/progression.json to pre-populate if localStorage is empty
+  if (!Object.keys(progressionMap).length) {
+    try {
+      const r = await fetch('data/progression.json?_=' + Date.now());
+      const data = await r.json();
+      if (data && typeof data === 'object' && Object.keys(data).length) {
+        progressionMap = data;
+        localStorage.setItem(PROG_KEY, JSON.stringify(progressionMap));
+      }
+    } catch(e) {}
+  }
+
   // Load knocked-out flags from localStorage
   const storedKO = localStorage.getItem(KO_KEY);
   if (storedKO) {
     try { knockedOutMap = JSON.parse(storedKO); } catch(e) { knockedOutMap = {}; }
+  }
+
+  // Also try fetching current data/knockedout.json to pre-populate if localStorage is empty
+  if (!Object.keys(knockedOutMap).length) {
+    try {
+      const r = await fetch('data/knockedout.json?_=' + Date.now());
+      const data = await r.json();
+      if (data && typeof data === 'object' && Object.keys(data).length) {
+        knockedOutMap = data;
+        localStorage.setItem(KO_KEY, JSON.stringify(knockedOutMap));
+      }
+    } catch(e) {}
   }
 
   // Load participants

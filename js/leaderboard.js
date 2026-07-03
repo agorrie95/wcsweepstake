@@ -505,18 +505,17 @@ async function loadAndRender() {
   try {
     const participants = await fetchJSON('data/participants.json');
 
-    let matches = getMatches();
-    if (!matches) matches = await fetchJSON('data/matches.json');
+    let matches, matchesSource = 'deployed';
+    try { matches = await fetchJSON('data/matches.json'); }
+    catch(e) { matches = getMatches() || []; matchesSource = 'cached (offline)'; }
 
-    let progressionMap = getProgression();
-    if (!progressionMap) {
-      try { progressionMap = await fetchJSON('data/progression.json'); } catch(e) { progressionMap = {}; }
-    }
+    let progressionMap;
+    try { progressionMap = await fetchJSON('data/progression.json'); }
+    catch(e) { progressionMap = getProgression() || {}; }
 
-    let knockedOutMap = getKnockedOut();
-    if (!knockedOutMap) {
-      try { knockedOutMap = await fetchJSON('data/knockedout.json'); } catch(e) { knockedOutMap = {}; }
-    }
+    let knockedOutMap;
+    try { knockedOutMap = await fetchJSON('data/knockedout.json'); }
+    catch(e) { knockedOutMap = getKnockedOut() || {}; }
 
     let teamInfoMap = {};
     try {
@@ -567,9 +566,8 @@ async function loadAndRender() {
     renderSidebar(matches);
     renderBestTeams(matches, participants, progressionMap, teamInfoMap);
 
-    const source = localStorage.getItem(STORAGE_KEY) ? 'live' : 'deployed';
     const el = document.getElementById('last-updated');
-    if (el) el.textContent = 'Updated: ' + new Date().toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }) + ` (${source})`;
+    if (el) el.textContent = 'Updated: ' + new Date().toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }) + ` (${matchesSource})`;
   } catch (err) {
     const c = document.getElementById('leaderboard-container');
     if (c) c.innerHTML = `<div class="lb-loading">Error loading data — will retry shortly</div>`;

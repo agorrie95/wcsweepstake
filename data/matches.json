@@ -2481,5 +2481,93 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1783074374613",
+    "date": "2026-07-02",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Spain",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Mikel Oyarzabal"
+        },
+        {
+          "player": "Mikel Oyarzabal"
+        },
+        {
+          "player": "Pedro Porro"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Austria",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783074374614",
+    "date": "2026-07-02",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Portugal",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Cristiano Ronaldo"
+        },
+        {
+          "player": "Gonçalo Ramos"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Croatia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Ivan Perisic"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783074374615",
+    "date": "2026-07-02",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Switzerland",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Breel Embolo"
+        },
+        {
+          "player": "Dan Ndoye"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Algeria",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

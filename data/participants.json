@@ -744,6 +744,30 @@
     ]
   },
   {
+    "name": "Hector Powell",
+    "office": "",
+    "teams": [
+      {
+        "name": "Spain",
+        "group": "H",
+        "multiplier": 1,
+        "bracket": "front-runner"
+      },
+      {
+        "name": "Ecuador",
+        "group": "E",
+        "multiplier": 6.81,
+        "bracket": "long-shot"
+      },
+      {
+        "name": "Iraq",
+        "group": "I",
+        "multiplier": 10,
+        "bracket": "not-a-chancer"
+      }
+    ]
+  },
+  {
     "name": "Hiral Patel",
     "office": "London",
     "teams": [

@@ -2569,5 +2569,179 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1783332789517",
+    "date": "2026-07-03",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Australia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mohamed Hany (OG)"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Egypt",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Emam Ashour"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789518",
+    "date": "2026-07-03",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Argentina",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Lionel Messi"
+        },
+        {
+          "player": "Lisandro Martinez"
+        },
+        {
+          "player": "Diney Borges (OG)"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Cape Verde",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Sidny Lopes Cabral"
+        },
+        {
+          "player": "Deroy Duarte"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789519",
+    "date": "2026-07-03",
+    "round": "round of 32",
+    "finished": true,
+    "home": {
+      "name": "Colombia",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Jhon Arias"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Ghana",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789520",
+    "date": "2026-07-04",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "Canada",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Morocco",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Azzedine Ounahi"
+        },
+        {
+          "player": "Azzedine Ounahi"
+        },
+        {
+          "player": "Soufiane Rahimi"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789521",
+    "date": "2026-07-04",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "Paraguay",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "France",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Kylian Mbappe"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789522",
+    "date": "2026-07-05",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "Brazil",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Neymar"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Norway",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Erling Haaland"
+        },
+        {
+          "player": "Erling Haaland"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

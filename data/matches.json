@@ -2598,7 +2598,8 @@
       ],
       "redCards": 0,
       "penaltySaves": 0
-    }
+    },
+    "penalties": { "home": 2, "away": 4 }
   },
   {
     "id": "1783332789518",
@@ -2743,6 +2744,43 @@
         }
       ],
       "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783332789523",
+    "date": "2026-07-05",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "Mexico",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Julian Quinones"
+        },
+        {
+          "player": "Raul Jimenez"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "England",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Jude Bellingham"
+        },
+        {
+          "player": "Jude Bellingham"
+        },
+        {
+          "player": "Harry Kane"
+        }
+      ],
+      "redCards": 1,
       "penaltySaves": 0
     }
   }

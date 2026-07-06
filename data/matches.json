@@ -2269,7 +2269,8 @@
       ],
       "redCards": 0,
       "penaltySaves": 2
-    }
+    },
+    "penalties": { "home": 3, "away": 4 }
   },
   {
     "id": "1782807206615",
@@ -2297,7 +2298,8 @@
       ],
       "redCards": 0,
       "penaltySaves": 1
-    }
+    },
+    "penalties": { "home": 3, "away": 4 }
   },
   {
     "id": "1782893342827",

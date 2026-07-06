@@ -39,6 +39,8 @@ let homeRed      = 0;
 let awayRed      = 0;
 let homePenSave  = 0;
 let awayPenSave  = 0;
+let homePens     = 0;    // penalty shootout score — knockout ties only, never scored as goals
+let awayPens     = 0;
 
 // ── Auth ──────────────────────────────────────────────────────────────────
 
@@ -155,9 +157,11 @@ function setDefaultDate() {
 }
 
 function resetCounters() {
-  homeScore = awayScore = homeRed = awayRed = homePenSave = awayPenSave = 0;
+  homeScore = awayScore = homeRed = awayRed = homePenSave = awayPenSave = homePens = awayPens = 0;
   updateScoreDisplays();
   updateEventDisplays();
+  updatePensDisplay();
+  syncPenaltySection();
 }
 
 // ── Tabs ──────────────────────────────────────────────────────────────────
@@ -383,12 +387,40 @@ function stepScore(side, delta) {
   else                 awayScore = Math.max(0, awayScore + delta);
   updateScoreDisplays();
   syncGoalRows();
+  syncPenaltySection();
   updatePreview();
 }
 
 function updateScoreDisplays() {
   document.getElementById('home-score-display').textContent = homeScore;
   document.getElementById('away-score-display').textContent = awayScore;
+}
+
+// ── Penalty shootout (knockout ties only) ───────────────────────────────────
+
+function stepPens(side, delta) {
+  if (side === 'home') homePens = Math.max(0, homePens + delta);
+  else                 awayPens = Math.max(0, awayPens + delta);
+  updatePensDisplay();
+  updatePreview();
+}
+
+function updatePensDisplay() {
+  const homeEl = document.getElementById('home-pens-count');
+  const awayEl = document.getElementById('away-pens-count');
+  if (homeEl) homeEl.textContent = homePens;
+  if (awayEl) awayEl.textContent = awayPens;
+}
+
+// Knockout ties can't stay draws — show the shootout inputs whenever the
+// round isn't group stage and the scoreline is currently level.
+function syncPenaltySection() {
+  const section = document.getElementById('pens-section');
+  if (!section) return;
+  const round = document.getElementById('f-round').value;
+  const isKnockoutTie = round !== 'group stage' && homeScore === awayScore;
+  section.classList.toggle('hidden', !isKnockoutTie);
+  if (!isKnockoutTie) { homePens = awayPens = 0; updatePensDisplay(); }
 }
 
 function stepEvent(side, type, delta) {
@@ -443,6 +475,10 @@ function syncTeamLabels() {
   document.getElementById('away-red-label').textContent     = awayName;
   document.getElementById('home-pensave-label').textContent = homeName;
   document.getElementById('away-pensave-label').textContent = awayName;
+  const homePensLabel = document.getElementById('home-pens-label');
+  const awayPensLabel = document.getElementById('away-pens-label');
+  if (homePensLabel) homePensLabel.textContent = homeName;
+  if (awayPensLabel) awayPensLabel.textContent = awayName;
 }
 
 function getScorerNames(listId) {
@@ -460,9 +496,13 @@ function updatePreview() {
   if (homeName === awayName)  { preview.classList.add('hidden'); return; }
 
   const round = document.getElementById('f-round').value;
-  const isNilNil = homeScore === 0 && awayScore === 0;
-  const homeResult = homeScore > awayScore ? 'win' : homeScore < awayScore ? 'loss' : 'draw';
-  const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+  const previewMatch = {
+    round,
+    home: { goals: homeScore },
+    away: { goals: awayScore },
+    penalties: (round !== 'group stage' && homeScore === awayScore) ? { home: homePens, away: awayPens } : undefined,
+  };
+  const { homeResult, awayResult, isNilNil, decidedByPenalties } = getMatchResult(previewMatch);
 
   const homeSide = {
     goalScorers: getScorerNames('home-scorers-list').map(p => ({player: p})),
@@ -491,15 +531,17 @@ function updatePreview() {
   const homeFinalPts = (homeRawPts * (homeTeam.multiplier || 1)).toFixed(2);
   const awayFinalPts = (awayRawPts * (awayTeam.multiplier || 1)).toFixed(2);
 
-  const resultLabel = homeResult === 'win' ? `<span style="color:var(--green)">Win</span>` :
+  const resultLabel = decidedByPenalties ? `<span style="color:var(--accent2)">Win on pens</span>` :
+                      homeResult === 'win' ? `<span style="color:var(--green)">Win</span>` :
                       homeResult === 'loss' ? `<span style="color:var(--red)">Loss</span>` :
                       isNilNil ? `<span style="color:var(--red)">0-0 😴</span>` : `<span style="color:var(--accent)">Draw</span>`;
+  const pensNote = decidedByPenalties ? ` <span style="opacity:0.55;font-size:0.8em">(${homePens}-${awayPens} pens)</span>` : '';
 
   preview.classList.remove('hidden');
   preview.innerHTML = `
     <div class="preview-header">
       <span class="preview-team">${homeName} <span class="preview-mult">×${homeTeam.multiplier||1}</span></span>
-      <span class="preview-score">${homeScore} – ${awayScore}</span>
+      <span class="preview-score">${homeScore} – ${awayScore}${pensNote}</span>
       <span class="preview-team">${awayName} <span class="preview-mult">×${awayTeam.multiplier||1}</span></span>
     </div>
     <div class="preview-pts">
@@ -514,16 +556,23 @@ function updatePreview() {
 function addMatch() {
   const homeName = document.getElementById('f-home-team').value;
   const awayName = document.getElementById('f-away-team').value;
+  const round    = document.getElementById('f-round').value;
 
   if (homeName === awayName) {
     alert('Home and away teams must be different.');
     return;
   }
 
+  const isKnockoutTie = round !== 'group stage' && homeScore === awayScore;
+  if (isKnockoutTie && homePens === awayPens) {
+    alert('Knockout ties can\'t end in a draw — enter the penalty shootout score first.');
+    return;
+  }
+
   const match = {
     id:       Date.now().toString(),
     date:     document.getElementById('f-date').value,
-    round:    document.getElementById('f-round').value,
+    round,
     finished: true,
     home: {
       name:          homeName,
@@ -540,6 +589,8 @@ function addMatch() {
       penaltySaves:  awayPenSave,
     },
   };
+
+  if (isKnockoutTie) match.penalties = { home: homePens, away: awayPens };
 
   matches.push(match);
   saveToStorage();
@@ -558,6 +609,7 @@ function resetForm() {
   resetCounters();
   setDefaultDate();
   document.getElementById('f-round').value = 'group stage';
+  syncPenaltySection();
   document.getElementById('home-scorers-list').innerHTML = '';
   document.getElementById('away-scorers-list').innerHTML = '';
   syncTeamLabels();

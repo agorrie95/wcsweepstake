@@ -56,7 +56,7 @@
 
             <div class="form-group">
               <label>Round</label>
-              <select id="f-round" class="form-input">
+              <select id="f-round" class="form-input" onchange="syncPenaltySection()">
                 <option value="group stage">Group Stage</option>
                 <option value="round of 32">Round of 32</option>
                 <option value="round of 16">Round of 16</option>
@@ -95,6 +95,26 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- Penalty shootout — only shown for knockout rounds tied after normal time -->
+          <div id="pens-section" class="pens-section hidden">
+            <h3 class="events-title">🥅 Penalty Shootout <span class="pens-hint">(knockout ties can't end in a draw)</span></h3>
+            <div class="pens-row">
+              <span id="home-pens-label">Home</span>
+              <div class="mini-stepper">
+                <button type="button" onclick="stepPens('home',-1)">−</button>
+                <span id="home-pens-count">0</span>
+                <button type="button" onclick="stepPens('home',1)">+</button>
+              </div>
+              <span class="pens-vs">–</span>
+              <div class="mini-stepper">
+                <button type="button" onclick="stepPens('away',-1)">−</button>
+                <span id="away-pens-count">0</span>
+                <button type="button" onclick="stepPens('away',1)">+</button>
+              </div>
+              <span id="away-pens-label">Away</span>
+            </div>
           </div>
 
           <!-- Goal scorers -->

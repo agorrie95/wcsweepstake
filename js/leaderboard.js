@@ -41,11 +41,10 @@ function getKnockedOut() {
 // ── Scoring helpers ───────────────────────────────────────────────────────
 
 function matchSides(m) {
-  const isNilNil = m.home.goals === 0 && m.away.goals === 0;
-  const homeResult = m.home.goals > m.away.goals ? 'win' : m.home.goals < m.away.goals ? 'loss' : 'draw';
-  const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+  const { homeResult, awayResult, isNilNil, decidedByPenalties } = getMatchResult(m);
   return {
     isNilNil,
+    decidedByPenalties,
     homeSide: { ...m.home, goalsConceded: m.away.goals, result: homeResult },
     awaySide: { ...m.away, goalsConceded: m.home.goals, result: awayResult },
     homeResult, awayResult
@@ -241,7 +240,7 @@ function renderSidebar(matches) {
   }
 
   const matchCards = yMatches.map(m => {
-    const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
+    const { homeSide, awaySide, homeResult, awayResult, isNilNil, decidedByPenalties } = matchSides(m);
     const homePts = scoreTeamInMatch(homeSide, isNilNil);
     const awayPts = scoreTeamInMatch(awaySide, isNilNil);
     const homeRaw = rawTotal(homePts);
@@ -250,15 +249,19 @@ function renderSidebar(matches) {
 
     const homeMult = _teamMultiplierMap[m.home.name] || 1;
     const awayMult = _teamMultiplierMap[m.away.name] || 1;
-    const uBonuses = upsetBonuses(homeMult, awayMult, m.home.goals, m.away.goals);
+    const uBonuses = upsetBonuses(homeMult, awayMult, homeResult, awayResult);
     const isUpset  = uBonuses.home !== 0 || uBonuses.away !== 0;
+
+    const pensStr = decidedByPenalties
+      ? `<div class="sidebar-pens">(${m.penalties.home}-${m.penalties.away} pens)</div>`
+      : '';
 
     return `
       <div class="sidebar-match lb-match-link" data-match-id="${m.id}">
         <div class="sidebar-round">${m.round || 'Match'}${isUpset ? ' <span class="lb-modal-upset-badge">⚡ UPSET</span>' : ''}</div>
         <div class="sidebar-scoreline">
           <div class="sidebar-team-name">${m.home.name}</div>
-          <div class="sidebar-score">${m.home.goals} - ${m.away.goals}</div>
+          <div class="sidebar-score">${m.home.goals} - ${m.away.goals}${pensStr}</div>
           <div class="sidebar-team-name sidebar-team-name--away">${m.away.name}</div>
         </div>
         <div class="sidebar-pts">
@@ -354,7 +357,7 @@ function openParticipantModal(name) {
       const uBonus       = upsetBonuses(
         isHome ? myMult : oppMult,
         isHome ? oppMult : myMult,
-        m.home.goals, m.away.goals
+        homeResult, awayResult
       );
       const upsetBonus   = isHome ? uBonus.home : uBonus.away;
       const adjustedRaw  = raw + upsetBonus;
@@ -412,19 +415,22 @@ function openMatchModal(matchId) {
   const m = _matches.find(x => x.id === matchId);
   if (!m) return;
 
-  const { homeSide, awaySide, homeResult, awayResult, isNilNil } = matchSides(m);
+  const { homeSide, awaySide, homeResult, awayResult, isNilNil, decidedByPenalties } = matchSides(m);
 
   const homeTeamMult = _teamMultiplierMap[m.home.name] || 1;
   const awayTeamMult = _teamMultiplierMap[m.away.name] || 1;
-  const matchUpset   = upsetBonuses(homeTeamMult, awayTeamMult, m.home.goals, m.away.goals);
+  const matchUpset   = upsetBonuses(homeTeamMult, awayTeamMult, homeResult, awayResult);
   const isUpsetMatch = matchUpset.home !== 0 || matchUpset.away !== 0;
+  const pensNote = decidedByPenalties
+    ? ` <span class="lb-modal-pens-note">(${m.penalties.home}-${m.penalties.away} pens)</span>`
+    : '';
 
   let html = `
     <div class="lb-modal-match-hdr">
       <div class="lb-modal-match-round-lbl">${m.round || 'Match'} · ${m.date}${isUpsetMatch ? ' <span class="lb-modal-upset-badge">⚡ UPSET</span>' : ''}</div>
       <div class="lb-modal-match-scoreline">
         <span class="lb-modal-match-team">${m.home.name}</span>
-        <span class="lb-modal-match-score">${m.home.goals} – ${m.away.goals}</span>
+        <span class="lb-modal-match-score">${m.home.goals} – ${m.away.goals}${pensNote}</span>
         <span class="lb-modal-match-team">${m.away.name}</span>
       </div>
     </div>

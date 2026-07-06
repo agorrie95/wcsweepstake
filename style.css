@@ -257,11 +257,22 @@ a { color: var(--accent); text-decoration: none; }
 }
 
 .sidebar-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 38px;
   font-weight: 900;
   color: var(--accent);
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.sidebar-pens {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  opacity: 0.55;
+  white-space: nowrap;
 }
 
 .sidebar-pts {
@@ -543,6 +554,7 @@ a { color: var(--accent); text-decoration: none; }
 }
 .lb-modal-match-team  { font-size: 20px; font-weight: 700; }
 .lb-modal-match-score { font-size: 40px; font-weight: 900; color: var(--accent); }
+.lb-modal-pens-note { font-size: 14px; font-weight: 600; color: var(--text-muted); opacity: 0.55; }
 
 .lb-modal-section-title {
   font-size: 12px;
@@ -922,6 +934,31 @@ select.form-input { cursor: pointer; }
 }
 .mini-stepper button:hover { background: var(--accent2); }
 .mini-stepper span { min-width: 28px; text-align: center; font-size: 16px; font-weight: 700; color: var(--accent); }
+
+/* Penalty shootout section */
+.pens-section {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+.pens-hint {
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.pens-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+.pens-vs { color: var(--text-muted); font-weight: 700; }
 
 /* Match preview */
 .match-preview {

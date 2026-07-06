@@ -69,6 +69,36 @@ function computeProgressionPts(stage) {
 }
 
 /**
+ * Determine the result of a finished match. Knockout fixtures (any round
+ * other than "group stage") cannot end in a draw — if scores are level after
+ * normal time, `match.penalties` (a {home, away} shootout score) decides the
+ * winner. Penalty-shootout goals never feed into goal/scorer-based points;
+ * they only break the tie for win/loss purposes.
+ * @param {object} match
+ * @returns {{ homeResult: string, awayResult: string, isNilNil: boolean, decidedByPenalties: boolean }}
+ */
+function getMatchResult(match) {
+  const { home, away, round, penalties } = match;
+  const isNilNil = home.goals === 0 && away.goals === 0;
+  const isLevel  = home.goals === away.goals;
+  const isKnockout = !!round && round.toLowerCase() !== 'group stage';
+
+  if (isLevel && isKnockout && penalties && penalties.home !== penalties.away) {
+    const homeWon = penalties.home > penalties.away;
+    return {
+      homeResult: homeWon ? 'win' : 'loss',
+      awayResult: homeWon ? 'loss' : 'win',
+      isNilNil,
+      decidedByPenalties: true,
+    };
+  }
+
+  const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
+  const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+  return { homeResult, awayResult, isNilNil, decidedByPenalties: false };
+}
+
+/**
  * Score one team's performance in one finished match.
  * @param {object} side  - { goals, goalScorers:[{player}], redCards, penaltySaves, result }
  * @param {boolean} isNilNil
@@ -113,9 +143,11 @@ function scoreTeamInMatch(side, isNilNil) {
  * Draw:      front-runner −3, minnow +3
  * Minnow win: front-runner −5, minnow +5
  * Front-runner win: no adjustment
+ * Takes the already-resolved match result (not raw goals) so a knockout tie
+ * decided by penalties is treated as a win/loss, never a draw.
  * @returns {{ home: number, away: number }}
  */
-function upsetBonuses(homeMultiplier, awayMultiplier, homeGoals, awayGoals) {
+function upsetBonuses(homeMultiplier, awayMultiplier, homeResult, awayResult) {
   const FR  = SCORING.UPSET_FRONT_RUNNER_MAX_MULT;
   const MIN = SCORING.UPSET_MINNOW_MIN_MULT;
 
@@ -126,7 +158,7 @@ function upsetBonuses(homeMultiplier, awayMultiplier, homeGoals, awayGoals) {
 
   if (!((homeFR && awayMinn) || (awayFR && homeMinn))) return { home: 0, away: 0 };
 
-  const isDraw   = homeGoals === awayGoals;
+  const isDraw = homeResult === 'draw';
   const DB = SCORING.UPSET_DRAW_BONUS;
   const WB = SCORING.UPSET_WIN_BONUS;
 
@@ -137,7 +169,7 @@ function upsetBonuses(homeMultiplier, awayMultiplier, homeGoals, awayGoals) {
     };
   }
 
-  const minnowWon = (homeMinn && homeGoals > awayGoals) || (awayMinn && awayGoals > homeGoals);
+  const minnowWon = (homeMinn && homeResult === 'win') || (awayMinn && awayResult === 'win');
   if (minnowWon) {
     return {
       home: homeFR ? -WB : WB,
@@ -168,17 +200,14 @@ function computeTeamTotals(matches, progressionMap, teamMultiplierMap) {
     if (!match.finished) continue;
     const { home, away, round } = match;
     const roundKey = (round || '').toLowerCase();
-    const isNilNil = home.goals === 0 && away.goals === 0;
-
-    const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
-    const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+    const { homeResult, awayResult, isNilNil } = getMatchResult(match);
 
     const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
     const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
 
     const homeMult = (teamMultiplierMap && teamMultiplierMap[home.name]) || 1;
     const awayMult = (teamMultiplierMap && teamMultiplierMap[away.name]) || 1;
-    const upset    = upsetBonuses(homeMult, awayMult, home.goals, away.goals);
+    const upset    = upsetBonuses(homeMult, awayMult, homeResult, awayResult);
 
     for (const [side, name, upsetBonus] of [
       [homeSide, home.name, upset.home],
@@ -295,17 +324,14 @@ function computeBestSingleMatchResult(matches, participants) {
   for (const match of matches) {
     if (!match.finished) continue;
     const { home, away } = match;
-    const isNilNil = home.goals === 0 && away.goals === 0;
-
-    const homeResult = home.goals > away.goals ? 'win' : home.goals < away.goals ? 'loss' : 'draw';
-    const awayResult = homeResult === 'win' ? 'loss' : homeResult === 'loss' ? 'win' : 'draw';
+    const { homeResult, awayResult, isNilNil } = getMatchResult(match);
 
     const homeSide = { ...home, goalsConceded: away.goals, result: homeResult };
     const awaySide = { ...away, goalsConceded: home.goals, result: awayResult };
 
     const homeMult = teamMultiplierMap[home.name] || 1;
     const awayMult = teamMultiplierMap[away.name] || 1;
-    const upset    = upsetBonuses(homeMult, awayMult, home.goals, away.goals);
+    const upset    = upsetBonuses(homeMult, awayMult, homeResult, awayResult);
 
     for (const [side, name, opponent, mult, upsetBonus] of [
       [homeSide, home.name, away.name, homeMult, upset.home],

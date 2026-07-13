@@ -2848,7 +2848,8 @@
       "goalScorers": [],
       "redCards": 0,
       "penaltySaves": 0
-    }
+    },
+    "penalties": { "home": 4, "away": 3 }
   },
   {
     "id": "1783929022017",
@@ -2943,6 +2944,94 @@
         }
       ],
       "redCards": 1,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783678000001",
+    "date": "2026-07-06",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "Portugal",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Spain",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Mikel Merino"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783678000002",
+    "date": "2026-07-06",
+    "round": "round of 16",
+    "finished": true,
+    "home": {
+      "name": "USA",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Malik Tillman"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Belgium",
+      "goals": 4,
+      "goalScorers": [
+        {
+          "player": "Charles De Ketelaere"
+        },
+        {
+          "player": "Charles De Ketelaere"
+        },
+        {
+          "player": "Hans Vanaken"
+        },
+        {
+          "player": "Romelu Lukaku"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783678000003",
+    "date": "2026-07-09",
+    "round": "quarter-finals",
+    "finished": true,
+    "home": {
+      "name": "France",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Ousmane Dembele"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Morocco",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
       "penaltySaves": 0
     }
   }

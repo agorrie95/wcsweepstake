@@ -2849,5 +2849,101 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1783929022017",
+    "date": "2026-07-10",
+    "round": "quarter-finals",
+    "finished": true,
+    "home": {
+      "name": "Spain",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Fabian Ruiz"
+        },
+        {
+          "player": "Mikel Merino"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Belgium",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Charles De Ketelaere"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783929022018",
+    "date": "2026-07-11",
+    "round": "quarter-finals",
+    "finished": true,
+    "home": {
+      "name": "Norway",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Andreas Schjelderup"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "England",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Jude Bellingham"
+        },
+        {
+          "player": "Jude Bellingham"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783929022019",
+    "date": "2026-07-11",
+    "round": "quarter-finals",
+    "finished": true,
+    "home": {
+      "name": "Argentina",
+      "goals": 3,
+      "goalScorers": [
+        {
+          "player": "Alexis Mac Allister"
+        },
+        {
+          "player": "Julian Alvarez"
+        },
+        {
+          "player": "Lautaro Martinez"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Switzerland",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Dan Ndoye"
+        }
+      ],
+      "redCards": 1,
+      "penaltySaves": 0
+    }
   }
 ]

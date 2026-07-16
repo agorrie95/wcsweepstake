@@ -3034,5 +3034,63 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1783764000001",
+    "date": "2026-07-14",
+    "round": "semi-finals",
+    "finished": true,
+    "home": {
+      "name": "France",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Spain",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Mikel Oyarzabal"
+        },
+        {
+          "player": "Pedro Porro"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783764000002",
+    "date": "2026-07-15",
+    "round": "semi-finals",
+    "finished": true,
+    "home": {
+      "name": "England",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Anthony Gordon"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Argentina",
+      "goals": 2,
+      "goalScorers": [
+        {
+          "player": "Enzo Fernandez"
+        },
+        {
+          "player": "Lautaro Martinez"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
   }
 ]

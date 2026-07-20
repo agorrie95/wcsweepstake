@@ -3092,5 +3092,81 @@
       "redCards": 0,
       "penaltySaves": 0
     }
+  },
+  {
+    "id": "1783937000001",
+    "date": "2026-07-18",
+    "round": "third place",
+    "finished": true,
+    "home": {
+      "name": "France",
+      "goals": 4,
+      "goalScorers": [
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Kylian Mbappe"
+        },
+        {
+          "player": "Bradley Barcola"
+        },
+        {
+          "player": "Ousmane Dembele"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "England",
+      "goals": 6,
+      "goalScorers": [
+        {
+          "player": "Declan Rice"
+        },
+        {
+          "player": "Ezri Konsa"
+        },
+        {
+          "player": "Bukayo Saka"
+        },
+        {
+          "player": "Bukayo Saka"
+        },
+        {
+          "player": "Bukayo Saka"
+        },
+        {
+          "player": "Jude Bellingham"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    }
+  },
+  {
+    "id": "1783937000002",
+    "date": "2026-07-19",
+    "round": "final",
+    "finished": true,
+    "home": {
+      "name": "Spain",
+      "goals": 1,
+      "goalScorers": [
+        {
+          "player": "Ferran Torres"
+        }
+      ],
+      "redCards": 0,
+      "penaltySaves": 0
+    },
+    "away": {
+      "name": "Argentina",
+      "goals": 0,
+      "goalScorers": [],
+      "redCards": 1,
+      "penaltySaves": 0
+    }
   }
 ]
